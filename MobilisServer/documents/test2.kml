@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml cefx:uid="100" xmlns="http://www.opengis.net/kml/2.2"
+   xmlns:atom="http://www.w3.org/2005/Atom"
+   xmlns:cefx="http://www.hdm-stuttgart.de/~gerlicher/cefx"
+   xmlns:gx="http://www.google.com/kml/ext/2.2"
+   xmlns:kml="http://www.opengis.net/kml/2.2"
+   xmlns:mobilis="http://www.tu-dresden.de/inf/rn/mobilis">
+   <Document cefx:uid="200">
+      <name cefx:uid="300">DrawingObjects.kml</name>
+      <Folder cefx:uid="400">
+         <name cefx:uid="500">Mobilis MapDraw</name>
+         <open cefx:uid="600">1</open>
+         <ExtendedData cefx:uid="700"/>
+      </Folder>
+   </Document>
+</kml>

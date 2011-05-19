@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/MobilisCommon"/>
+	<classpathentry kind="lib" path="libs/appframework-1.0.3.jar"/>
+	<classpathentry kind="lib" path="libs/commons-beanutils.jar"/>
+	<classpathentry kind="lib" path="libs/commons-collections-3.2.1.jar"/>
+	<classpathentry kind="lib" path="libs/commons-lang-2.4.jar"/>
+	<classpathentry kind="lib" path="libs/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="libs/facebook-java-api-schema-2.0.4.jar"/>
+	<classpathentry kind="lib" path="libs/jdom.jar"/>
+	<classpathentry kind="lib" path="libs/json-20070829.jar"/>
+	<classpathentry kind="lib" path="libs/servlet-api.jar"/>
+	<classpathentry kind="lib" path="libs/smackx-debug.jar" sourcepath="P:/Eigene Dateien/(S) Studien/[SH2] Hauptstudium 2/Großer Beleg/Repository Private/Software/smack_src_3_0_4"/>
+	<classpathentry kind="lib" path="libs/smackx-jingle.jar" sourcepath="P:/Eigene Dateien/(S) Studien/[SH2] Hauptstudium 2/Großer Beleg/Repository Private/Software/smack_src_3_0_4"/>
+	<classpathentry kind="lib" path="libs/swing-worker-1.1.jar"/>
+	<classpathentry kind="lib" path="libs/xpp3-1.1.4c.jar"/>
+	<classpathentry kind="lib" path="libs/derby.jar"/>
+	<classpathentry kind="lib" path="libs/eclipselink.jar"/>
+	<classpathentry kind="lib" path="libs/javax.persistence_2.0.1.v201006031150.jar"/>
+	<classpathentry kind="lib" path="libs/SimpleWebServer.jar"/>
+	<classpathentry kind="lib" path="libs/QueryTool1.2a.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/AndroidCEFX_Common"/>
+	<classpathentry kind="lib" path="libs/smack.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/D:/JWork/smack_310_javadoc.zip!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="libs/smackx.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/MobilisXMPP"/>
+	<classpathentry kind="lib" path="libs/hibernate-annotations.jar"/>
+	<classpathentry kind="lib" path="libs/hibernate-entitymanager.jar"/>
+	<classpathentry kind="lib" path="libs/hibernate3.jar"/>
+	<classpathentry kind="lib" path="libs/mysql-connector-java-5.1.10-bin.jar"/>
+	<classpathentry kind="lib" path="libs/persistence-api-1.0.jar"/>
+	<classpathentry kind="lib" path="libs/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="libs/antlr-2.7.6.jar"/>
+	<classpathentry kind="lib" path="libs/commons-collections-3.1.jar"/>
+	<classpathentry kind="lib" path="libs/ejb3-persistence.jar"/>
+	<classpathentry kind="lib" path="libs/hibernate-commons-annotations.jar"/>
+	<classpathentry kind="lib" path="libs/hibernate-core.jar"/>
+	<classpathentry kind="lib" path="libs/javassist-3.9.0.GA.jar"/>
+	<classpathentry kind="lib" path="libs/jta-1.1.jar"/>
+	<classpathentry kind="lib" path="libs/slf4j-api-1.5.8.jar"/>
+	<classpathentry kind="lib" path="libs/javassist.jar"/>
+	<classpathentry kind="lib" path="libs/slf4j-jdk14-1.5.8.jar"/>
+	<classpathentry kind="lib" path="libs/ant-antlr-1.6.5.jar"/>
+	<classpathentry kind="lib" path="libs/axiom.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+<TextView  
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:text="@string/hello"
+    />
+<Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/main_btn_service" android:text="@string/main_btn_service"></Button>
+<Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/main_btn_server" android:id="@+id/main_btn_server"></Button>
+<Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/main_btn_presence" android:id="@+id/main_btn_presence"></Button>
+<Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/main_btn_message" android:text="@string/main_btn_message"></Button>
+<Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/main_btn_iq" android:text="@string/main_btn_iq"></Button>
+<Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/main_btn_file" android:text="@string/main_btn_file"></Button>
+<Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/main_btn_disconnect" android:text="@string/main_btn_disconnect"></Button>
+
+
+
+<Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/main_btn_monitor" android:text="@string/main_btn_monitor"></Button>
+</LinearLayout>

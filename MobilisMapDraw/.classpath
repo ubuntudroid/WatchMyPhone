@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="gen"/>
+	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/AndroidCEFX_Common"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/MobilisCommon"/>
+	<classpathentry kind="lib" path="/MobilisCommon/libs/smack.jar"/>
+	<classpathentry kind="lib" path="/MXA/build/MXAClient.jar" sourcepath="/MXA"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/MobilisXMPP"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

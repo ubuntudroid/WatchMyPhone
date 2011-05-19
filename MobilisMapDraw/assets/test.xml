@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<OfficeDocument>
+	<Part>
+		Normaler Text.
+		<Part style="bold">Fetter Text</Part>
+		Weiterer Text!
+	</Part>
+	<Part>
+		<Drawing>
+			<Circle center="150,120" radius="10"/>
+			<Label value="Abbildung 1"/>
+		</Drawing>
+	</Part>
+</OfficeDocument>

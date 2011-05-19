@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      package="de.tudresden.inf.rn.mobilis.clientservices"
+      android:versionCode="1"
+      android:versionName="1.0">
+    <application android:icon="@drawable/icon" android:label="@string/app_name">
+        <service android:name=".socialnetwork.SocialNetworkService"
+	        	android:exported="true"
+	        	android:enabled="true">
+	    	<intent-filter>
+	    		<action android:name="de.tudresden.inf.rn.mobilis.clientservices.socialnetwork.ISocialNetworkService"></action>
+	    	</intent-filter>
+    	</service>
+
+    </application>
+
+
+</manifest> 

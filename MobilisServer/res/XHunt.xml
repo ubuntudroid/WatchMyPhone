@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (C) 2010 Technische Universität Dresden
+  
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+  	http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  
+  Dresden, University of Technology, Faculty of Computer Science
+  Computer Networks Group: http://www.rn.inf.tu-dresden.de
+  mobilis project: http://mobilisplatform.sourceforge.net
+-->
+<MobilisXHuntDescription>
+	<Route id="1" type="tram" start="Leutewitz" end="Prohlis">
+		<stop nr="0">cob</stop>
+		<stop nr="1">flw</stop>
+		<stop nr="2">brm</stop>
+		<stop nr="3">wth</stop>
+		<stop nr="4">sfs</stop>
+		<stop nr="5">bmi</stop>
+		<stop nr="6">pos</stop>
+		<stop nr="7">amt</stop>
+		<stop nr="8">pip</stop>
+		<stop nr="9">sbp</stop>
+		<stop nr="10">kar</stop>
+		<stop nr="11">zwi</stop>
+	</Route>
+	<Route id="2" type="tram" start="Gorbitz" end="Kleinzschachwitz">
+		<stop nr="0">per</stop>
+		<stop nr="1">sem</stop>
+		<stop nr="2">coa</stop>
+		<stop nr="3">sfs</stop>
+		<stop nr="4">bmi</stop>
+		<stop nr="5">pos</stop>
+		<stop nr="6">amt</stop>
+		<stop nr="7">pip</stop>
+		<stop nr="8">sbp</stop>
+		<stop nr="9">kar</stop>
+		<stop nr="10">zwi</stop>
+	</Route>
+	<Route id="3" type="tram" start="Coschütz" end="Wilder Mann">
+		<stop nr="0">sar</stop>
+		<stop nr="1">cam</stop>
+		<stop nr="2">ntn</stop>
+		<stop nr="3">nup</stop>
+		<stop nr="4">rei</stop>
+		<stop nr="5">hbf</stop>
+		<stop nr="6">wps</stop>
+		<stop nr="7">pip</stop>
+		<stop nr="8">syn</stop>
+		<stop nr="9">cap</stop>
+		<stop nr="10">alp</stop>
+		<stop nr="11">bfn</stop>
+		<stop nr="12">lon</stop>
+		<stop nr="13">lis</stop>
+		<stop nr="14">trp</stop>
+		<stop nr="15">hub</stop>
+		<stop nr="16">wim</stop>
+	</Route>
+	<Route id="4" type="tram" start="Weinböhla" end="Laubegast">
+		<stop nr="0">htr</stop>
+		<stop nr="1">ran</stop>
+		<stop nr="2">mic</stop>
+		<stop nr="3">api</stop>
+		<stop nr="4">apu</stop>
+		<stop nr="5">lei</stop>
+		<stop nr="6">nmt</stop>
+		<stop nr="7">pos</stop>
+		<stop nr="8">amt</stop>
+		<stop nr="9">pip</stop>
+		<stop nr="10">sbp</stop>
+		<stop nr="11">fep</stop>
+		<stop nr="12">bma</stop>
+		<stop nr="13">poh</stop>
+	</Route>
+	<Route id="6" type="tram" start="Gorbitz" end="Niedersedlitz">
+		<stop nr="0">bns</stop>
+		<stop nr="1">tha</stop>
+		<stop nr="2">coa</stop>
+		<stop nr="3">sfs</stop>
+		<stop nr="4">bmi</stop>
+		<stop nr="5">kgz</stop>
+		<stop nr="6">lei</stop>
+		<stop nr="7">bfn</stop>
+		<stop nr="8">alp</stop>
+		<stop nr="9">btz</stop>
+		<stop nr="10">saa</stop>
+		<stop nr="11">pms</stop>
+		<stop nr="12">fet</stop>
+	</Route>
+	<Route id="7" type="tram" start="Pennrich" end="Weixdorf">
+		<stop nr="0">bns</stop>
+		<stop nr="1">tha</stop>
+		<stop nr="2">oed</stop>
+		<stop nr="3">fbg</stop>
+		<stop nr="4">bdp</stop>
+		<stop nr="5">hbf</stop>
+		<stop nr="6">wps</stop>
+		<stop nr="7">pip</stop>
+		<stop nr="8">syn</stop>
+		<stop nr="9">cap</stop>
+		<stop nr="10">alp</stop>
+		<stop nr="11">biw</stop>
+		<stop nr="12">stf</stop>
+		<stop nr="13">ind</stop>
+	</Route>
+	<Route id="8" type="tram" start="Südvorstadt" end="Hellerau">
+		<stop nr="0">svs</stop>
+		<stop nr="1">nup</stop>
+		<stop nr="2">rei</stop>
+		<stop nr="3">hbf</stop>
+		<stop nr="4">wps</stop>
+		<stop nr="5">pgs</stop>
+		<stop nr="6">pos</stop>
+		<stop nr="7">nmt</stop>
+		<stop nr="8">cap</stop>
+		<stop nr="9">alp</stop>
+		<stop nr="10">biw</stop>
+		<stop nr="11">stf</stop>
+		<stop nr="12">ind</stop>
+	</Route>
+	<Route id="9" type="tram" start="Kaditz" end="Prohlis">
+		<stop nr="0">epk</stop>
+		<stop nr="1">adf</stop>
+		<stop nr="2">mic</stop>
+		<stop nr="3">api</stop>
+		<stop nr="4">apu</stop>
+		<stop nr="5">lei</stop>
+		<stop nr="6">nmt</stop>
+		<stop nr="7">pos</stop>
+		<stop nr="8">pgs</stop>
+		<stop nr="9">wps</stop>
+		<stop nr="10">gps</stop>
+		<stop nr="11">len</stop>
+		<stop nr="12">que</stop>
+		<stop nr="13">was</stop>
+	</Route>
+	<Route id="10" type="tram" start="Friedrichstadt" end="Striesen">
+		<stop nr="0">frs</stop>
+		<stop nr="1">bmi</stop>
+		<stop nr="2">fbg</stop>
+		<stop nr="3">bdp</stop>
+		<stop nr="4">hbf</stop>
+		<stop nr="5">gps</stop>
+		<stop nr="6">len</stop>
+		<stop nr="7">grg</stop>
+		<stop nr="8">sbp</stop>
+		<stop nr="9">fep</stop>
+		<stop nr="10">bma</stop>
+		<stop nr="11">poh</stop>
+	</Route>
+	<Route id="11" type="tram" start="Zschertnitz" end="Bühlau">
+		<stop nr="0">ztz</stop>
+		<stop nr="1">rac</stop>
+		<stop nr="2">zel</stop>
+		<stop nr="3">stp</stop>
+		<stop nr="4">len</stop>
+		<stop nr="5">gps</stop>
+		<stop nr="6">hbf</stop>
+		<stop nr="7">wps</stop>
+		<stop nr="8">pgs</stop>
+		<stop nr="9">pos</stop>
+		<stop nr="10">kgz</stop>
+		<stop nr="11">lei</stop>
+		<stop nr="12">bfn</stop>
+		<stop nr="13">alp</stop>
+		<stop nr="14">btz</stop>
+	</Route>
+	<Route id="12" type="tram" start="Leutewitz" end="Striesen">
+		<stop nr="0">cob</stop>
+		<stop nr="1">okw</stop>
+		<stop nr="2">aco</stop>
+		<stop nr="3">per</stop>
+		<stop nr="4">bns</stop>
+		<stop nr="5">tha</stop>
+		<stop nr="6">oed</stop>
+		<stop nr="7">fbg</stop>
+		<stop nr="8">pos</stop>
+		<stop nr="9">pgs</stop>
+		<stop nr="10">pip</stop>
+		<stop nr="11">sbp</stop>
+		<stop nr="12">fep</stop>
+		<stop nr="13">fet</stop>
+	</Route>
+	<Route id="13" type="tram" start="Mickten" end="Prohlis">
+		<stop nr="0">mic</stop>
+		<stop nr="1">api</stop>
+		<stop nr="2">rpn</stop>
+		<stop nr="3">lis</stop>
+		<stop nr="4">bip</stop>
+		<stop nr="5">biw</stop>
+		<stop nr="6">gls</stop>
+		<stop nr="7">btz</stop>
+		<stop nr="8">saa</stop>
+		<stop nr="9">gym</stop>
+		<stop nr="10">sbp</stop>
+		<stop nr="11">grg</stop>
+		<stop nr="12">len</stop>
+		<stop nr="13">que</stop>
+		<stop nr="14">was</stop>
+	</Route>
+	<Route id="61" type="bus" start="Löbtau" end="Weißig">
+		<stop nr="0">tha</stop>
+		<stop nr="1">che</stop>
+		<stop nr="2">svs</stop>
+		<stop nr="3">nup</stop>
+		<stop nr="4">ffp</stop>
+		<stop nr="5">zel</stop>
+		<stop nr="6">cdf</stop>
+		<stop nr="7">was</stop>
+		<stop nr="8">hps</stop>
+		<stop nr="9">tie</stop>
+		<stop nr="10">zwi</stop>
+		<stop nr="11">poh</stop>
+	</Route>
+	<Route id="62" type="bus" start="Dölzschen" end="Johannstadt">
+		<stop nr="0">dlz</stop>
+		<stop nr="1">fsu</stop>
+		<stop nr="2">hpl</stop>
+		<stop nr="3">rpl</stop>
+		<stop nr="4">che</stop>
+		<stop nr="5">szs</stop>
+		<stop nr="6">bdp</stop>
+		<stop nr="7">pgs</stop>
+		<stop nr="8">pip</stop>
+		<stop nr="9">gym</stop>
+		<stop nr="10">pms</stop>
+	</Route>
+	<Route id="63" type="bus" start="Löbtau" end="Bonnewitz">
+		<stop nr="0">tha</stop>
+		<stop nr="1">fsu</stop>
+		<stop nr="2">hpl</stop>
+		<stop nr="3">rpl</stop>
+		<stop nr="4">cam</stop>
+		<stop nr="5">sar</stop>
+		<stop nr="6">dfh</stop>
+		<stop nr="7">sue</stop>
+		<stop nr="8">ztz</stop>
+		<stop nr="9">cdf</stop>
+		<stop nr="10">was</stop>
+		<stop nr="11">hps</stop>
+		<stop nr="12">tie</stop>
+		<stop nr="13">kar</stop>
+		<stop nr="14">bma</stop>
+	</Route>
+	<Route id="64" type="bus" start="Kaditz" end="Waldschlößchen">
+		<stop nr="0">epk</stop>
+		<stop nr="1">bun</stop>
+		<stop nr="2">mic</stop>
+		<stop nr="3">hpp</stop>
+		<stop nr="4">trp</stop>
+		<stop nr="5">spf</stop>
+		<stop nr="6">saz</stop>
+		<stop nr="7">stf</stop>
+	</Route>
+	<Route id="66" type="bus" start="Coschütz" end="Lockwitz">
+		<stop nr="0">dfh</stop>
+		<stop nr="1">sue</stop>
+		<stop nr="2">ffp</stop>
+		<stop nr="3">rei</stop>
+		<stop nr="4">hbf</stop>
+		<stop nr="5">gps</stop>
+		<stop nr="6">stp</stop>
+		<stop nr="7">cdf</stop>
+	</Route>
+	<Route id="70" type="bus" start="Gompitz" end="Industriegebiet Nord">
+		<stop nr="0">okw</stop>
+		<stop nr="1">aco</stop>
+		<stop nr="2">flw</stop>
+		<stop nr="3">ove</stop>
+		<stop nr="4">epk</stop>
+		<stop nr="5">bun</stop>
+		<stop nr="6">ran</stop>
+		<stop nr="7">htr</stop>
+		<stop nr="8">khn</stop>
+		<stop nr="9">hub</stop>
+		<stop nr="10">trp</stop>
+		<stop nr="11">spf</stop>
+	</Route>
+	<Route id="74" type="bus" start="Reick" end="Johannstadt">
+		<stop nr="0">zwi</stop>
+		<stop nr="1">bma</stop>
+		<stop nr="2">fet</stop>
+	</Route>
+	<Route id="75" type="bus" start="Goppeln" end="Messe Dresden">
+		<stop nr="0">was</stop>
+		<stop nr="1">hps</stop>
+		<stop nr="2">que</stop>
+		<stop nr="3">len</stop>
+		<stop nr="4">pgs</stop>
+		<stop nr="5">pos</stop>
+		<stop nr="6">bmi</stop>
+	</Route>
+	<Route id="79" type="bus" start="Übigau" end="Mickten">
+		<stop nr="0">ove</stop>
+		<stop nr="1">adf</stop>
+		<stop nr="2">mic</stop>
+	</Route>
+	<Route id="80" type="bus" start="Omsewitz" end="Klotzsche">
+		<stop nr="0">okw</stop>
+		<stop nr="1">aco</stop>
+		<stop nr="2">flw</stop>
+		<stop nr="3">ove</stop>
+		<stop nr="4">epk</stop>
+		<stop nr="5">bun</stop>
+		<stop nr="6">ran</stop>
+		<stop nr="7">htr</stop>
+	</Route>
+	<Route id="81" type="bus" start="Bahnhof Neustadt" end="Wilschdorf">
+		<stop nr="0">bfn</stop>
+		<stop nr="1">lis</stop>
+		<stop nr="2">spf</stop>
+	</Route>
+	<Route id="85" type="bus" start="Striesen" end="Löbtau Süd">
+		<stop nr="0">zwi</stop>
+		<stop nr="1">tie</stop>
+		<stop nr="2">hps</stop>
+		<stop nr="3">was</stop>
+		<stop nr="4">cdf</stop>
+		<stop nr="5">rac</stop>
+		<stop nr="6">hhz</stop>
+		<stop nr="7">ntn</stop>
+		<stop nr="8">rpl</stop>
+		<stop nr="9">hpl</stop>
+		<stop nr="10">fsu</stop>
+	</Route>
+	<Route id="90" type="bus" start="Gompitz" end="Löbtau">
+		<stop nr="0">dlz</stop>
+		<stop nr="1">tha</stop>
+	</Route>
+	<Route id="94" type="bus" start="Postplatz" end="Cossebaude">
+		<stop nr="0">pos</stop>
+		<stop nr="1">bmi</stop>
+		<stop nr="2">frs</stop>
+		<stop nr="3">wth</stop>
+		<stop nr="4">brm</stop>
+		<stop nr="5">flw</stop>
+		<stop nr="6">cob</stop>
+	</Route>
+	<Route id="S1" type="railway" start="Meißen" end="Schöna">
+		<stop nr="0">htr</stop>
+		<stop nr="1">hpp</stop>
+		<stop nr="2">bfn</stop>
+		<stop nr="3">bmi</stop>
+		<stop nr="4">fbg</stop>
+		<stop nr="5">hbf</stop>
+		<stop nr="6">hps</stop>
+	</Route>
+	<Route id="S2" type="railway" start="Pirna" end="Dresden Flughafen">
+		<stop nr="0">hps</stop>
+		<stop nr="1">hbf</stop>
+		<stop nr="2">fbg</stop>
+		<stop nr="3">bmi</stop>
+		<stop nr="4">bfn</stop>
+		<stop nr="5">ind</stop>
+	</Route>
+	<Route id="S3" type="railway" start="Hauptbahnhof" end="HP Plauen">
+		<stop nr="0">hbf</stop>
+		<stop nr="1">hpl</stop>
+	</Route>
+	<InitialStops>
+		<stop>khn</stop>
+		<stop>ove</stop>
+		<stop>rpn</stop>
+		<stop>apu</stop>
+		<stop>spf</stop>
+		<stop>bip</stop>
+		<stop>gls</stop>
+		<stop>brm</stop>
+		<stop>sem</stop>
+		<stop>bdp</stop>
+		<stop>szs</stop>
+		<stop>dfh</stop>
+		<stop>ffp</stop>
+		<stop>tie</stop>
+		<stop>grg</stop>
+		<stop>syn</stop>
+		<stop>bma</stop>
+		<stop>pms</stop>
+		<stop>dlz</stop>
+	</InitialStops>
+	
+</MobilisXHuntDescription>

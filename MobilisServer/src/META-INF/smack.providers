@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<smackProviders>
+	<iqProvider>
+		<elementName>query</elementName>
+		<namespace>mobilis:iq:groups</namespace>
+		<className>de.tudresden.inf.rn.mobilis.xmpp.provider.QueryGroupsIQProvider</className>
+	</iqProvider>
+	<iqProvider>
+		<elementName>query</elementName>
+		<namespace>mobilis:iq:creategroup</namespace>
+		<className>de.tudresden.inf.rn.mobilis.xmpp.provider.CreateGroupIQProvider</className>
+	</iqProvider>
+	<iqProvider>
+		<elementName>query</elementName>
+		<namespace>mobilis:iq:joingroup</namespace>
+		<className>de.tudresden.inf.rn.mobilis.xmpp.provider.JoinGroupIQProvider</className>
+	</iqProvider>
+	<iqProvider>
+		<elementName>pubsub</elementName>
+		<namespace>http://jabber.org/protocol/pubsub</namespace>
+		<className>se.su.it.smack.provider.PubSubProvider</className>
+	</iqProvider>
+	<iqProvider>
+		<elementName>query</elementName>
+		<namespace>mobilis:iq:buddylist</namespace>
+		<className>de.tudresden.inf.rn.mobilis.xmpp.provider.BuddylistIQProvider</className>
+	</iqProvider>
+	<iqProvider>
+		<elementName>query</elementName>
+		<namespace>mobilis:iq:location</namespace>
+		<className>de.tudresden.inf.rn.mobilis.xmpp.provider.LocationIQProvider</className>
+	</iqProvider>
+	<iqProvider>
+		<elementName>query</elementName>
+		<namespace>mobilis:iq:network</namespace>
+		<className>de.tudresden.inf.rn.mobilis.xmpp.provider.NetworkIQProvider</className>
+	</iqProvider>
+	<iqProvider>
+		<elementName>query</elementName>
+		<namespace>mobilis:iq:setting</namespace>
+		<className>de.tudresden.inf.rn.mobilis.xmpp.provider.SettingsIQProvider</className>
+	</iqProvider>
+		
+</smackProviders>

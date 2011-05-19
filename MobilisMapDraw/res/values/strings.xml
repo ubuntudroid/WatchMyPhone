@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">MapDraw</string>
+	<string name="main_btn_service">Connect to service</string>
+	<string name="main_btn_server">Connect to server</string>
+	<string name="main_btn_disconnect">Disconnect from Server</string>
+	<string name="pref_xmpp_server">XMPP Server Preferences</string>
+	<string name="pref_xmpp_host_dialogtitle">Enter the XMPP host</string>
+	<string name="pref_xmpp_host_title">XMPP host</string>
+	<string name="pref_xmpp_host_summary">The XMPP host\'s address</string>
+	<string name="pref_xmpp_port_dialogtitle">Enter the host\'s port</string>
+	<string name="pref_xmpp_port_title">Host\'s port</string>
+	<string name="pref_xmpp_port_summary">The XMPP host\'s port</string>
+	<string name="pref_xmpp_service_dialogtitle">Enter the XMPP service name</string>
+	<string name="pref_xmpp_service_title">XMPP service name</string>
+	<string name="pref_xmpp_service_summary">The XMPP service name</string>
+	<string name="pref_xmpp_resource_dialogtitle">Enter the client\'s resource name</string>
+	<string name="pref_xmpp_resource_title">XMPP resource</string>
+	<string name="pref_xmpp_resource_summary">The client\'s resource</string>
+	<string name="menu_pref">Preferences</string>
+	<string name="menu_connect">Connect XMPP</string>
+	<string name="pref_title">Preferences</string>
+	<string name="pref_xmpp_credentials">XMPP User Credentials</string>
+	<string name="pref_xmpp_user_dialogtitle">Enter your XMPP username</string>
+	<string name="pref_xmpp_user_title">XMPP username</string>
+	<string name="pref_xmpp_user_summary">Your username</string>
+	<string name="pref_xmpp_password_dialogtitle">Enter your XMPP password</string>
+	<string name="pref_xmpp_password_title">XMPP password</string>
+	<string name="pref_xmpp_password_summary">Your password</string>
+	<string name="main_btn_message">Send message</string>
+	<string name="main_btn_iq">Send Service Discovery IQ</string>
+	<string name="main_btn_presence">Set Presence Away</string>
+	<string name="main_btn_map">Get me that map!</string>
+
+	<!-- groups -->
+	<string name="querygroups">Retrieving chat groups from Mobilis server ...
+	</string>
+	<string name="querygroups_failed">Failed retrieving chat groups!</string>
+	<string name="groupdlg_title">Join Group</string>
+	<string name="groupdlg_txt_listtitle">Please choose the group to join or create a new
+		group.</string>
+	<string name="groupdlg_edt_newgroup">new group name</string>
+	<string name="groupdlg_btn_join">join</string>
+	<string name="groupdlg_txt_groupsempty">no groups available</string>
+	<string name="dlg_title_noresponse">No response</string>
+</resources>

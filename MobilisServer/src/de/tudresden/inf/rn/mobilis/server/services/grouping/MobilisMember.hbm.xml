@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="de.tudresden.inf.rn.mobilis.server.services.grouping">
+    <class name="MobilisMember" table="MOBILISMEMBER">
+        <id name="jidWithoutResource" column="MEMBER_ID">
+            <generator class="assigned"/>
+        </id>        
+        <property name="realName"/>
+        <property name="age"/>
+        <property name="email"/>
+        <property name="homepage"/>
+        <property name="city"/>
+        
+        <set name="groups" table="GROUP_MEMBER" inverse="true">
+            <key column="MEMBER_ID"/>
+            <many-to-many column="GROUP_ID" class="MobilisGroup"/>
+        </set>
+        
+    </class>
+</hibernate-mapping>

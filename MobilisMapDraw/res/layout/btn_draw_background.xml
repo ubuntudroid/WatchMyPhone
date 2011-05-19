@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>  
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+      
+    <item android:state_checked="true" android:state_window_focused="false"
+          android:state_enabled="true"
+          android:drawable="@drawable/btn_draw_on" />
+    <item android:state_checked="false" android:state_window_focused="false"
+          android:state_enabled="true"
+          android:drawable="@drawable/btn_draw_off" />
+
+    <item android:state_checked="true" android:state_pressed="true"
+          android:state_enabled="true"
+          android:drawable="@drawable/btn_draw_selected" />
+    <item android:state_checked="false" android:state_pressed="true"
+          android:state_enabled="true"
+          android:drawable="@drawable/btn_draw_selected" />
+
+    <item android:state_checked="true" android:state_focused="true"
+          android:state_enabled="true"
+          android:drawable="@drawable/btn_draw_selected" />
+    <item android:state_checked="false" android:state_focused="true"
+          android:state_enabled="true"
+          android:drawable="@drawable/btn_draw_selected" />
+
+    <item android:state_checked="false"
+          android:state_enabled="true"
+          android:drawable="@drawable/btn_draw_off" />
+    <item android:state_checked="true"
+          android:state_enabled="true"
+          android:drawable="@drawable/btn_draw_on" />
+
+
+
+    <item android:state_checked="true" android:state_window_focused="false"
+          android:drawable="@drawable/btn_draw_disabled" />
+    <item android:state_checked="false" android:state_window_focused="false"
+          android:drawable="@drawable/btn_draw_disabled" />
+
+    <item android:state_checked="true" android:state_focused="true"
+          android:drawable="@drawable/btn_draw_disabled_selected" />
+    <item android:state_checked="false" android:state_focused="true"
+          android:drawable="@drawable/btn_draw_disabled_selected" />
+
+    <item android:state_checked="false" android:drawable="@drawable/btn_draw_disabled" />
+    <item android:state_checked="true" android:drawable="@drawable/btn_draw_disabled" />
+
+</selector>
+
+

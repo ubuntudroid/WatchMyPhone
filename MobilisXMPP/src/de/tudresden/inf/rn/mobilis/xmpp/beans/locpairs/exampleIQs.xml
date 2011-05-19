@@ -1,0 +1,71 @@
+<iq id="mobilis_19" to="server@141.30.203.90/Smack" from="alpha@141.30.203.90/MXA"
+	type="set">
+	<query xmlns="mobilislocpairs:iq:joingame">
+		<playerID>alpha@141.30.203.90/MXA</playerID>
+		<playerName>Alpha</playerName>
+		<location>
+			<latitude>0.0</latitude>
+			<longitude>0.0</longitude>
+			<altitude>0.0</altitude>
+		</location>
+	</query>
+</iq>
+<iq id="mobilis_1" to="server@141.30.203.90/Smack" from="reik@141.30.203.90/Client"
+	type="set">
+	<query xmlns="mobilislocpairs:iq:joingame">
+		<playerID>reik@141.30.203.90/Client</playerID>
+		<playerName>Alpha</playerName>
+		<location>
+			<latitude>0.0</latitude>
+			<longitude>0.0</longitude>
+			<altitude>0.0</altitude>
+		</location>
+	</query>
+</iq>
+
+<iq id='mobilis_19' to='server@141.30.203.90/Smack' from='reik@141.30.203.90/Client' type='result'>
+		<query xmlns='mobilislocpairs:iq:playerupdate'>
+	</query>
+
+</iq>
+
+<iq id="mobilis_20" to="server@141.30.203.90/Smack" from="alpha@141.30.203.90/MXA"
+	type="set">
+	<query xmlns="mobilislocpairs:iq:joingame">
+		<playerID>beta@141.30.203.90/MXA</playerID>
+		<playerName>Beta</playerName>
+		<location>
+			<latitude>0.0</latitude>
+			<longitude>0.0</longitude>
+			<altitude>0.0</altitude>
+		</location>
+	</query>
+</iq>
+
+
+<iq id="mobilis_21" to="server@141.30.203.90/Smack" from="alpha@141.30.203.90/MXA"
+	type="set">
+	<query xmlns="mobilislocpairs:iq:joingame">
+		<playerID>gamma@141.30.203.90/MXA</playerID>
+		<playerName>Gamma</playerName>
+		<location>
+			<latitude>0.0</latitude>
+			<longitude>0.0</longitude>
+			<altitude>0.0</altitude>
+		</location>
+	</query>
+</iq>
+
+
+<iq id="mobilis_22" to="server@141.30.203.90/Smack" from="alpha@141.30.203.90/MXA"
+	type="set">
+	<query xmlns="mobilislocpairs:iq:joingame">
+		<playerID>delta@141.30.203.90/MXA</playerID>
+		<playerName>Delta</playerName>
+		<location>
+			<latitude>0.0</latitude>
+			<longitude>0.0</longitude>
+			<altitude>0.0</altitude>
+		</location>
+	</query>
+</iq>

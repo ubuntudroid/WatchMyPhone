@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="de.tudresden.inf.rn.mobilis.server.services.grouping">
+    <class name="MobilisGroup" table="MOBILISGROUPS">
+        <id name="groupId" column="GROUP_ID">
+            <generator class="uuid"/>
+        </id>        
+        <property name="name"/>
+        <property name="description"/>
+        <property name="address"/>
+        <property name="longitude_e6"/>
+        <property name="latitude_e6"/>
+        <property name="visibilityRadius"/>
+        <property name="visibilityLatitude_e6"/>
+        <property name="visibilityLongitude_e6"/>
+        <property name="joinRadius"/>
+        <property name="joinLatitude_e6"/>
+        <property name="joinLongitude_e6"/>
+        <property name="joinStartTime" type="timestamp"/>
+        <property name="joinEndTime" type="timestamp"/>
+        <property name="startTime" type="timestamp"/>
+        <property name="endTime" type="timestamp"/>
+        <property name="privacy"/>
+        <property name="link"/>
+        
+        <many-to-one name="founder" class="de.tudresden.inf.rn.mobilis.server.services.grouping.MobilisMember" column="founder_id" lazy="false"/>
+                
+        <set name="members" table="GROUP_MEMBER">
+	        <key column="GROUP_ID"/>
+	        <many-to-many column="MEMBER_ID" class="MobilisMember"/>
+    	</set>
+    	
+    	<property name="invitees"/>    	
+    </class>
+</hibernate-mapping>

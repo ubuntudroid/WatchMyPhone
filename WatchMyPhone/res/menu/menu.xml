@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+	
+	
+	
+	<item android:id="@+id/menu_pref" android:title="Open XMPP preferences"
+		android:menuCategory="secondary"></item>
+
+	<item android:id="@+id/menu_join" android:title="Join session"
+		android:menuCategory="secondary"></item>
+
+
+</menu>

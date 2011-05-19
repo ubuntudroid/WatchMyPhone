@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><OfficeDocument xmlns:cefx="http://www.hdm-stuttgart.de/~gerlicher/cefx" cefx:uid="100">
+	<Part cefx:uid="200">
+		Normaler Text.
+		<Part cefx:uid="300" style="bold">Fetter Text</Part>
+		Weiterer Text!
+	</Part>
+	<Part cefx:uid="400">
+		<Drawing cefx:uid="500">
+			<Circle cefx:uid="600" center="150,120" radius="10"/>
+			<Label cefx:uid="700" value="Abbildung 1"/>
+		</Drawing>
+	</Part>
+</OfficeDocument>

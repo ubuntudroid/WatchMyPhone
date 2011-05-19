@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/tool_buttons_layout" android:orientation="horizontal"
+	android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+	<CheckBox android:text="" android:id="@+id/btn_draw"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:button="@layout/btn_draw_background" />
+
+	<Button android:text="Clear" android:id="@+id/btn_clear"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+
+	<CheckBox android:text="" android:id="@+id/btn_white"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"></CheckBox>
+
+	<Button android:text="Join" android:id="@+id/btn_test_cefx"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+
+	<Button android:text="Ping" android:id="@+id/btn_ping"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+</LinearLayout>
