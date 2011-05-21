@@ -17,7 +17,7 @@
 		android:layout_width="wrap_content" android:layout_height="wrap_content"/>
 		
 	<edu.bonn.cs.wmp.views.WMPEditText android:id="@+id/main_edit_text_collab_text" android:layout_width="fill_parent"
-		android:layout_height="100px" android:text="bla">
+		android:layout_height="100px" android:text="">
 	</edu.bonn.cs.wmp.views.WMPEditText>
 		
 	<TextView android:id="@+id/main_text_players" android:text="Player 1: X   Player 2: O"
