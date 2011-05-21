@@ -174,7 +174,7 @@ public class OperationExtension implements PacketExtension {
 		if ((attrName!=null) && (attrName.length()>0)) builder.append(getAS(ATTRNAME_ATTRNAME, attrName));
 		builder.append(getAS(ATTRNAME_FIXNODE, fixNodeID));
 		builder.append(">");
-//		builder.append(content); // currently in message body!
+		builder.append(content); // currently in message body! XXX: commented in by sven
 		builder.append("</x>");
 		
 		return builder.toString();
