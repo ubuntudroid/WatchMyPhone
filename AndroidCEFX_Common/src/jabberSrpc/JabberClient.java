@@ -173,6 +173,7 @@ public class JabberClient {
 			userName = fullUserName.substring(0, fullUserName.indexOf("@"));
 			host = jabberConnection.getHost();
 			port = jabberConnection.getPort();
+			serviceName = jabberConnection.getServiceName();
 			resource = fullUserName.substring(fullUserName.lastIndexOf("/")+1);
 			resourceSuffix = "";
 			
@@ -479,7 +480,7 @@ public class JabberClient {
 	}
 
 	public String getJID() {
-		String userid=userName+"@"+host;
+		String userid=userName+"@"+serviceName;
 		if (resource == null) resource = "";
 		if (resourceSuffix == null) resourceSuffix = "";
 		if ((resource.length()>0) || (resourceSuffix.length()>0)) {

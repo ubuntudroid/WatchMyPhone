@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010 Technische Universität Dresden
+ * Copyright (C) 2010 Technische Universitï¿½t Dresden
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -148,7 +148,7 @@ public class CollabEditingService extends MobilisService {
 		
 		public SessionData joinSession(Object o) {
 			ServerConnection_joinSession c=(ServerConnection_joinSession)o;
-			translateClientJID(c.client);
+//			translateClientJID(c.client);
 			return CollabEditingService.this.joinSession(c.sessionName, c.client);
 		}
 	}
@@ -162,7 +162,7 @@ public class CollabEditingService extends MobilisService {
 		String fullJID = client.getConnectionString();
 		String name = StringUtils.parseName(fullJID);
 		String resource = StringUtils.parseResource(fullJID);
-		client.setConnectionString(name + "@" + JabberClient.getInstance().getHost() + "/" + resource);
+		client.setConnectionString(name + "@" + JabberClient.getInstance().getServiceName() + "/" + resource);
 	}
 	
 	@Override
