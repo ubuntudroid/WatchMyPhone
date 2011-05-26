@@ -27,6 +27,7 @@ import de.tudresden.inf.rn.mobilis.xmpp.beans.XMPPBean;
 import edu.bonn.cs.wmp.service.CollabEditingService;
 import edu.bonn.cs.wmp.views.WMPButton;
 import edu.bonn.cs.wmp.views.WMPEditText;
+import edu.bonn.cs.wmp.viewupdater.SessionService;
 import edu.bonn.cs.wmp.xmpp.beans.ButtonBean;
 import edu.bonn.cs.wmp.xmpp.beans.PingBean;
 
@@ -70,8 +71,6 @@ public class MainActivity extends Activity {
 	
 	private String fromAccount;
 	private String toAccount;
-	
-	private CollabEditingService collabService;
 	
 	// TODO: connecting, disconnecting and send/receiveIQ can be encapsulated in WMPButton or WMPBean -> more transparency
 	
@@ -220,8 +219,7 @@ public class MainActivity extends Activity {
 //        registerBeanPrototypes();
 //        connectToServiceAndServer();
 
-        collabService = new CollabEditingService();
-        collabService.connect();
+        SessionService.getInstance().getCollabEditingService().connect();
     }
     
     @Override
@@ -245,8 +243,9 @@ public class MainActivity extends Activity {
     	case R.id.menu_pref:
     		startXMPPPrefs();
     	case R.id.menu_join:
+    		CollabEditingService collabService = SessionService.getInstance().getCollabEditingService();
     		collabService.joinSession("edit_text_test");
-    		collabService.loadDocumentFromServer("edit_text_test.xml");
+//    		collabService.loadDocumentFromServer("edit_text_test.xml");
     		collabText.setCollabEditingService(collabService);
     	}
     	return true;
