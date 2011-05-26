@@ -158,7 +158,6 @@ public class CollabEditingService implements MobilisAndroidService {
 			
 //			connectToXMPPServer();
 			connectToXMPPViaCEFX();
-			
 		}
 	};
 	
