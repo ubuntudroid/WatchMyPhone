@@ -28,7 +28,7 @@ import de.hdm.cefx.concurrency.operations.OperationData;
 public abstract class ViewUpdater implements AwarenessWidget {
 
 	protected Operation operation;
-	private AwarenessController ac;
+	protected AwarenessController ac;
 
 	@Override
 	public boolean hasInterestIn(AwarenessEvent event) {

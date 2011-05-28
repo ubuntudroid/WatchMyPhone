@@ -1,5 +1,7 @@
 package edu.bonn.cs.wmp.views;
 
+import java.lang.Character.UnicodeBlock;
+
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.Text;
@@ -7,10 +9,11 @@ import org.w3c.dom.Text;
 import de.hdm.cefx.concurrency.operations.NodePosition;
 
 import edu.bonn.cs.wmp.service.CollabEditingService;
+import edu.bonn.cs.wmp.service.SessionService;
 import edu.bonn.cs.wmp.viewupdater.EditTextViewUpdater;
-import edu.bonn.cs.wmp.viewupdater.SessionService;
 
 import android.content.Context;
+import android.inputmethodservice.Keyboard.Key;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -33,6 +36,7 @@ public class WMPEditText extends EditText {
 
 	public WMPEditText(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
+		collabService = SessionService.getInstance().getCollabEditingService();
 		registerViewUpdater();
 	}
 	
@@ -40,33 +44,54 @@ public class WMPEditText extends EditText {
 		viewUpdater = new EditTextViewUpdater(this);
 	}
 	
+	
 	@Override
-	protected void onTextChanged(CharSequence text, int start, int before,
-			int after) {
-		
-		// TODO: shouldn't be triggered for remote modifications
-		collabService = SessionService.getInstance().getCollabEditingService();
-		
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (collabService != null && collabService.isReadyForEditing()){
-			// TODO: search element by name (edit_text)
 			Element el = (Element) collabService.getDOMAdapter().getDocument().getElementsByTagName("edit_text").item(0);
-//			if (!el.hasChildNodes()){
-//				Text content = collabService.createTextNode("");
-//				collabService.insertNode(el, content, null, NodePosition.INSERT_BEFORE);
-//			}
-			if (after > 0){
-				// INSERT
-				collabService.insertText(el, null, NodePosition.INSERT_BEFORE, text.subSequence(start, start+after).toString(), start);
-			} else if (before > 0){
+			if (keyCode == KeyEvent.KEYCODE_CLEAR){
 				// DELETE
-				collabService.deleteText(el, null, NodePosition.INSERT_BEFORE, start, before);
+				collabService.deleteText(el, null, NodePosition.INSERT_BEFORE, getSelectionStart(), 1);
+			} else if (event.isPrintingKey()){
+				// INSERT
+				String output = Character.toString(event.getDisplayLabel());
+				if (!event.isShiftPressed()){
+					output = output.toLowerCase();
+				}
+				collabService.insertText(el, null, NodePosition.INSERT_BEFORE, String.valueOf(Character.toChars(event.getUnicodeChar())), getSelectionStart());
 			} else {
 				// TODO: ?
 			}
 			Log.i("WMP", "document state: " + collabService.getDocumentString());
 		}
-		super.onTextChanged(text, start, before, after);
+		return super.onKeyDown(keyCode, event);
 	}
+	
+//	@Override
+//	protected void onTextChanged(CharSequence text, int start, int before,
+//			int after) {
+//		
+//		/* TODO: shouldn't be triggered for remote modifications - could be solved by:
+//		 * - implementing onKeyDown() - just called during local actions
+//		 * - implementing setText() - just called during remote actions (*but* can also be called by 
+//		 *   other methods in our code - so that doesn't seem suitable)
+//		 */
+//		
+//		if (collabService != null && collabService.isReadyForEditing()){
+//			Element el = (Element) collabService.getDOMAdapter().getDocument().getElementsByTagName("edit_text").item(0);
+//			if (after > 0){
+//				// INSERT
+//				collabService.insertText(el, null, NodePosition.INSERT_BEFORE, text.subSequence(start, start+after).toString(), start);
+//			} else if (before > 0){
+//				// DELETE
+//				collabService.deleteText(el, null, NodePosition.INSERT_BEFORE, start, before);
+//			} else {
+//				// TODO: ?
+//			}
+//			Log.i("WMP", "document state: " + collabService.getDocumentString());
+//		}
+//		super.onTextChanged(text, start, before, after);
+//	}
 	
 	// TODO: not necessary any more as we obtain the CollabEditingService dynamically in onTextChanged()
 	public void setCollabEditingService(CollabEditingService collabService){
