@@ -17,10 +17,8 @@
  * Computer Networks Group: http://www.rn.inf.tu-dresden.de
  * mobilis project: http://mobilisplatform.sourceforge.net
  ******************************************************************************/
-package edu.bonn.cs.wmp.viewupdater;
+package edu.bonn.cs.wmp.service;
 
-import edu.bonn.cs.wmp.service.CollabEditingService;
-import edu.bonn.cs.wmp.service.MobilisAndroidService;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;

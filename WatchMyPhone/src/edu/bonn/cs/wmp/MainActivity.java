@@ -25,9 +25,9 @@ import de.tudresden.inf.rn.mobilis.mxa.parcelable.XMPPIQ;
 import de.tudresden.inf.rn.mobilis.xmpp.android.Parceller;
 import de.tudresden.inf.rn.mobilis.xmpp.beans.XMPPBean;
 import edu.bonn.cs.wmp.service.CollabEditingService;
+import edu.bonn.cs.wmp.service.SessionService;
 import edu.bonn.cs.wmp.views.WMPButton;
 import edu.bonn.cs.wmp.views.WMPEditText;
-import edu.bonn.cs.wmp.viewupdater.SessionService;
 import edu.bonn.cs.wmp.xmpp.beans.ButtonBean;
 import edu.bonn.cs.wmp.xmpp.beans.PingBean;
 
