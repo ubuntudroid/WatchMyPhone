@@ -60,6 +60,7 @@ import de.hdm.cefx.server.DocumentData;
 import de.hdm.cefx.server.ServerObject;
 import de.hdm.cefx.server.SessionData;
 import de.hdm.cefx.util.CEFXUtil;
+import de.hdm.cefx.util.XMLHelper;
 
 /**
  * The implementing class of the CEFXController interface.
@@ -399,10 +400,11 @@ public class CEFXControllerImpl implements CEFXController {
 	public void executeRemoteOperation(Operation operation) {
 		final String node=operation.getTargetId();
 		
-		System.out.println("CEFXControllerImpl.executeRemoteOperation()");
+		LOG.log(Level.INFO, "CEFXControllerImpl.executeRemoteOperation()");
 		if (!cc.executeRemoteOperation(operation)) {
 			LOG.log(Level.SEVERE, "Could not execute remote operation: " + operation);
 		}
+		LOG.log(Level.INFO, "document state: " + XMLHelper.getDocumentString(da.getDocument(), true));
 		Timer timer = new Timer();
 		TimerTask task = new TimerTask() {
 
