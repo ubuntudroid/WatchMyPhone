@@ -96,10 +96,10 @@ public class CEFXSessionImpl implements CEFXSession, Cloneable {
 		if (clients.get(client.getName()) != null)
 			return;
 		clients.put(client.getName(), client);
+		System.out.println("CEFXSessionImpl.addClient() " + client);
 		
 		Collection<CEFXClient> c = clients.values();
 		for (CEFXClient cli : c) {
-			System.out.println("CEFXSessionImpl.addClient() " + cli);
 			if (!cli.getName().equals(client.getName())) {
 				
 				// notify each client in this session of the new joiner
