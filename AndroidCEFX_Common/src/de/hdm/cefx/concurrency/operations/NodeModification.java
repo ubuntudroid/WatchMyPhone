@@ -133,9 +133,9 @@ public class NodeModification implements Serializable {
 		} else {
 			NamedNodeMap nnm = node.getAttributes();
 
-			for (int i = 0; i < nnm.getLength(); i++) {
-
-			}
+//			for (int i = 0; i < nnm.getLength(); i++) {
+//
+//			}
 			if (nnm == null) {
 
 				return null;
