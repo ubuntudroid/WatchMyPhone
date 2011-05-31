@@ -173,8 +173,13 @@ public class OperationExtension implements PacketExtension {
 		if ((type!=null) && (type.length()>0)) builder.append(getAS(ATTRNAME_NODETYPE, type));
 		if ((attrName!=null) && (attrName.length()>0)) builder.append(getAS(ATTRNAME_ATTRNAME, attrName));
 		builder.append(getAS(ATTRNAME_FIXNODE, fixNodeID));
+		
+		// TODO: temporary fix for position and length - consider pulling generic attribute XML parsing code from vanilla CEFX+ 
+		if (attr.get(ATTRNAME_POSITION) != null) builder.append(getAS(ATTRNAME_POSITION, attr.get(ATTRNAME_POSITION)));
+		if (attr.get(ATTRNAME_LENGTH) != null) builder.append(getAS(ATTRNAME_LENGTH, attr.get(ATTRNAME_LENGTH)));
+
 		builder.append(">");
-		builder.append(content); // currently in message body! XXX: commented in by sven
+		builder.append(content); // currently in message body(Dirk)! XXX: commented in by sven
 		builder.append("</x>");
 		
 		return builder.toString();

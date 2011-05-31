@@ -29,11 +29,13 @@
  */
 package de.hdm.cefx.concurrency.operations;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
 import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -104,7 +106,7 @@ public class UpdateOperationImpl implements UpdateOperation {
 		String result="";
 		NodePosition p=disOperation.getNodePosition();
 		if (disOperation.getNodeType()==UpdateOperations.TEXT) {
-			if ((p.getFixNodeId()==null) || ("".equals(p.getFixNodeId()))) {
+			if (p.getFixNodeId() == null || (p.getFixNodeId().equals("null")) || ("".equals(p.getFixNodeId()))) {
 				result=p.getParentNodeId();
 			} else {
 				result=p.getFixNodeId()+'_'+p.getRelativeInsertPosition();
@@ -156,7 +158,7 @@ public class UpdateOperationImpl implements UpdateOperation {
 			Node node = context.getNodeForId(this.targetNodeId);
 			//node.normalize(); // TODO node normalize needed?
 			String fixNodeId=np.getFixNodeId();
-			if ((fixNodeId==null) || ("".equals(fixNodeId))) {
+			if (fixNodeId == null || fixNodeId.equals("null") || ("".equals(fixNodeId))) {
 				if (!node.hasChildNodes()) {
 					return null;
 				} else {
@@ -250,6 +252,43 @@ public class UpdateOperationImpl implements UpdateOperation {
 			DOM3Methods.setTextContent(t, text);
 		}
 	}
+	
+	/**
+	 * Checks whether the given <code>fixNode</code> has a sibling
+	 * (before or are after depending on value of <code>beforeAfter</code>)
+	 * of type {@link Text} Node. If <code>fixNode</code> is <code>null</code> it is checked
+	 * whether the parent's last child is a text node. If there is no text node at the
+	 * specified position a new text node is inserted at the desired position.
+	 * @param parent
+	 * @return the found or created {@link Text} node
+	 */
+	private Text findOrCreateTextNodeAtPosition(Element parent, Element fixNode, int beforeAfter, Document doc) {
+		// TODO: also add code to auto add a text node at the given position if desired
+		Text content = doc.createTextNode("");
+		if (fixNode == null){
+			Node last = parent.getLastChild();
+			if (last != null && last.getNodeType() == Node.TEXT_NODE) {
+				return (Text) last;
+			} else {
+				parent.appendChild(content);
+			}
+		}else if (beforeAfter == NodePosition.INSERT_BEFORE) {
+			Node prev = fixNode.getPreviousSibling();
+			if (prev != null && prev.getNodeType() == Node.TEXT_NODE){
+				return (Text) prev;
+			} else {
+				parent.insertBefore(content, fixNode);
+			}
+		} else if (beforeAfter == NodePosition.INSERT_AFTER){
+			Node next = fixNode.getNextSibling();
+			if (next != null && next.getNodeType() == Node.TEXT_NODE){
+				return (Text) next;
+			} else {
+				parent.insertBefore(content, fixNode.getNextSibling());
+			}
+		}
+		return content;
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -257,7 +296,38 @@ public class UpdateOperationImpl implements UpdateOperation {
 	 * @see de.hdm.cefx.concurrency.operations.Operation#execute(de.hdm.cefx.concurrency.operations.ExecutionContext)
 	 */
 	public synchronized boolean execute(ExecutionContext context) {
-
+		
+		if (getDISOperation() instanceof UpdateInsertOperation && getDISOperation().getNodeType() == UpdateOperations.TEXT) {
+			
+			// check if target node has child of type text at the specified position
+			UpdateInsertOperation dis = (UpdateInsertOperation) getDISOperation();
+			Element fixNode = null;
+			String fixNodeId = dis.getNodePosition().getFixNodeId();
+			if (fixNodeId != null && !fixNodeId.equals("null") && !fixNodeId.equals("")) {
+				try {
+					fixNode = (Element) context.getNodeForId(fixNodeId);
+				} catch (NodeNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			Element parentNode  = null;
+			String parentNodeId = dis.getNodePosition().getParentNodeId();
+			if (parentNodeId != null && !parentNodeId.equals("null") && !parentNodeId.equals("")) {
+				try {
+					parentNode = (Element) context.getNodeForId(parentNodeId);
+				} catch (NodeNotFoundException e){
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			findOrCreateTextNodeAtPosition(parentNode,
+					fixNode,
+					dis.getNodePosition().getRelativeInsertPosition(),
+					context.getLocalDoc());
+		}
+		
+		
 		context.refreshNodeMap();
 
 		if (discarded)
@@ -275,6 +345,20 @@ public class UpdateOperationImpl implements UpdateOperation {
 			//node.normalize(); // TODO node normalize needed?
 			//store original node values
 			orgNode = new NodeModification(node);
+//			if (disOperation instanceof UpdateInsertOperation){
+//				UpdateInsertOperation upInsOp = (UpdateInsertOperation) disOperation;
+//				if (disOperation.getNodeType() == Node.TEXT_NODE){
+//					NodePosition np = upInsOp.getNodePosition();
+//					String textContent = node.getTextContent();
+//					TextUpdate up = new TextUpdate(np.parentNodeId, 
+//							context.getNodeId(node.getPreviousSibling()), 
+//							textContent.substring(0, upInsOp.getTextPos()) + upInsOp.getText() + textContent.substring(upInsOp.getTextPos(), textContent.length()), 
+//							context.getNodeId(node.getNextSibling()));
+//					List<TextUpdate> textUpdates = new ArrayList<TextUpdate>();
+//					textUpdates.add(up);
+//					modifyTextNodes(textUpdates, node, context);
+//				}
+//			}
 			context.refreshNodeMap();
 			undone = false;
 			return true;

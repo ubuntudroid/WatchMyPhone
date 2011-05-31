@@ -64,7 +64,7 @@ public class NodePosition implements Serializable {
 	 */
 	public NodePosition(String parentNodeId, String fixNodeId, int pos) throws NodePositionException {
 
-		if (parentNodeId == null || parentNodeId.equals(""))
+		if (parentNodeId == null || parentNodeId.equals("null") || parentNodeId.equals(""))
 			throw new NodePositionException("parentid is null or empty");
 
 		if (pos < INSERT_BEFORE || pos > INSERT_AFTER)
