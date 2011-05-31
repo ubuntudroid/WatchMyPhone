@@ -9,6 +9,7 @@ import de.hdm.cefx.awareness.AwarenessEvent;
 import de.hdm.cefx.concurrency.operations.DeleteOperationImpl;
 import de.hdm.cefx.concurrency.operations.ExecutionContext;
 import de.hdm.cefx.concurrency.operations.InsertOperationImpl;
+import de.hdm.cefx.concurrency.operations.UpdateDeleteOperation;
 import de.hdm.cefx.concurrency.operations.UpdateInsertOperation;
 import de.hdm.cefx.concurrency.operations.UpdateOperationImpl;
 import edu.bonn.cs.wmp.MainActivity;
@@ -44,6 +45,15 @@ public class EditTextViewUpdater extends ViewUpdater {
 					@Override
 					public void run() {
 						editText.getText().replace(upInsOp.getTextPos(), upInsOp.getTextPos(), upInsOp.getText());
+					}
+				});
+			} else if (updateOperation.getDISOperation() instanceof UpdateDeleteOperation) {
+				final UpdateDeleteOperation upDelOp = (UpdateDeleteOperation) updateOperation.getDISOperation();
+				MainActivity.getInstance().runOnUiThread(new Runnable() {
+					
+					@Override
+					public void run() {
+						editText.getText().replace(upDelOp.getTextPos(), upDelOp.getTextPos()+upDelOp.getLength(), "");
 					}
 				});
 			}

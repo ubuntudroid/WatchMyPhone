@@ -47,11 +47,15 @@ public class WMPEditText extends EditText {
 	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		// TODO: should be done in an own thread so that the UI isn't blocked
 		if (collabService != null && collabService.isReadyForEditing()){
 			Element el = (Element) collabService.getDOMAdapter().getDocument().getElementsByTagName("edit_text").item(0);
-			if (keyCode == KeyEvent.KEYCODE_CLEAR){
+			if (keyCode == KeyEvent.KEYCODE_DEL && getSelectionStart() != 0){
 				// DELETE
-				collabService.deleteText(el, null, NodePosition.INSERT_BEFORE, getSelectionStart(), 1);
+				collabService.deleteText(el, null, NodePosition.INSERT_BEFORE, getSelectionStart()-1, 1);
+			} else if (keyCode == KeyEvent.KEYCODE_SPACE){
+				// SPACE
+				collabService.insertText(el, null, NodePosition.INSERT_BEFORE, " ", getSelectionStart());
 			} else if (event.isPrintingKey()){
 				// INSERT
 				String output = Character.toString(event.getDisplayLabel());
