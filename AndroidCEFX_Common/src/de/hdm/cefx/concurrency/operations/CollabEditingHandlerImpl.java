@@ -40,7 +40,7 @@ public class CollabEditingHandlerImpl extends CollabEditingHandler {
 	@Override
 	public void processMessage(Packet packet) {
 		Message msg = (Message) packet;
-//		System.out.println("Received Remote Operation Message via Multi-User-Chat, from: " + msg.getFrom());
+		System.out.println("Received Remote Operation Message via Multi-User-Chat, from: " + msg.getFrom());
 		Operation o = OperationXMLTransformer.transformMessage2Operation(msg,
 				(CEFXSessionImpl) session, clientID);
 		if (o != null) {
