@@ -1,23 +1,16 @@
 package edu.bonn.cs.wmp.views;
 
-import java.lang.Character.UnicodeBlock;
-
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.Text;
-
-import de.hdm.cefx.concurrency.operations.NodePosition;
-
-import edu.bonn.cs.wmp.service.CollabEditingService;
-import edu.bonn.cs.wmp.service.SessionService;
-import edu.bonn.cs.wmp.viewupdater.EditTextViewUpdater;
 
 import android.content.Context;
-import android.inputmethodservice.Keyboard.Key;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.EditText;
+import de.hdm.cefx.concurrency.operations.NodePosition;
+import edu.bonn.cs.wmp.service.CollabEditingService;
+import edu.bonn.cs.wmp.service.SessionService;
+import edu.bonn.cs.wmp.viewupdater.EditTextViewUpdater;
 
 public class WMPEditText extends EditText {
 	
@@ -47,28 +40,55 @@ public class WMPEditText extends EditText {
 	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		// TODO: should be done in an own thread so that the UI isn't blocked
 		if (collabService != null && collabService.isReadyForEditing()){
 			Element el = (Element) collabService.getDOMAdapter().getDocument().getElementsByTagName("edit_text").item(0);
 			if (keyCode == KeyEvent.KEYCODE_DEL && getSelectionStart() != 0){
 				// DELETE
-				collabService.deleteText(el, null, NodePosition.INSERT_BEFORE, getSelectionStart()-1, 1);
+				deleteSelectedText(el);
 			} else if (keyCode == KeyEvent.KEYCODE_SPACE){
 				// SPACE
 				collabService.insertText(el, null, NodePosition.INSERT_BEFORE, " ", getSelectionStart());
 			} else if (event.isPrintingKey()){
 				// INSERT
+				// TODO: handle selection (if text is selected first delete marked text (see DELETE) and then insert new text)
+				if (getSelectionStart() != getSelectionEnd()){
+					deleteSelectedText(el);
+				}
+				
+				int insertPos;
+				if (getSelectionStart() > getSelectionEnd()){
+					insertPos = getSelectionEnd();
+				} else {
+					insertPos = getSelectionStart();
+				}
+				
 				String output = Character.toString(event.getDisplayLabel());
 				if (!event.isShiftPressed()){
 					output = output.toLowerCase();
 				}
-				collabService.insertText(el, null, NodePosition.INSERT_BEFORE, String.valueOf(Character.toChars(event.getUnicodeChar())), getSelectionStart());
+				collabService.insertText(el, null, NodePosition.INSERT_BEFORE, String.valueOf(Character.toChars(event.getUnicodeChar())), insertPos);
 			} else {
 				// TODO: ?
 			}
 			Log.i("WMP", "document state: " + collabService.getDocumentString());
 		}
 		return super.onKeyDown(keyCode, event);
+	}
+
+	private void deleteSelectedText(Element el) {
+		int deletePos;
+		int length;
+		if (getSelectionStart() < getSelectionEnd()) {
+			deletePos = getSelectionStart();
+			length = getSelectionEnd() - getSelectionStart();
+		} else if (getSelectionStart() > getSelectionEnd()){
+			deletePos = getSelectionEnd();
+			length = getSelectionStart() - getSelectionEnd();
+		} else {
+			deletePos = getSelectionStart() - 1;
+			length = 1;
+		}
+		collabService.deleteText(el, null, NodePosition.INSERT_BEFORE, deletePos, length);
 	}
 	
 //	@Override
