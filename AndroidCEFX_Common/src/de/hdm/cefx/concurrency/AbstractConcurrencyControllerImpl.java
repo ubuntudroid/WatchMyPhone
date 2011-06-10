@@ -41,7 +41,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 import java.util.Vector;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -111,6 +116,8 @@ public abstract class AbstractConcurrencyControllerImpl implements ConcurrencyCo
 	boolean                                   collaborationReady = false;
 	protected Stack<Operation>                lateJoinBuffer;
 	protected final ReentrantLock             lateJoinBufferLock = new ReentrantLock();
+	
+	ExecutorService executor = Executors.newSingleThreadExecutor();
 
 	/*
 	 * Begin ConcurrencyController interface methods
@@ -156,8 +163,13 @@ public abstract class AbstractConcurrencyControllerImpl implements ConcurrencyCo
 			// increase operation count for debugging
 			operationcount++;
 			// propagate the operation to the other sites
-			propagateOperation(operation);
-
+			executor.submit(new Runnable() {
+				
+				@Override
+				public void run() {
+					propagateOperation(operation);
+				}
+			});
 		} else {
 			// Error occured, debug output.
 			log.log(Level.SEVERE, "Operation: " + operation + " could not be executed. SV: " + getStateVector());
