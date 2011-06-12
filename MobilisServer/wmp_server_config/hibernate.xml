@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory>
+
+		<!-- Database connection settings -->
+		<property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
+		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="connection.url">jdbc:mysql://127.0.0.1:3306/mobilis_server</property>
+		<property name="connection.username">mobilis</property>
+		<property name="connection.password">mobilis</property>
+
+		<!-- JDBC connection pool (use the built-in) -->
+		<property name="connection.pool_size">1</property>
+
+		<!-- Enable Hibernate's automatic session context management -->
+		<property name="current_session_context_class">thread</property>
+
+		<!-- Disable the second-level cache -->
+		<property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>	
+		
+		<!-- Echo all executed SQL to stdout -->
+		<property name="show_sql">true</property>
+
+        <!-- Drop and re-create the database schema on startup (destroys data) -->
+        <property name="hbm2ddl.auto">create</property>
+
+		<!-- Load the database table mapping file -->
+		<mapping class="de.tudresden.inf.rn.mobilis.server.services.media.ContentItem" />
+		<mapping class="de.tudresden.inf.rn.mobilis.server.services.media.RepositoryItem" />
+		<mapping resource="de/tudresden/inf/rn/mobilis/server/services/grouping/MobilisGroup.hbm.xml" />
+		<mapping resource="de/tudresden/inf/rn/mobilis/server/services/grouping/MobilisMember.hbm.xml" />
+
+	</session-factory>
+</hibernate-configuration>
