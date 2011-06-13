@@ -9,7 +9,7 @@
 		<!-- Database connection settings -->
 		<property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
 		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-		<property name="connection.url">jdbc:mysql://127.0.0.1:3306/mobilis_server</property>
+		<property name="connection.url">jdbc:mysql://79.125.77.206:3306/mobilis_server</property>
 		<property name="connection.username">mobilis</property>
 		<property name="connection.password">mobilis</property>
 

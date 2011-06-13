@@ -6,7 +6,7 @@
 		<agent name="buddy" description="Buddy Broker Service"
 			type="de.tudresden.inf.rn.mobilis.server.agents.MobilisAgent" start="auto">
 			<settings>
-				<setting name="host">localhost</setting>
+				<setting name="host">79.125.77.206</setting>
 				<setting name="port">5222</setting>
 				<setting name="service">79.125.77.206</setting>
 				<setting name="username">mobilis</setting>
@@ -17,7 +17,7 @@
 		<agent name="coordinator" description="Coordinator"
 			type="de.tudresden.inf.rn.mobilis.server.agents.MobilisAgent" start="auto">
 			<settings>
-				<setting name="host">localhost</setting>
+				<setting name="host">79.125.77.206</setting>
 				<setting name="port">5222</setting>
 				<setting name="service">79.125.77.206</setting>
 				<setting name="username">mobilis</setting>
@@ -28,7 +28,7 @@
 		<agent name="context" description="User Context Broker Service"
 			type="de.tudresden.inf.rn.mobilis.server.agents.MobilisAgent" start="auto">
 			<settings>
-				<setting name="host">localhost</setting>
+				<setting name="host">79.125.77.206</setting>
 				<setting name="port">5222</setting>
 				<setting name="service">79.125.77.206</setting>
 				<setting name="username">mobilis</setting>
@@ -39,7 +39,7 @@
 		<agent name="collabediting" description="Collaborative Editing Broker service"
 			type="de.tudresden.inf.rn.mobilis.server.agents.MobilisAgent" start="auto">
 			<settings>
-				<setting name="host">localhost</setting>
+				<setting name="host">79.125.77.206</setting>
 				<setting name="port">5222</setting>
 				<setting name="service">79.125.77.206</setting>
 				<setting name="username">mobilis</setting>
@@ -50,7 +50,7 @@
 		<agent name="content" description="Default Content Broker service"
 			type="de.tudresden.inf.rn.mobilis.server.agents.MobilisAgent" start="auto">
 			<settings>
-				<setting name="host">localhost</setting>
+				<setting name="host">79.125.77.206</setting>
 				<setting name="port">5222</setting>
 				<setting name="service">79.125.77.206</setting>
 				<setting name="username">mobilis</setting>
@@ -61,7 +61,7 @@
 		<agent name="repository" description="Repository Broker Service"
 			type="de.tudresden.inf.rn.mobilis.server.agents.MobilisAgent" start="auto">
 			<settings>
-				<setting name="host">localhost</setting>
+				<setting name="host">79.125.77.206</setting>
 				<setting name="port">5222</setting>
 				<setting name="service">79.125.77.206</setting>
 				<setting name="username">mobilis</setting>
@@ -72,7 +72,7 @@
 		<agent name="grouping" description="Grouping Broker Service"
 			type="de.tudresden.inf.rn.mobilis.server.agents.MobilisAgent" start="auto">
 			<settings>
-				<setting name="host">localhost</setting>
+				<setting name="host">79.125.77.206</setting>
 				<setting name="port">5222</setting>
 				<setting name="service">79.125.77.206</setting>
 				<setting name="username">mobilis</setting>
@@ -84,7 +84,7 @@
 		<agent name="locpairsHTTP" description="locpairs HTTP server"
 			type="de.tudresden.inf.rn.mobilis.server.agents.MobilisAgent" start="auto">
 			<settings>
-				<setting name="host">localhost</setting>
+				<setting name="host">79.125.77.206</setting>
 				<setting name="port">5222</setting>
 				<setting name="service">79.125.77.206</setting>
 				<setting name="username">mobilis</setting>
@@ -96,7 +96,7 @@
 		<agent name="locpairs" description="locpairs game server service"
 			type="de.tudresden.inf.rn.mobilis.server.agents.MobilisAgent" start="ondemand">
 			<settings>
-				<setting name="host">localhost</setting>
+				<setting name="host">79.125.77.206</setting>
 				<setting name="port">5222</setting>
 				<setting name="service">79.125.77.206</setting>
 				<setting name="username">mobilis</setting>
@@ -108,7 +108,7 @@
 		<agent name="xhunt" description="xhunt game server service"
 			type="de.tudresden.inf.rn.mobilis.server.agents.MobilisAgent" start="ondemand">
 			<settings>
-				<setting name="host">localhost</setting>
+				<setting name="host">79.125.77.206</setting>
 				<setting name="port">5222</setting>
 				<setting name="service">79.125.77.206</setting>
 				<setting name="username">mobilis</setting>
