@@ -142,7 +142,7 @@ public class ServerUtil {
 	        do {
 	        	inUse = false;
 	        	for (HostedRoom hr : hostedRooms) {
-	        		if (hr.getName().equals(plainMucName)) {
+	        		if (hr.getName().equals(newName)) {
 	        			inUse = true;
 	        			newName = plainMucName + "_" + i;
 	        			i++;
