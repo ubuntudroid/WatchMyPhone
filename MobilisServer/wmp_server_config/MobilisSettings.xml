@@ -8,7 +8,7 @@
 			<settings>
 				<setting name="host">79.125.77.206</setting>
 				<setting name="port">5222</setting>
-				<setting name="service">79.125.77.206</setting>
+				<setting name="service">sven-ubuntu-big</setting>
 				<setting name="username">mobilis</setting>
 				<setting name="password">mobilis</setting>
 				<setting name="resource">Buddy</setting>
@@ -19,7 +19,7 @@
 			<settings>
 				<setting name="host">79.125.77.206</setting>
 				<setting name="port">5222</setting>
-				<setting name="service">79.125.77.206</setting>
+				<setting name="service">sven-ubuntu-big</setting>
 				<setting name="username">mobilis</setting>
 				<setting name="password">mobilis</setting>
 				<setting name="resource">Coordinator</setting>
@@ -30,7 +30,7 @@
 			<settings>
 				<setting name="host">79.125.77.206</setting>
 				<setting name="port">5222</setting>
-				<setting name="service">79.125.77.206</setting>
+				<setting name="service">sven-ubuntu-big</setting>
 				<setting name="username">mobilis</setting>
 				<setting name="password">mobilis</setting>
 				<setting name="resource">Context</setting>
@@ -41,7 +41,7 @@
 			<settings>
 				<setting name="host">79.125.77.206</setting>
 				<setting name="port">5222</setting>
-				<setting name="service">79.125.77.206</setting>
+				<setting name="service">sven-ubuntu-big</setting>
 				<setting name="username">mobilis</setting>
 				<setting name="password">mobilis</setting>
 				<setting name="resource">CollabEditing</setting>
@@ -52,7 +52,7 @@
 			<settings>
 				<setting name="host">79.125.77.206</setting>
 				<setting name="port">5222</setting>
-				<setting name="service">79.125.77.206</setting>
+				<setting name="service">sven-ubuntu-big</setting>
 				<setting name="username">mobilis</setting>
 				<setting name="password">mobilis</setting>
 				<setting name="resource">Content</setting>
@@ -63,7 +63,7 @@
 			<settings>
 				<setting name="host">79.125.77.206</setting>
 				<setting name="port">5222</setting>
-				<setting name="service">79.125.77.206</setting>
+				<setting name="service">sven-ubuntu-big</setting>
 				<setting name="username">mobilis</setting>
 				<setting name="password">mobilis</setting>
 				<setting name="resource">Repository</setting>
@@ -74,7 +74,7 @@
 			<settings>
 				<setting name="host">79.125.77.206</setting>
 				<setting name="port">5222</setting>
-				<setting name="service">79.125.77.206</setting>
+				<setting name="service">sven-ubuntu-big</setting>
 				<setting name="username">mobilis</setting>
 				<setting name="password">mobilis</setting>
 				<setting name="resource">Grouping</setting>
@@ -86,7 +86,7 @@
 			<settings>
 				<setting name="host">79.125.77.206</setting>
 				<setting name="port">5222</setting>
-				<setting name="service">79.125.77.206</setting>
+				<setting name="service">sven-ubuntu-big</setting>
 				<setting name="username">mobilis</setting>
 				<setting name="password">mobilis</setting>
 				<setting name="resource">LocPairsHTTP</setting>
@@ -98,7 +98,7 @@
 			<settings>
 				<setting name="host">79.125.77.206</setting>
 				<setting name="port">5222</setting>
-				<setting name="service">79.125.77.206</setting>
+				<setting name="service">sven-ubuntu-big</setting>
 				<setting name="username">mobilis</setting>
 				<setting name="password">mobilis</setting>
 				<setting name="resource">LocPairs</setting>
@@ -110,7 +110,7 @@
 			<settings>
 				<setting name="host">79.125.77.206</setting>
 				<setting name="port">5222</setting>
-				<setting name="service">79.125.77.206</setting>
+				<setting name="service">sven-ubuntu-big</setting>
 				<setting name="username">mobilis</setting>
 				<setting name="password">mobilis</setting>
 				<setting name="resource">XHunt</setting>
@@ -137,23 +137,23 @@
 			type="de.tudresden.inf.rn.mobilis.server.services.SessionService"
 			agent="coordinator" start="auto">
 			<settings>
-				<setting name="PubSubServer">pubsub.79.125.77.206</setting>
+				<setting name="PubSubServer">pubsub.sven-ubuntu-big</setting>
 				<setting name="PubSubNode">testnode0</setting>
-				<setting name="ChatRoomServer">conference.79.125.77.206</setting>
+				<setting name="ChatRoomServer">conference.sven-ubuntu-big</setting>
 			</settings>
 		</service>
 		<service name="CollabEditingService" description="Collaborative Editing Service"
 			type="de.tudresden.inf.rn.mobilis.server.services.CollabEditingService"
 			agent="collabediting" start="auto">
 			<settings>
-				<setting name="ChatRoomServer">conference.79.125.77.206</setting>
+				<setting name="ChatRoomServer">conference.sven-ubuntu-big</setting>
 			</settings>
 		</service>
 		<service name="RepositoryService" description="Repository Service"
 			type="de.tudresden.inf.rn.mobilis.server.services.media.RepositoryService"
 			agent="repository" start="auto">
 			<settings>
-				<setting name="ContentBroker">mobilis@79.125.77.206/Content</setting>
+				<setting name="ContentBroker">mobilis@sven-ubuntu-big/Content</setting>
 				<setting name="Slices">
 					<setting name="taken">timestamp</setting>
 					<setting name="longitude_e6">integer</setting>
@@ -175,7 +175,7 @@
 			type="de.tudresden.inf.rn.mobilis.server.services.grouping.GroupingService"
 			agent="grouping" start="auto">
 			<settings>
-				<setting name="ChatRoomServer">conference.79.125.77.206</setting>
+				<setting name="ChatRoomServer">conference.sven-ubuntu-big</setting>
 			</settings>
 		</service>
 		<service name="CoordinatorService" description="Coordinator Service"
