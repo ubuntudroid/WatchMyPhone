@@ -11,5 +11,6 @@
 <listEntry value="org.eclipse.debug.ui.launchGroup.run"/>
 </listAttribute>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="de.tudresden.inf.rn.mobilis.server.MG_Server"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-gui"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="MobilisServer"/>
 </launchConfiguration>

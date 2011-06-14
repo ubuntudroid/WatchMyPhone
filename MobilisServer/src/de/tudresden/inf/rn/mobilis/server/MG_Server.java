@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010 Technische Universität Dresden
+ * Copyright (C) 2010 Technische Universitï¿½t Dresden
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,16 +30,36 @@ import org.jivesoftware.smack.XMPPConnection;
 public class MG_Server extends SingleFrameApplication {
 	
 	protected MG_ServerView parentView;
+	private boolean gui = false;
 
+	@Override
+	protected void initialize(String[] args) {
+		if (args.length > 0 && args[0].equals("-gui")){
+    		gui = true;
+    		args[0] = "";
+    	}
+		super.initialize(args);
+	}
+	
     /**
      * At startup create and show the main frame of the application.
      * Also startup Mobilis Manager and associate with main frame.
      */
     @Override protected void startup() {
-    	parentView = new MG_ServerView(this);
-    	XMPPConnection.DEBUG_ENABLED = true;
-    	MobilisManager.getInstance().registerServerView(parentView);
-    	show(parentView);
+    	if (gui){
+    		parentView = new MG_ServerView(this);
+    		XMPPConnection.DEBUG_ENABLED = true;
+    		MobilisManager.getInstance().registerServerView(parentView);
+    		show(parentView);
+    	} else {
+    		MobilisManager.getInstance().startup();
+    		Runtime.getRuntime().addShutdownHook(new Thread(){
+    			public void run() {
+    				getApplication().shutdown();
+    				System.out.println("Server shut down!");
+    			}
+    		});
+    	}
     }
 
     /**
@@ -47,8 +67,10 @@ public class MG_Server extends SingleFrameApplication {
      */
     @Override protected void shutdown() {
     	MobilisManager.getInstance().shutdown();
-    	MobilisManager.getInstance().unregisterServerView(parentView);
-    	super.shutdown();
+    	if (gui) {
+    		MobilisManager.getInstance().unregisterServerView(parentView);
+    		super.shutdown();
+    	}
     }
 
     /**
@@ -71,6 +93,6 @@ public class MG_Server extends SingleFrameApplication {
      * Main method launching the application.
      */
     public static void main(String[] args) {
-        launch(MG_Server.class, args);
+   		launch(MG_Server.class, args);
     }
 }
