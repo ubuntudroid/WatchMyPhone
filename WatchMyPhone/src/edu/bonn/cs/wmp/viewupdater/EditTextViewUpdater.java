@@ -44,7 +44,9 @@ public class EditTextViewUpdater extends ViewUpdater {
 					
 					@Override
 					public void run() {
+						editText.setRemoteEditMode(true);
 						editText.getText().replace(upInsOp.getTextPos(), upInsOp.getTextPos(), upInsOp.getText());
+						editText.setRemoteEditMode(false);
 					}
 				});
 			} else if (updateOperation.getDISOperation() instanceof UpdateDeleteOperation) {
@@ -53,7 +55,9 @@ public class EditTextViewUpdater extends ViewUpdater {
 					
 					@Override
 					public void run() {
+						editText.setRemoteEditMode(true);
 						editText.getText().replace(upDelOp.getTextPos(), upDelOp.getTextPos()+upDelOp.getLength(), "");
+						editText.setRemoteEditMode(false);
 					}
 				});
 			}
