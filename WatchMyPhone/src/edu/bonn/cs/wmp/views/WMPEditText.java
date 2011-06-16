@@ -20,13 +20,28 @@ public class WMPEditText extends EditText {
 	private CollabEditingService collabService;
 	private boolean remoteEditMode = false;
 	
+	/* 
+	* TODO: atm node name is hardcoded, obtain ID from WMPComponentRegistry on view creation
+	* using the following code. The problem with this is, that this node will be created by all participants
+	* which probably leads to
+	* 	1) a XML with more than one node having the same name (not sure if this is possible or if CEFX merges the nodes then)
+	* 	2) a XML with several nodes having different names but should be the same
+	* Therefore we need to obtain the node name either from the server or from the ressource id.
+	*/ 
+//	Text content = collabService.createTextNode(this.getText().toString());
+//	el.appendChild(content);
+//	collabService.insertNode("100", el, null, NodePosition.INSERT_BEFORE);
+//	Log.i("WMP", "document state: " + collabService.getDocumentString());
+	
 	public WMPEditText(Context context) {
 		super(context);
+		collabService = SessionService.getInstance().getCollabEditingService();
 		registerViewUpdater();
 	}
 
 	public WMPEditText(Context context, AttributeSet attrs) {
 		super(context, attrs);
+		collabService = SessionService.getInstance().getCollabEditingService();
 		registerViewUpdater();
 	}
 
@@ -53,68 +68,9 @@ public class WMPEditText extends EditText {
 		return true;
 	}
 	
-//	@Override
-//	public boolean onKeyDown(int keyCode, KeyEvent event) {
-//		if (collabService != null && collabService.isReadyForEditing()){
-//			Element el = (Element) collabService.getDOMAdapter().getDocument().getElementsByTagName("edit_text").item(0);
-//			if (keyCode == KeyEvent.KEYCODE_DEL && getSelectionStart() != 0){
-//				// DELETE
-//				deleteSelectedText(el);
-//			} else if (keyCode == KeyEvent.KEYCODE_SPACE){
-//				// SPACE
-//				collabService.insertText(el, null, NodePosition.INSERT_BEFORE, " ", getSelectionStart());
-//			} else if (event.isPrintingKey()){
-//				// INSERT
-//				// TODO: handle selection (if text is selected first delete marked text (see DELETE) and then insert new text)
-//				if (getSelectionStart() != getSelectionEnd()){
-//					deleteSelectedText(el);
-//				}
-//				
-//				int insertPos;
-//				if (getSelectionStart() > getSelectionEnd()){
-//					insertPos = getSelectionEnd();
-//				} else {
-//					insertPos = getSelectionStart();
-//				}
-//				
-//				String output = Character.toString(event.getDisplayLabel());
-//				if (!event.isShiftPressed()){
-//					output = output.toLowerCase();
-//				}
-//				collabService.insertText(el, null, NodePosition.INSERT_BEFORE, String.valueOf(Character.toChars(event.getUnicodeChar())), insertPos);
-//			} else {
-//				// TODO: ?
-//			}
-//			Log.i("WMP", "document state: " + collabService.getDocumentString());
-//		}
-//		return super.onKeyDown(keyCode, event);
-//	}
-
-	private void deleteSelectedText(Element el) {
-		int deletePos;
-		int length;
-		if (getSelectionStart() < getSelectionEnd()) {
-			deletePos = getSelectionStart();
-			length = getSelectionEnd() - getSelectionStart();
-		} else if (getSelectionStart() > getSelectionEnd()){
-			deletePos = getSelectionEnd();
-			length = getSelectionStart() - getSelectionEnd();
-		} else {
-			deletePos = getSelectionStart() - 1;
-			length = 1;
-		}
-		collabService.deleteText(el, null, NodePosition.INSERT_BEFORE, deletePos, length);
-	}
-	
 	@Override
 	protected void onTextChanged(CharSequence text, int start, int before,
 			int after) {
-		
-		/* TODO: shouldn't be triggered for remote modifications - could be solved by:
-		 * - implementing onKeyDown() - just called during local actions
-		 * - implementing setText() - just called during remote actions (*but* can also be called by 
-		 *   other methods in our code - so that doesn't seem suitable)
-		 */
 		
 		if (!getRemoteEditMode() && collabService != null && collabService.isReadyForEditing()){
 			Element el = (Element) collabService.getDOMAdapter().getDocument().getElementsByTagName("edit_text").item(0);
@@ -136,15 +92,4 @@ public class WMPEditText extends EditText {
 		super.onTextChanged(text, start, before, after);
 	}
 	
-	// TODO: not necessary any more as we obtain the CollabEditingService dynamically in onTextChanged()
-	public void setCollabEditingService(CollabEditingService collabService){
-		this.collabService = collabService;
-		// TODO: atm node name is hardcoded, obtain ID from WMPComponentRegistry
-		// we won't run the following code for now, as propagation should start not sooner than all clients have joined the session
-//		Text content = collabService.createTextNode(this.getText().toString());
-//		el.appendChild(content);
-//		collabService.insertNode("100", el, null, NodePosition.INSERT_BEFORE);
-//		Log.i("WMP", "document state: " + collabService.getDocumentString());
-	}
-
 }
