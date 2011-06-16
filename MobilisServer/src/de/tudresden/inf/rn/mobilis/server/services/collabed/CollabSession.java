@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (C) 2010 Technische Universität Dresden
+ * Copyright (C) 2010 Technische Universitï¿½t Dresden
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -210,6 +210,6 @@ public class CollabSession implements OperationExecutor, RemoteOperationExecutor
 		managedDocument.stopEdit();
 		cc.executeRemoteOperation(operation);
 		managedDocument.startEdit();
-//		XMLHelper.showDocumentContent(managedDocument.getDocument());
+		XMLHelper.showDocumentContent(managedDocument.getDocument());
 	}
 }

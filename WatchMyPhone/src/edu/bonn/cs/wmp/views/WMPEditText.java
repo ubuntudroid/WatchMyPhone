@@ -116,7 +116,6 @@ public class WMPEditText extends EditText {
 		 *   other methods in our code - so that doesn't seem suitable)
 		 */
 		
-		// TODO: lock code so that only there are no concurrent modifications
 		if (!getRemoteEditMode() && collabService != null && collabService.isReadyForEditing()){
 			Element el = (Element) collabService.getDOMAdapter().getDocument().getElementsByTagName("edit_text").item(0);
 			if (before == 0){
@@ -130,6 +129,8 @@ public class WMPEditText extends EditText {
 				collabService.deleteText(el, null, NodePosition.INSERT_BEFORE, start, before);
 				collabService.insertText(el, null, NodePosition.INSERT_BEFORE, text.subSequence(start, start+after).toString(), start);
 			}
+		}
+		if (collabService != null) {
 			Log.i("WMP", "document state: " + collabService.getDocumentString());
 		}
 		super.onTextChanged(text, start, before, after);
