@@ -55,7 +55,7 @@ public class WMPEditText extends EditText {
 		this.remoteEditMode = remoteEditMode;
 	}
 	
-	public boolean getRemoteEditMode() {
+	public boolean isInRemoteEditMode() {
 		return remoteEditMode;
 	}
 	
@@ -72,7 +72,7 @@ public class WMPEditText extends EditText {
 	protected void onTextChanged(CharSequence text, int start, int before,
 			int after) {
 		
-		if (!getRemoteEditMode() && collabService != null && collabService.isReadyForEditing()){
+		if (!isInRemoteEditMode() && collabService != null && collabService.isReadyForEditing()){
 			Element el = (Element) collabService.getDOMAdapter().getDocument().getElementsByTagName("edit_text").item(0);
 			if (before == 0){
 				// INSERT
