@@ -35,16 +35,22 @@ import java.util.Vector;
 import java.util.logging.Logger;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import de.hdm.cefx.CEFXController;
+import de.hdm.cefx.CEFXControllerImpl;
 import de.hdm.cefx.awareness.AwarenessEvent;
 import de.hdm.cefx.awareness.events.AwarenessEventDescriptions;
 import de.hdm.cefx.awareness.events.AwarenessEventTypes;
 import de.hdm.cefx.awareness.events.EventPropagator;
 import de.hdm.cefx.client.CEFXClient;
 import de.hdm.cefx.concurrency.operations.CollabEditingHandlerImpl;
+import de.hdm.cefx.concurrency.operations.InsertOperationImpl;
+import de.hdm.cefx.concurrency.operations.NodePosition;
 import de.hdm.cefx.concurrency.operations.Operation;
 import de.hdm.cefx.concurrency.operations.OperationData;
+import de.hdm.cefx.concurrency.operations.UpdateInsertOperation;
+import de.hdm.cefx.dom.adapter.CEFXDOMAdapterImpl;
 import de.hdm.cefx.server.DocumentData;
 import de.hdm.cefx.server.ServerConnection_CStub;
 import de.hdm.cefx.server.ServerObject;

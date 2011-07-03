@@ -3,12 +3,11 @@ package edu.bonn.cs.wmp.views;
 import org.w3c.dom.Element;
 
 import android.content.Context;
-import android.text.Editable;
+import android.graphics.Canvas;
+import android.graphics.Rect;
+import android.text.style.BackgroundColorSpan;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputConnection;
 import android.widget.EditText;
 import de.hdm.cefx.concurrency.operations.NodePosition;
 import edu.bonn.cs.wmp.service.CollabEditingService;
@@ -66,6 +65,43 @@ public class WMPEditText extends EditText {
 	@Override
 	public boolean onCheckIsTextEditor() {
 		return true;
+	}
+	
+	@Override
+	protected void onDraw(Canvas canvas) {
+		
+		/*
+		 * TODO: check for this line, if it was already in the viewport 
+		 * (alternatively check the scroll direction:
+		 *  up -> line leaves viewport -> has been seen by user -> delete all spans
+		 *  down -> line approaches viewport -> has not yet been seen by user -> do nothing)  
+		 */
+		
+		super.onDraw(canvas);
+	}
+	
+	@Override
+	protected void onScrollChanged(int l, int t, int oldl, int oldt) {
+		super.onScrollChanged(l, t, oldl, oldt);
+		if (t > oldt) {
+			// scroll down
+			int topVisibleLine = this.getLayout().getLineForVertical(t) - 1;
+			int oldTopVisibleLine = this.getLayout().getLineForVertical(oldt);
+			BackgroundColorSpan[] highlights = this.getText().getSpans(this.getLayout().getLineStart(oldTopVisibleLine), this.getLayout().getLineEnd(topVisibleLine), BackgroundColorSpan.class);
+			for (BackgroundColorSpan highlight : highlights) {
+				this.getText().removeSpan(highlight);
+			}
+		} else if (t < oldt) {
+			// scroll up
+			Rect r = new Rect();
+			this.getDrawingRect(r);
+			int bottomVisibleLine = this.getLayout().getLineForVertical(t + r.height());
+			int oldBottomVisibleLine = this.getLayout().getLineForVertical(oldt + r.height());
+			BackgroundColorSpan[] highlights = this.getText().getSpans(this.getLayout().getLineStart(bottomVisibleLine), this.getLayout().getLineEnd(oldBottomVisibleLine), BackgroundColorSpan.class);
+			for (BackgroundColorSpan highlight : highlights) {
+				this.getText().removeSpan(highlight);
+			}
+		}
 	}
 	
 	@Override

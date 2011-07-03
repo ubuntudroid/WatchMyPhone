@@ -317,7 +317,7 @@ public class CEFXDOMAdapterImpl implements CEFXDOMAdapter {
 	 *            the fix node.
 	 * @return the InsertOperation object.
 	 */
-	private de.hdm.cefx.concurrency.operations.Operation createInsertUnder(Node parent, Node n, Node fixChild, int before) {
+	public de.hdm.cefx.concurrency.operations.Operation createInsertUnder(Node parent, Node n, Node fixChild, int before) {
 		Operation op = null;
 		String fixNodeId = null;
 		if (n.equals(fixChild)) {

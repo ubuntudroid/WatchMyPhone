@@ -44,15 +44,21 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import de.hdm.cefx.awareness.AwarenessController;
+import de.hdm.cefx.awareness.AwarenessEvent;
+import de.hdm.cefx.awareness.events.AwarenessEventTypes;
 import de.hdm.cefx.client.CEFXClient;
 import de.hdm.cefx.client.CEFXClientImpl;
 import de.hdm.cefx.client.net.NetworkController;
 import de.hdm.cefx.concurrency.ConcurrencyController;
+import de.hdm.cefx.concurrency.operations.NodePosition;
 import de.hdm.cefx.concurrency.operations.Operation;
+import de.hdm.cefx.concurrency.operations.OperationData;
+import de.hdm.cefx.concurrency.operations.OperationFactory;
 import de.hdm.cefx.concurrency.operations.StateVector;
 import de.hdm.cefx.dom.adapter.CEFXDOMAdapter;
 import de.hdm.cefx.dom.adapter.CEFXDOMAdapterImpl;
@@ -114,6 +120,10 @@ public class CEFXControllerImpl implements CEFXController {
 		LOG.setLevel(Level.ALL);
 		da = impl;
 		client = new CEFXClientImpl();
+	}
+	
+	public CEFXDOMAdapter getCEFXDOMAdapter() {
+		return da;
 	}
 	
 	public void setAwarenessController(AwarenessController awarenessController) {
@@ -320,7 +330,27 @@ public class CEFXControllerImpl implements CEFXController {
 		client.setCounter(counter);
 		da.setDocument(doc);
 
+		// basic implementation for awareness events for first class nodes (i.e. nodes being direct children of the cefx root element)
+		Node mainElement = null;
+		int mainElementsCount = doc.getChildNodes().getLength();
+		for (int i = 0; i < mainElementsCount; i++) {
+			if (doc.getChildNodes().item(i) instanceof Element) {
+				mainElement = doc.getChildNodes().item(i);
+				break;
+			}
+		}
+		int childrenCount = mainElement.getChildNodes().getLength();
+		for (int i = 0; i < childrenCount; i++) {
+			Node child = mainElement.getChildNodes().item(i);
+			if (child instanceof Element) {
+				Operation o = ((CEFXDOMAdapterImpl)da).createInsertUnder(mainElement, child, null, NodePosition.INSERT_BEFORE);
+				AwarenessEvent ae = new AwarenessEvent(AwarenessEventTypes.OPERATION_EXECUTION.toString(), "", new OperationData(o), null);
+				ac.awarenessEvent(ae);
+			}
+		}
+		
 		cc.setCollaborationReady(true);
+		LOG.info("document state: " + XMLHelper.getDocumentString(da.getDocument(), true));
 		return true;
 	}
 

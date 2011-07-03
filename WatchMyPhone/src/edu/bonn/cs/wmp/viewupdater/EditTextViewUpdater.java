@@ -1,14 +1,12 @@
 package edu.bonn.cs.wmp.viewupdater;
 
+import org.w3c.dom.Element;
+import org.w3c.dom.Text;
+
 import android.graphics.Color;
-import android.graphics.Path;
-import android.graphics.RectF;
 import android.text.Editable;
-import android.text.Selection;
 import android.text.Spannable;
 import android.text.style.BackgroundColorSpan;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import de.hdm.cefx.awareness.AwarenessEvent;
 import de.hdm.cefx.concurrency.operations.DeleteOperationImpl;
 import de.hdm.cefx.concurrency.operations.InsertOperationImpl;
@@ -40,8 +38,24 @@ public class EditTextViewUpdater extends ViewUpdater {
 		SessionService.getInstance().getCollabEditingService();
 		
 		// TODO: create getter for operation instead of protected variable
+		// TODO: check if modified node is ours
 		if (operation instanceof InsertOperationImpl) {
-			// nothing to do for WMPEditText
+			// new node (i.e. in case of late join)
+			InsertOperationImpl insOp = (InsertOperationImpl) operation;
+			// TODO: very basic implementation which heavily relies on the given structure in our CEFX documents
+			if (insOp.getInsertNode() instanceof Element && insOp.getInsertNode().getFirstChild() instanceof Text) {
+				final Text textNode = (Text) insOp.getInsertNode().getFirstChild().cloneNode(true);
+				MainActivity.getInstance().runOnUiThread(new Runnable() {
+					
+					@Override
+					public void run() {
+						editText.setRemoteEditMode(true);
+						editText.setText(textNode.getData());
+						editText.invalidate();
+						editText.setRemoteEditMode(false);
+					}
+				});
+			}
 		} else if (operation instanceof UpdateOperationImpl) {
 			UpdateOperationImpl updateOperation = (UpdateOperationImpl) operation;
 			if (updateOperation.getDISOperation() instanceof UpdateInsertOperation) {
