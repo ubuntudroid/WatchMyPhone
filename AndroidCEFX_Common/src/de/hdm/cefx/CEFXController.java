@@ -26,6 +26,7 @@
  * Copyright 2007 Ansgar Gerlicher.
  * @author Ansgar Gerlicher
  * @author Michael Voigt
+ * @author Sven Bendel
  */
 package de.hdm.cefx;
 
@@ -57,6 +58,7 @@ import de.hdm.cefx.server.ServerObject;
  * thus acts, from the perspective of the concurrency controller, as a client.
  * 
  * @author Ansgar Gerlicher
+ * @author Sven Bendel
  * 
  */
 public interface CEFXController extends OperationExecutor {
@@ -134,6 +136,19 @@ public interface CEFXController extends OperationExecutor {
 	 */
 	public void notifyOfNewClientInSession(CEFXClient client);
 
+	/**
+	 * This method is called by the NetworkController when a client disconnects from an open
+	 * session. The CEFXController then removes the client ID from the
+	 * ConcurrencyController's state vector so that the disconnected client isn't taken into
+	 * consideration in the concurrency control any more. After this the state vector and
+	 * the history buffer are cleared in order have the same default state at
+	 * all editing sites.
+	 * 
+	 * @param client
+	 *            the client that disconnected from the session.
+	 */
+	public void notifyOfDisconnectedClientInSession(CEFXClient client);
+	
 	/**
 	 * The CEFXController initialises � next to the CEFXClient object - the
 	 * ConcurrencyController including the ConflictResolutionProvider, the

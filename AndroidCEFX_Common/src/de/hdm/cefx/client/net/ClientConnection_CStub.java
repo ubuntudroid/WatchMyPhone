@@ -24,6 +24,7 @@
 /**
  * This sourcecode is part of the Collaborative Editing Framework for XML (CEFX).
  * @author Michael Voigt
+ * @author Sven Bendel
  */
 
 package de.hdm.cefx.client.net;
@@ -50,5 +51,9 @@ public class ClientConnection_CStub extends Stub {
 
 	public void awarenessEvent(AwarenessEvent event) {
 		sendRPC("awarenessEvent",event, false);
+	}
+	
+	public void notifyOfDisconnectedClientInSession(CEFXClient client) {
+		sendRPC("notifyOfDisconnectedClientInSession",client,false);
 	}
 }

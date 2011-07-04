@@ -392,6 +392,17 @@ public class CollabEditingService implements MobilisAndroidService {
 		}
 	}
 	
+	public boolean leaveSession(String sessionName) {
+		if (cefx.leaveSession(sessionName).booleanValue()) {
+			document = null;
+			readyForEditing = false;
+			return true;
+		} else {
+			Log.e(TAG, "Could not disconnect from session: " + sessionName);
+			return false;
+		}
+	}
+	
 	public Element createElement(String name) {
 		return document.createElement(name);
 	}

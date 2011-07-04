@@ -87,16 +87,25 @@ public class MainActivity extends Activity {
     	switch (item.getItemId()) {
     	case R.id.menu_pref:
     		startXMPPPrefs();
+    		break;
     	case R.id.menu_join:
     		CollabEditingService collabService = SessionService.getInstance().getCollabEditingService();
     		collabService.joinSession("edit_text_test");
-//    		collabService.loadDocumentFromServer("edit_text_test.xml");
-//    		collabText.setCollabEditingService(collabService);
+    		break;
+    	case R.id.menu_disconnect:
+    		SessionService.getInstance().getCollabEditingService().leaveSession("edit_text_test");
+    		break;
     	}
     	return true;
     }
 
-
+    @Override
+    protected void onDestroy() {
+    	if (SessionService.getInstance().getCollabEditingService().isConnected())
+    	SessionService.getInstance().getCollabEditingService().leaveSession("edit_text_test");
+    	super.onDestroy();
+    }
+    
 	protected void makeAndShowToast(final String text, final int length) {
 		runOnUiThread(new Runnable() {
 			

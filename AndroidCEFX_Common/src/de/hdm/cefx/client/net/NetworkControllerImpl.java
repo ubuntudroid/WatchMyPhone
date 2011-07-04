@@ -26,6 +26,7 @@
  * Copyright 2007 Ansgar Gerlicher.
  * @author Ansgar Gerlicher
  * @author Michael Voigt
+ * @author Sven Bendel
  */
 package de.hdm.cefx.client.net;
 
@@ -65,6 +66,7 @@ import de.hdm.cefx.server.SessionData;
  * the server at the beginning of a session.
  *
  * @author Ansgar Gerlicher
+ * @author Sven Bendel
  *
  */
 @SuppressWarnings("serial")
@@ -127,6 +129,22 @@ public class NetworkControllerImpl implements NetworkController, RemoteOperation
 		}
 
 		return data;
+	}
+	
+	public boolean leaveSession(String sessionName) {
+		if ((sessionName == null) || (sessionName.equals("")))
+			return false;
+		
+		boolean result = serverCH.getServerConnection().leaveSession(sessionName, cefx.getClient());
+		
+		if (result && session != null) {
+			JabberClient.getInstance().leaveMucRoom(session.getMucRoomName());
+			documentID = -1;
+			session = null;
+			cefx.getClient().setID(-1);
+			collabEditingHandler = null;
+		}
+		return result;
 	}
 
 	public SessionData joinSession(String sessionName) {
@@ -251,6 +269,24 @@ System.out.println("openClientConnection "+JabberClient.getInstance().getUserNam
 		clientCH.addClientConnection(client);
 		
 		System.out.println("NetworkControllerImpl.notifyOfNewClientInSession() client " + client.getID() + 
+				" current state: " + cefx.getConcurrencyController().getStateVector());
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.hdm.cefx.client.net.NetworkController#notifyOfDisconnectedClientInSession(de.hdm.cefx.client.CEFXClient)
+	 */
+	public void notifyOfDisconnectedClientInSession(CEFXClient client) {
+		
+		if (session != null) {
+			session.getClientMap().remove(client.getName());
+			session.updateIdMap();
+		}
+		cefx.notifyOfDisconnectedClientInSession(client);
+		clientCH.removeClientConnection(client);
+		
+		System.out.println("NetworkControllerImpl.notifyOfDisconnectedClientInSession() client " + client.getID() + 
 				" current state: " + cefx.getConcurrencyController().getStateVector());
 	}
 

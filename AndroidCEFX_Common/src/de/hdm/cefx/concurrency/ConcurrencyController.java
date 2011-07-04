@@ -143,4 +143,19 @@ public interface ConcurrencyController {
 	public void reset();
 
 	public Document setDocumentData(DocumentData data);
+	
+	/**
+	 * Should be called after a client has disconnected from a session. This
+	 * method will clear all tracks of this client from the lastStateVectors set.
+	 * @param clientID of the disconnected client
+	 */
+	public void removeClientFromLastStateVectors(int clientID);
+	
+	/**
+	 * Should be called after a client has disconnected from a session. This
+	 * method will clear all tracks of this client from the state vectors in the
+	 * history buffer.
+	 * @param clientID of the disconnected client
+	 */
+	public void removeClientFromHistoryBufferStateVectors(int clientID);
 }

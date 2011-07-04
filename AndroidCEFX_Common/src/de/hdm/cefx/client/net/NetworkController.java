@@ -27,6 +27,7 @@
  * @author Ansgar Gerlicher
  * @author Michael Voigt
  * @author Dirk Hering
+ * @author Sven Bendel
  */
 package de.hdm.cefx.client.net;
 
@@ -54,7 +55,7 @@ import de.hdm.cefx.server.SessionData;
  * @see de.hdm.cefx.client.net.ClientConnection
  *
  * @author Ansgar Gerlicher
- *
+ * @author Sven Bendel
  */
 public interface NetworkController extends Serializable {
 
@@ -150,6 +151,21 @@ public interface NetworkController extends Serializable {
 	public void notifyOfNewClientInSession(CEFXClient client);
 
 	/**
+	 * This method is called on the ClientConnection when a client has disconnected
+	 * from the session. The ClientConnection in turn calls the
+	 * <code>notifyOfDisconnectedClientInSession(CEFXClient client)</code> method of
+	 * the NetworkController. The NetworkController then notifies the
+	 * CEFXController of the disconnected client and removes the client from the
+	 * session represented by the CEFXSession object owned by the
+	 * NetworkController. The last step is to inform the
+	 * OutgoingClientConnectionHandler of the disconnected client.
+	 * 
+	 * @param client
+	 *            the CEFXClient object that specifies the remote client handle
+	 */
+	public void notifyOfDisconnectedClientInSession(CEFXClient client);
+	
+	/**
 	 * The method <code>executeRemoteOperation(Operation operation)</code> of
 	 * the NetworkController is called by the ClientConnection when another
 	 * client calls its <code>executeOperation(Operation operation)</code>
@@ -209,6 +225,8 @@ public interface NetworkController extends Serializable {
 	public SessionData openDocument(int docID);
 	
 	public SessionData joinSession(String sessionName);
+	
+	public boolean leaveSession(String sessionName);
 
 	public Vector<ServerObject> listFiles();
 }

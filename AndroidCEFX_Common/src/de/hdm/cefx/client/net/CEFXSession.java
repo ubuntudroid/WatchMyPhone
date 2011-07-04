@@ -26,6 +26,7 @@
  * Copyright 2007 Ansgar Gerlicher.
  * @author Ansgar Gerlicher
  * @author Michael Voigt
+ * @author Sven Bendel
  */
 package de.hdm.cefx.client.net;
 
@@ -44,7 +45,7 @@ import de.hdm.cefx.client.CEFXClient;
  * CEFXSessionImpl class
  *
  * @author Ansgar Gerlicher
- *
+ * @author Sven Bendel
  *
  */
 public interface CEFXSession extends Serializable {
@@ -60,6 +61,14 @@ public interface CEFXSession extends Serializable {
 	 */
 	void addClient(CEFXClient client);
 
+	/**
+	 * This method is called by the server when a client wants to disconnect from
+	 * a running session. It removes the client from the session's map of clients.
+	 * @param client a reference to the CEFXClient
+	 * @return <code>true</code> if the client was found in the client map, <code>false</code> otherwise
+	 */
+	boolean removeClient(CEFXClient client);
+	
 	/**
 	 * The method <code>getDocumentID()</code> returns the document's URI
 	 * which is a path to the document relative to its location in the local

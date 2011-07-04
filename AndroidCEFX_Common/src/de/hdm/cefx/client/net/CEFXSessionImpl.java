@@ -46,7 +46,7 @@ import de.hdm.cefx.client.CEFXClient;
  * @author Ansgar Gerlicher
  * @author Michael Voigt
  * @author Dirk Hering
- *
+ * @author Sven Bendel
  */
 @SuppressWarnings("serial")
 public class CEFXSessionImpl implements CEFXSession, Cloneable {
@@ -119,6 +119,30 @@ public class CEFXSessionImpl implements CEFXSession, Cloneable {
 
 		}
 		updateIdMap();
+	}
+	
+	public boolean removeClient(CEFXClient client) {
+		if (clients.get(client.getName()) == null)
+			return false;
+		clients.remove(client.getName());
+		System.out.println("CEFXSessionImpl.removeClient() " + client);
+		
+		Collection<CEFXClient> c = clients.values();
+		for (CEFXClient cli : c) {
+			if (!cli.getName().equals(client.getName())) {
+				
+				// notify each client in this session of the disconnect
+				ClientConnection_CStub conn=null;
+				conn=connectToClient(cli);
+				if (conn!=null) {
+					conn.notifyOfDisconnectedClientInSession(client);
+				}
+
+			}
+
+		}
+		updateIdMap();
+		return true;
 	}
 
 	/**

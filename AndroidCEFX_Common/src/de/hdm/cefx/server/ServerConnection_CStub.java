@@ -24,6 +24,7 @@
 /**
  * This sourcecode is part of the Collaborative Editing Framework for XML (CEFX).
  * @author Michael Voigt
+ * @author Sven Bendel
  */
 package de.hdm.cefx.server;
 
@@ -105,6 +106,20 @@ public class ServerConnection_CStub extends Stub {
 		Object o = sendRPC("joinSession", c, true);
 		if (o != null) {
 			result = (SessionData) o;
+		}
+		return result;
+	}
+	
+	public boolean leaveSession(String sessionName, CEFXClient client) {
+		boolean result = false;
+		
+		ServerConnection_leaveSession c = new ServerConnection_leaveSession();
+		c.sessionName = sessionName;
+		c.client = client;
+		
+		Object o = sendRPC("leaveSession", c, true);
+		if (o != null) {
+			result = (Boolean) o;
 		}
 		return result;
 	}

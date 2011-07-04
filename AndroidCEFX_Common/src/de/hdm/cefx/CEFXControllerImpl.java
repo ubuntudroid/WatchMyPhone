@@ -27,6 +27,7 @@
  * @author Ansgar Gerlicher
  * @author Michael Voigt
  * @author Dirk Hering
+ * @author Sven Bendel
 */
 package de.hdm.cefx;
 
@@ -74,6 +75,7 @@ import de.hdm.cefx.util.XMLHelper;
  * @author Ansgar Gerlicher
  * @author Michael Voigt
  * @author Dirk Hering
+ * @author Sven Bendel
  */
 public class CEFXControllerImpl implements CEFXController {
 
@@ -307,6 +309,17 @@ public class CEFXControllerImpl implements CEFXController {
 		return true;
 	}
 	
+	public Boolean leaveSession(String sessionName) {
+		if ((sessionName == null) || (sessionName.equals("")))
+			return false;
+		boolean result = nc.leaveSession(sessionName);
+		if (result) {
+			cc.setCollaborationReady(false);
+			cc.reset();
+		}
+		return result;
+	}
+	
 	public Boolean joinSession(String sessionName) {
 		if ((sessionName == null) || (sessionName.equals("")))
 			return false;
@@ -455,6 +468,16 @@ public class CEFXControllerImpl implements CEFXController {
 	public void notifyOfNewClientInSession(CEFXClient client) {
 		if (!cc.getStateVector().containsKey(client.getID())) {
 			cc.getStateVector().put(client.getID(), 0);
+		}
+	}
+	
+	public void notifyOfDisconnectedClientInSession(CEFXClient client) {
+		if (cc.getStateVector().containsKey(client.getID())) {
+			cc.getStateVector().remove(client.getID());
+			cc.removeClientFromLastStateVectors(client.getID());
+			cc.removeClientFromHistoryBufferStateVectors(client.getID());
+		} else {
+			System.out.println("Couldn't remove client " + client.getName() + " with ID " + client.getID() + " from state vector, as it didn\'t contain this ID!");
 		}
 	}
 

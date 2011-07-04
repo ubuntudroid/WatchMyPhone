@@ -8,6 +8,8 @@
 
 	<item android:id="@+id/menu_join" android:title="Join session"
 		android:menuCategory="secondary"></item>
-
+	
+	<item android:id="@+id/menu_disconnect" android:title="Disconnect from session"
+		android:menuCategory="secondary"></item>
 
 </menu>

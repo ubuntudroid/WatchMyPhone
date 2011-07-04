@@ -52,6 +52,7 @@ import de.hdm.cefx.concurrency.operations.Operation;
 import de.hdm.cefx.concurrency.operations.StateVector;
 import de.hdm.cefx.server.DocumentData;
 import de.hdm.cefx.server.ServerConnection_joinSession;
+import de.hdm.cefx.server.ServerConnection_leaveSession;
 import de.hdm.cefx.server.ServerConnection_loadDocument;
 import de.hdm.cefx.server.ServerConnection_openDocument;
 import de.hdm.cefx.server.ServerConnection_uploadDocument;
@@ -74,6 +75,7 @@ import de.tudresden.inf.rn.mobilis.services.cores.MapDrawKMLDocumentBuilder;
  * @author Dirk Hering
  * @author Ansgar Gerlicher
  * @author Michael Voigt
+ * @author Sven Bendel
  */
 public class CollabEditingService extends MobilisService {
 	
@@ -118,6 +120,7 @@ public class CollabEditingService extends MobilisService {
 			client.registerMethod("ServerConnection", "uploadDocument", this, null);
 			client.registerMethod("ServerConnection", "listFiles", this, null);
 			client.registerMethod("ServerConnection", "joinSession", this, null);
+			client.registerMethod("ServerConnection", "leaveSession", this, null);
 		}
 
 		public SessionData openDocument(Object o) {
@@ -150,6 +153,11 @@ public class CollabEditingService extends MobilisService {
 			ServerConnection_joinSession c=(ServerConnection_joinSession)o;
 //			translateClientJID(c.client);
 			return CollabEditingService.this.joinSession(c.sessionName, c.client);
+		}
+		
+		public boolean leaveSession(Object o) {
+			ServerConnection_leaveSession c = (ServerConnection_leaveSession) o;
+			return CollabEditingService.this.leaveSession(c.sessionName, c.client);
 		}
 	}
 	
@@ -392,6 +400,31 @@ public class CollabEditingService extends MobilisService {
 	}
 	
 	/**
+	 * Lets the given client disconnect from the collaboration session indicated by the session name.
+	 * @param sessionName the name of the collaboration session to disconnect from
+	 * @param client the client which disconnects
+	 * @return <code>true</code> if successful, <code>false</code> otherwise
+	 */
+	public boolean leaveSession(String sessionName, CEFXClient client) {
+		CollabSession session = collabSessions.get(sessionName);
+		if (session == null) {
+			return false;
+		}
+		return leaveCollabSession(session, client);
+	}
+	
+	/**
+	 * Lets the given client disconnect from the collaboration session indicated by the session name.
+	 * @param sessionName the name of the collaboration session to disconnect from
+	 * @param client the client which disconnects
+	 * @return <code>true</code> if successful, <code>false</code> otherwise
+	 */
+	private boolean leaveCollabSession(CollabSession session, CEFXClient client) {
+		if ((session == null) || (client == null) || !session.isOpen()) return false;
+		return session.removeClient(client);
+	}
+	
+	/**
 	 * Lets the given client join the collaboration session indicated by the session name.
 	 * @param sessionName the name of the collaboration session to join
 	 * @param client the client which joins
@@ -459,15 +492,6 @@ public class CollabEditingService extends MobilisService {
 		// TODO impl close collab session
 //		session.close();
 //		collabSessions.remove(session.getName());
-//		...
-	}
-	
-	public void leaveCollabSession(String sessionName, CEFXClient client) {
-		// TODO impl leave collab session
-//		CollabSession session = collabSessions.get(sessionName);
-//		if (session != null) {
-//			session.removeClient(client);
-//		}
 //		...
 	}
 	

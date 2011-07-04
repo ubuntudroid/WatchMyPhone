@@ -38,6 +38,7 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.Stack;
 import java.util.Vector;
@@ -205,7 +206,28 @@ public abstract class AbstractConcurrencyControllerImpl implements ConcurrencyCo
 
 		return min;
 	}
-
+	
+	@Override
+	public void removeClientFromLastStateVectors(int clientID) {
+		// TODO: synchronized?
+		Iterator<Entry<Integer, StateVector>> it = lastStateVectors.entrySet().iterator();
+		while (it.hasNext()) {
+			Entry<Integer, StateVector> entry = it.next();
+			StateVector stateVector = entry.getValue();
+			stateVector.remove(clientID);
+		}
+	}
+	
+	@Override
+	public void removeClientFromHistoryBufferStateVectors(int clientID) {
+		// TODO: synchronized?
+		Iterator<Operation> it = historyBuffer.iterator();
+		while (it.hasNext()) {
+			Operation op = it.next();
+			op.getStateVector().remove(clientID);
+		}
+	}
+	
 	protected void cleanHistoryBuffer() {
 		if (session==null) return;
 

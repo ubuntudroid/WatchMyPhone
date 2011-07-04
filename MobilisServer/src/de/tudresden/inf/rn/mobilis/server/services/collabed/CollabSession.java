@@ -43,6 +43,7 @@ import de.tudresden.inf.rn.mobilis.server.services.CollabEditingService;
  * The collaboration session allows a group of participants (stored as CEFXClients in the attached CEFXSessionImpl)
  * to collaboratively edit a replicated XML document (referenced on this server by the ServerDocument wrapper object). ...
  * @author Dirk Hering
+ * @author Sven Bendel
  *
  */
 public class CollabSession implements OperationExecutor, RemoteOperationExecutor {
@@ -127,6 +128,18 @@ public class CollabSession implements OperationExecutor, RemoteOperationExecutor
 		if (!cc.getStateVector().containsKey(client.getID())) {
 			cc.getStateVector().put(client.getID(), 0);
 		}
+	}
+	
+	public boolean removeClient(final CEFXClient client) {
+		if (!managedDocument.isOpen() || (cefxSession == null) || (cc == null)) return false;
+		boolean result =  cefxSession.removeClient(client);
+		// notify the local cc of the disconnected client
+		if (cc.getStateVector().containsKey(client.getID())) {
+			cc.getStateVector().remove(client.getID());
+			cc.removeClientFromLastStateVectors(client.getID());
+			cc.removeClientFromHistoryBufferStateVectors(client.getID());
+		}
+		return true;
 	}
 
 	public int getFreeClientID() {

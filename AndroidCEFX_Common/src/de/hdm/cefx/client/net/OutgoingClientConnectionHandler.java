@@ -26,6 +26,7 @@
  * Copyright 2007 Ansgar Gerlicher.
  * @author Ansgar Gerlicher
  * @author Michael Voigt
+ * @author Sven Bendel
  */
 package de.hdm.cefx.client.net;
 
@@ -46,6 +47,7 @@ import de.hdm.cefx.concurrency.operations.Operation;
  * the remote interface (ClientConnection) of the new joined client.
  *
  * @author Ansgar Gerlicher
+ * @author Sven Bendel
  *
  */
 public class OutgoingClientConnectionHandler {
@@ -103,6 +105,16 @@ public class OutgoingClientConnectionHandler {
 		connection.setTarget(client.getConnectionString());
 		connection.setThreadID(client.getThreadID());
 		clientConnections.put(client, connection);
+	}
+	
+	/**
+	 * Removes the connection of a disconnected client
+	 * from the OutgoingClientConnectionHandler.
+	 * 
+	 * @param client the client to be removed
+	 */
+	public void removeClientConnection(CEFXClient client) {
+		clientConnections.remove(client);
 	}
 
 	/**

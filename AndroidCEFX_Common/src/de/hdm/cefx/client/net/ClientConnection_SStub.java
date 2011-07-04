@@ -24,6 +24,7 @@
 /**
  * This sourcecode is part of the Collaborative Editing Framework for XML (CEFX).
  * @author Michael Voigt
+ * @author Sven Bendel
  */
 
 package de.hdm.cefx.client.net;
@@ -47,6 +48,7 @@ public class ClientConnection_SStub extends Stub {
 		client.registerMethod("ClientConnection", "executeOperation", this,cefxclient.getThreadID());
 		client.registerMethod("ClientConnection", "notifyOfNewClientInSession", this,cefxclient.getThreadID());
 		client.registerMethod("ClientConnection", "awarenessEvent", this,cefxclient.getThreadID());
+		client.registerMethod("ClientConnection", "notifyOfDisconnectedClientInSession", this, cefxclient.getThreadID());
 	}
 
 	public void setNetworkController(NetworkController impl) {
@@ -63,6 +65,11 @@ public class ClientConnection_SStub extends Stub {
 	public void notifyOfNewClientInSession(Object o)  {
 		CEFXClient client=(CEFXClient)o;
 		controller.notifyOfNewClientInSession(client);
+	}
+	
+	public void notifyOfDisconnectedClientInSession(Object o) {
+		CEFXClient client = (CEFXClient) o;
+		controller.notifyOfDisconnectedClientInSession(client);
 	}
 
 	public void awarenessEvent(Object o) {
