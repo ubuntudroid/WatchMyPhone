@@ -47,6 +47,7 @@ import de.hdm.cefx.client.net.NetworkController;
 import de.hdm.cefx.client.net.NetworkControllerImpl;
 import de.hdm.cefx.concurrency.AbstractConcurrencyControllerImpl;
 import de.hdm.cefx.concurrency.OrderingConcurrencyControllerImpl;
+import de.hdm.cefx.concurrency.operations.NodePosition;
 import de.hdm.cefx.dom.adapter.CEFXDOMAdapterImpl;
 import de.hdm.cefx.exceptions.NodeNotFoundException;
 import de.hdm.cefx.server.ServerObject;
@@ -270,14 +271,30 @@ public class CollabEditingService implements MobilisAndroidService {
 	}
 	
 	public void deleteText(Element parent, Element fixNode, int before, int pos, int len){
-		da.Element_TextDelete(parent, fixNode, before, pos, len);
+		if (len != 0) {
+			da.Element_TextDelete(parent, fixNode, before, pos, len);
+		}
 	}
 
 	public void deleteText(String parentNodeID, String fixNodeID, int before, int pos, int len) {
-		Element parentNode = getElementForId(parentNodeID);
-		Element fixNode = getElementForId(fixNodeID);
-		da.Element_TextDelete(parentNode, fixNode, before, pos, len);
+		if (len != 0) {
+			Element parentNode = getElementForId(parentNodeID);
+			Element fixNode = getElementForId(fixNodeID);
+			da.Element_TextDelete(parentNode, fixNode, before, pos, len);
+		}
 	}	
+	
+	public void replaceText(Element parent, Element fixNode, int before, String text, int pos, int len) {
+		this.deleteText(parent, fixNode, NodePosition.INSERT_BEFORE, pos, len);
+		this.insertText(parent, fixNode, NodePosition.INSERT_BEFORE, text, pos);
+	}
+	
+	public void replaceText(String parentNodeID, String fixNodeID, int before, String text, int pos, int len) {
+		Element parent = getElementForId(parentNodeID);
+		Element fixNode = getElementForId(fixNodeID);
+		this.deleteText(parent, fixNode, NodePosition.INSERT_BEFORE, pos, len);
+		this.insertText(parent, fixNode, NodePosition.INSERT_BEFORE, text, pos);
+	}
 
 	public void setText(Element parent, Element fixNode, int before, String text){
 		da.Element_TextSet(parent, fixNode, before, text);
