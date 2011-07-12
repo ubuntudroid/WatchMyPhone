@@ -8,11 +8,13 @@ import android.text.Editable;
 import android.text.Spannable;
 import android.text.style.BackgroundColorSpan;
 import de.hdm.cefx.awareness.AwarenessEvent;
+import de.hdm.cefx.awareness.events.AwarenessEventDescriptions;
 import de.hdm.cefx.concurrency.operations.DeleteOperationImpl;
 import de.hdm.cefx.concurrency.operations.InsertOperationImpl;
 import de.hdm.cefx.concurrency.operations.UpdateDeleteOperation;
 import de.hdm.cefx.concurrency.operations.UpdateInsertOperation;
 import de.hdm.cefx.concurrency.operations.UpdateOperationImpl;
+import edu.bonn.cs.wmp.EditTextSpannableStringBuilder;
 import edu.bonn.cs.wmp.MainActivity;
 import edu.bonn.cs.wmp.service.SessionService;
 import edu.bonn.cs.wmp.views.WMPEditText;
@@ -29,7 +31,7 @@ public class EditTextViewUpdater extends ViewUpdater {
 	}
 	
 	@Override
-	public void notifyOfAwarenessEvent(AwarenessEvent event) {
+	public void notifyOfAwarenessEvent(final AwarenessEvent event) {
 		
 		/*
 		 * TODO: necessary? CollabEditingService is needed to call this method, thus it should be already there
@@ -49,30 +51,34 @@ public class EditTextViewUpdater extends ViewUpdater {
 					
 					@Override
 					public void run() {
-						editText.setRemoteEditMode(true);
 						editText.setText(textNode.getData());
 						editText.invalidate();
-						editText.setRemoteEditMode(false);
 					}
 				});
 			}
 		} else if (operation instanceof UpdateOperationImpl) {
-			UpdateOperationImpl updateOperation = (UpdateOperationImpl) operation;
+			final UpdateOperationImpl updateOperation = (UpdateOperationImpl) operation;
 			if (updateOperation.getDISOperation() instanceof UpdateInsertOperation) {
 				final UpdateInsertOperation upInsOp = (UpdateInsertOperation) updateOperation.getDISOperation();
+					
 				MainActivity.getInstance().runOnUiThread(new Runnable() {
 					
 					@Override
 					public void run() {
-						editText.setRemoteEditMode(true);
-						// TODO: color should be chosen based on modifying collaborator
-						BackgroundColorSpan background = new BackgroundColorSpan(Color.argb(100, 255, 255, 0));
 						int start = upInsOp.getTextPos();
 						Editable text = Editable.Factory.getInstance().newEditable(upInsOp.getText());
-						text.setSpan(background, 0, text.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+						// TODO: color should be chosen based on modifying collaborator
+						
+						// TODO: determination of LOCALE or REMOTE operation should happen much earlier, as this is also interesting for other view updaters -> EventPropagator 
+						if (updateOperation.getClientId() != SessionService.getInstance().getCollabEditingService().getCEFXController().getIdentifier()){
+							BackgroundColorSpan background = new BackgroundColorSpan(Color.argb(100, 255, 255, 0));
+							text.setSpan(background, 0, text.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+						} else {
+							// TODO: advance cursor/selection?
+						}
+						
 						editText.getText().replace(start, start, text);
 						editText.invalidate();
-						editText.setRemoteEditMode(false);
 					}
 				});
 			} else if (updateOperation.getDISOperation() instanceof UpdateDeleteOperation) {
@@ -81,9 +87,9 @@ public class EditTextViewUpdater extends ViewUpdater {
 					
 					@Override
 					public void run() {
-						editText.setRemoteEditMode(true);
+						// TODO: colorize delete operation
 						editText.getText().replace(upDelOp.getTextPos(), upDelOp.getTextPos()+upDelOp.getLength(), "");
-						editText.setRemoteEditMode(false);
+						editText.invalidate();
 					}
 				});
 			}

@@ -244,14 +244,30 @@ System.out.println("openClientConnection "+JabberClient.getInstance().getUserNam
 	 *
 	 * @see de.hdm.cefx.client.net.NetworkController#propagateOperation(de.hdm.cefx.concurrency.operations.Operation)
 	 */
-	public void propagateOperation(Operation operation) {
+	public void propagateOperation(final Operation operation) {
 		/*System.out.println("NetworkControllerImpl.propagateOperation()");
 		serverCH.executeOperation(operation);*/
 		// and last but not least we tell the clients to execute the
 		// operation
 		//clientCH.executeOperation(operation);
 
-		JabberClient.getInstance().sendMucRoomMessage(session.getMucRoomName(),OperationXMLTransformer.transformOperation2Message(operation,session.getMucRoomName()));
+		
+//		EventPropagator.propagateEvent(
+//				new OperationData(operation), AwarenessEventTypes.OPERATION_EXECUTION.toString(), 
+//				AwarenessEventDescriptions.LOCAL_OPERATION.toString(), 
+//				EventPropagator.SCOPE_INTERNAL, operation.getClientName());
+		
+		Runnable propagateRunnable = new Runnable() {
+			
+			@Override
+			public void run() {
+				JabberClient.getInstance().sendMucRoomMessage(session.getMucRoomName(),OperationXMLTransformer.transformOperation2Message(operation,session.getMucRoomName()));
+			}
+		};
+		
+		Thread t = new Thread(propagateRunnable);
+		t.start();
+		
 	}
 
 	/*
@@ -299,11 +315,11 @@ System.out.println("openClientConnection "+JabberClient.getInstance().getUserNam
 
 		cefx.executeRemoteOperation(operation);
 		
-		// notify the GUI (and so the user) about the changes
-		EventPropagator.propagateEvent(
-				new OperationData(operation), AwarenessEventTypes.OPERATION_EXECUTION.toString(), 
-				AwarenessEventDescriptions.REMOTE_OPERATION.toString(), 
-				EventPropagator.SCOPE_INTERNAL, operation.getClientName());
+//		// notify the GUI (and so the user) about the changes
+//		EventPropagator.propagateEvent(
+//				new OperationData(operation), AwarenessEventTypes.OPERATION_EXECUTION.toString(), 
+//				AwarenessEventDescriptions.REMOTE_OPERATION.toString(), 
+//				EventPropagator.SCOPE_INTERNAL, operation.getClientName());
 	}
 
 	/*

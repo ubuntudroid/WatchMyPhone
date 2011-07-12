@@ -31,6 +31,10 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.Vector;
 
+import de.hdm.cefx.awareness.events.AwarenessEventDescriptions;
+import de.hdm.cefx.awareness.events.AwarenessEventTypes;
+import de.hdm.cefx.awareness.events.EventPropagator;
+
 public class UpdateOperationsProcessor {
 
 	private static String executeOP(UpdateOperations op, String text) {
@@ -148,7 +152,12 @@ public class UpdateOperationsProcessor {
 			ops.add(dis); //transformierte Operation anhängen
 		}
 		text=executeOP(dis,text);
-
+		
+		// notify the GUI (and so the user) about the changes
+		EventPropagator.propagateEvent(
+				new OperationData(op), AwarenessEventTypes.OPERATION_EXECUTION.toString(), 
+				EventPropagator.SCOPE_INTERNAL, op.getClientName());
+		
 		return text;
 	}
 }
