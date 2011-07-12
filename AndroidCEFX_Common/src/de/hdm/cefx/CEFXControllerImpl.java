@@ -433,8 +433,9 @@ public class CEFXControllerImpl implements CEFXController {
 	 * @see de.hdm.cefx.CEFXController#executeOperation(de.hdm.cefx.concurrency.operations.Operation)
 	 */
 	public boolean executeOperation(Operation operation) {
-		return this.cc.executeLocalOperation(operation);
-
+		boolean result = this.cc.executeLocalOperation(operation);
+		System.out.println("document state: " + XMLHelper.getDocumentString(da.getDocument(), true));
+		return result;
 	}
 
 	/* (non-Javadoc)
@@ -459,7 +460,7 @@ public class CEFXControllerImpl implements CEFXController {
 
 		};
 		timer.schedule(task, 100); // TODO needed 100ms delay?
-
+		System.out.println("document state: " + XMLHelper.getDocumentString(da.getDocument(), true));
 	}
 
 	/* (non-Javadoc)
