@@ -35,6 +35,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.w3c.dom.Attr;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -42,6 +43,9 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
+import de.hdm.cefx.awareness.AwarenessEvent;
+import de.hdm.cefx.awareness.events.AwarenessEventTypes;
+import de.hdm.cefx.awareness.events.EventPropagator;
 import de.hdm.cefx.exceptions.NodeNotFoundException;
 import de.hdm.cefx.util.DOM3Methods;
 
@@ -416,7 +420,21 @@ public class UpdateOperationImpl implements UpdateOperation {
 			}
 			//DOM3Methods.setTextContent(a, (String) attributes.get(object));
 			a.setValue((String) attributes.get(object));
-			nnm.setNamedItemNS(a);
+			
+			try {
+				nnm.setNamedItemNS(a);
+			} catch (DOMException e) {
+				/* 
+				 * TODO: dirty workaround for ditching the infamous DOMException.INUSE_ATTRIBUTE_ERR when undoing an operation.
+				 * The problem here is, that a.ownerElement has to be null, so that the attribute can be attached to the node. Otherwise
+				 * the somewhat dump Android ElementImpl implementation thinks, that the attribute is already attached to another element.
+				 * Instead the Android ElementImpl implementation should check for (a.ownerElement != null && !a.ownerElement.equals(this))
+				 * which should trigger the DOMException.
+				 * So the solution would be either to use an own implementation of ElementImpl or set a.ownerElement to null (which not that easy,
+				 * as there aren't any setters to achieve this.
+				 */
+				e.printStackTrace();
+			}
 		}
 	}
 
