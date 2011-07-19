@@ -431,7 +431,7 @@ public class UpdateOperationImpl implements UpdateOperation {
 				 * Instead the Android ElementImpl implementation should check for (a.ownerElement != null && !a.ownerElement.equals(this))
 				 * which should trigger the DOMException.
 				 * So the solution would be either to use an own implementation of ElementImpl or set a.ownerElement to null (which not that easy,
-				 * as there aren't any setters to achieve this.
+				 * as there aren't any setters to achieve this).
 				 */
 				e.printStackTrace();
 			}
