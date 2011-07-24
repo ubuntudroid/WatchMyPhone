@@ -1,19 +1,18 @@
 package edu.bonn.cs.wmp.views;
 
+import android.widget.Button;
 import android.content.Context;
 import android.util.AttributeSet;
-import android.widget.Button;
 
 public class WMPButton extends Button {
-	
 	private boolean wmpInput = false;
-	
-	public boolean isWmpInput() {
-		return wmpInput;
+
+	public void setWmpInput(boolean value) {
+		this.wmpInput = value;
 	}
 
-	public void setWmpInput(boolean wmpInput) {
-		this.wmpInput = wmpInput;
+	public boolean isWmpInput() {
+		return this.wmpInput;
 	}
 
 	public WMPButton(Context context) {
