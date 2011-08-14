@@ -1,29 +1,31 @@
 package edu.bonn.cs.wmp.awarenesswidgets;
 
-import android.view.View;
-import android.view.ViewConfiguration;
-
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
-import edu.bonn.cs.wmp.R;
-import edu.bonn.cs.wmp.views.WMPEditText;
-import edu.bonn.cs.wmp.views.WMPView;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
-import android.graphics.Bitmap.Config;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Matrix;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.View;
+import edu.bonn.cs.wmp.R;
+import edu.bonn.cs.wmp.awarenesswidgets.LineChange.LineLength;
+import edu.bonn.cs.wmp.views.WMPView;
 
 public class RadarView extends View implements WMPAwarenessWidget {
 	private Map<String, Viewport> viewportLines = new HashMap<String, RadarView.Viewport>();
 	private int subjectID;
 	private View subject;
-	private Canvas subjectCanvas;
-
+	
+	private float[] lineLengths;
+	private float maxLineLength;
+	
 	public RadarView(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
@@ -79,40 +81,52 @@ public class RadarView extends View implements WMPAwarenessWidget {
 			int endPos = ((ViewportChange) c).endPos;
 			String user = c.user;
 			viewportLines.put(user, new Viewport(startPos, endPos));
-		} else if (c instanceof TextChange) {
-			// reload content
-			// TODO: obsolete with CanvasChange?
-		} else if (c instanceof CanvasChange) {
-			subjectCanvas = ((CanvasChange) c).canvas;
+		} else if (c instanceof LineChange) {
+			LineChange lineChange = (LineChange) c;
+			lineLengths = lineChange.lineLengths;
+			maxLineLength = lineChange.getMaxLineLength();
+			// TODO: maybe just invalidate every three seconds to save cpu time?
 			this.invalidate();
 		}
 	}
 
 	@Override
 	public boolean isInterestedIn(Class<? extends ContentChange> changeClass) {
-		return (changeClass.equals(CanvasChange.class) || changeClass
+		return (changeClass.equals(LineChange.class) || changeClass
 				.equals(ViewportChange.class));
 	}
 
 	@Override
 	protected void onDraw(Canvas canvas) {
-//		super.onDraw(canvas);
 		
-		if (subject != null) {
-//			subject.setDrawingCacheEnabled(true);
-			subject.buildDrawingCache();
-//			subject.invalidate();
-			Bitmap drawingCache = subject.getDrawingCache().copy(Config.ARGB_4444, true);
-			subject.destroyDrawingCache();
-//			subject.setDrawingCacheEnabled(false);
-			// TODO: use the Matrix to scale down the bitmap
-			Matrix matrix = new Matrix();
-			float sx = (float) this.getWidth()/drawingCache.getWidth();
-			float sy = (float) this.getHeight()/drawingCache.getHeight();
-			matrix.postScale(sx, sy);
-			canvas.drawBitmap(drawingCache, matrix, null);
-//			canvas = new Canvas(drawingCache);
+		setBackgroundColor(Color.WHITE);
+		
+		if (lineLengths != null) {
+			// draw line indicators
+			// TODO: optimize by just redrawing the changed lines
+			int height = this.getHeight();
+			int width = this.getWidth();
+			
+			/*
+			 *  TODO: handle short documents (indicated by lineSpacing ratio being very big)
+			 *  -> these shouldn't be stretched to the maximum heigth
+			 */
+			
+			int arraySize = lineLengths.length;
+			float lineSpacing = height/arraySize;
+			float lineStart = (int) (width*0.1);
+			float fullLineEnd = (int) (width*0.9);
+			Paint p = new Paint();
+			p.setColor(Color.BLACK);
+			p.setStrokeWidth(lineSpacing/5);
+			
+			for (int i = 0; i < arraySize; i++) {
+				canvas.drawLine(lineStart, (i+.5f)*lineSpacing, maxLineLength/fullLineEnd*lineLengths[i], (i+.5f)*lineSpacing, p);
+			}
 		}
+		
+		// draw viewports
+		
 		super.onDraw(canvas);
 	}
 

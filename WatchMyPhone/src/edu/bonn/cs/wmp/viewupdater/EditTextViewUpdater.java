@@ -31,88 +31,86 @@ public class EditTextViewUpdater extends ViewUpdater {
 
 	@Override
 	public void notifyOfAwarenessEvent(final AwarenessEvent event) {
+		
 		app.getCollabEditingService();
 
-		if (event.getDescription().equals(
-				AwarenessEventTypes.OPERATION_EXECUTION.toString())) {
-			// TODO: create getter for operation instead of protected variable
-			if (operation instanceof InsertOperationImpl) {
-				// new node (i.e. in case of late join)
-				InsertOperationImpl insOp = (InsertOperationImpl) operation;
-				// TODO: very basic implementation which heavily relies on the
-				// given structure in our CEFX documents
-				if (insOp.getInsertNode() instanceof Element
-						&& insOp.getInsertNode().getFirstChild() instanceof Text) {
-					final Text textNode = (Text) insOp.getInsertNode()
-							.getFirstChild().cloneNode(true);
-					MainActivity.getInstance().runOnUiThread(new Runnable() {
+		// TODO: create getter for operation instead of protected variable
+		if (operation instanceof InsertOperationImpl) {
+			// new node (i.e. in case of late join)
+			InsertOperationImpl insOp = (InsertOperationImpl) operation;
+			// TODO: very basic implementation which heavily relies on the
+			// given structure in our CEFX documents
+			if (insOp.getInsertNode() instanceof Element
+					&& insOp.getInsertNode().getFirstChild() instanceof Text) {
+				final Text textNode = (Text) insOp.getInsertNode()
+						.getFirstChild().cloneNode(true);
+				MainActivity.getInstance().runOnUiThread(new Runnable() {
 
-						@Override
-						public void run() {
-							editText.setText(textNode.getData());
-							editText.invalidate();
-						}
-					});
-				}
-			} else if (operation instanceof UpdateOperationImpl) {
-				final UpdateOperationImpl updateOperation = (UpdateOperationImpl) operation;
-				if (updateOperation.getDISOperation() instanceof UpdateInsertOperation) {
-					final UpdateInsertOperation upInsOp = (UpdateInsertOperation) updateOperation
-							.getDISOperation();
-
-					MainActivity.getInstance().runOnUiThread(new Runnable() {
-
-						@Override
-						public void run() {
-							int start = upInsOp.getTextPos();
-							Editable text = Editable.Factory.getInstance()
-									.newEditable(upInsOp.getText());
-							// TODO: color should be chosen based on modifying
-							// collaborator
-
-							// TODO: determination of LOCALE or REMOTE operation
-							// should happen much earlier, as this is also
-							// interesting for other view updaters ->
-							// EventPropagator
-							if (updateOperation.getClientId() != app.getCollabEditingService()
-									.getCEFXController().getIdentifier()) {
-								BackgroundColorSpan background = new BackgroundColorSpan(
-										Color.argb(100, 255, 255, 0));
-								text.setSpan(background, 0, text.length(),
-										Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-							} else {
-								// TODO: advance cursor/selection?
-							}
-
-							editText.getText().replace(start, start, text);
-							editText.invalidate();
-						}
-					});
-				} else if (updateOperation.getDISOperation() instanceof UpdateDeleteOperation) {
-					final UpdateDeleteOperation upDelOp = (UpdateDeleteOperation) updateOperation
-							.getDISOperation();
-					MainActivity.getInstance().runOnUiThread(new Runnable() {
-
-						@Override
-						public void run() {
-							// TODO: colorize delete operation
-							editText.getText().replace(upDelOp.getTextPos(),
-									upDelOp.getTextPos() + upDelOp.getLength(),
-									"");
-							editText.invalidate();
-						}
-					});
-				}
-			} else if (operation instanceof DeleteOperationImpl) {
-				// XXX: not necessary for WMP?
+					@Override
+					public void run() {
+						editText.setText(textNode.getData());
+						editText.invalidate();
+					}
+				});
 			}
+		} else if (operation instanceof UpdateOperationImpl) {
+			final UpdateOperationImpl updateOperation = (UpdateOperationImpl) operation;
+			if (updateOperation.getDISOperation() instanceof UpdateInsertOperation) {
+				final UpdateInsertOperation upInsOp = (UpdateInsertOperation) updateOperation
+						.getDISOperation();
 
+				MainActivity.getInstance().runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						int start = upInsOp.getTextPos();
+						Editable text = Editable.Factory.getInstance()
+								.newEditable(upInsOp.getText());
+						// TODO: color should be chosen based on modifying
+						// collaborator
+
+						// TODO: determination of LOCALE or REMOTE operation
+						// should happen much earlier, as this is also
+						// interesting for other view updaters ->
+						// EventPropagator
+						if (updateOperation.getClientId() != app.getCollabEditingService()
+								.getCEFXController().getIdentifier()) {
+							BackgroundColorSpan background = new BackgroundColorSpan(
+									Color.argb(100, 255, 255, 0));
+							text.setSpan(background, 0, text.length(),
+									Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+						} else {
+							// TODO: advance cursor/selection?
+						}
+
+						editText.getText().replace(start, start, text);
+						editText.invalidate();
+					}
+				});
+			} else if (updateOperation.getDISOperation() instanceof UpdateDeleteOperation) {
+				final UpdateDeleteOperation upDelOp = (UpdateDeleteOperation) updateOperation
+						.getDISOperation();
+				MainActivity.getInstance().runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						// TODO: colorize delete operation
+						editText.getText().replace(upDelOp.getTextPos(),
+								upDelOp.getTextPos() + upDelOp.getLength(),
+								"");
+						editText.invalidate();
+					}
+				});
+			}
+		} else if (operation instanceof DeleteOperationImpl) {
+			// XXX: not necessary for WMP?
 		}
 
 	}
 
 	@Override
 	public boolean hasInterestIn(AwarenessEvent event) {
-		return super.hasInterestIn(event);
+		return event.getDescription().equals(
+				AwarenessEventTypes.OPERATION_EXECUTION.toString());
 	}
 }

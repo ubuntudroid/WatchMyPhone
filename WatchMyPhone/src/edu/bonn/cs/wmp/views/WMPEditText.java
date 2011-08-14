@@ -18,7 +18,7 @@ import android.view.inputmethod.InputConnectionWrapper;
 import android.widget.EditText;
 import de.hdm.cefx.concurrency.operations.NodePosition;
 import edu.bonn.cs.wmp.application.WMPApplication;
-import edu.bonn.cs.wmp.awarenesswidgets.CanvasChange;
+import edu.bonn.cs.wmp.awarenesswidgets.LineChange;
 import edu.bonn.cs.wmp.awarenesswidgets.ContentChange;
 import edu.bonn.cs.wmp.awarenesswidgets.WMPAwarenessWidget;
 import edu.bonn.cs.wmp.service.CollabEditingService;
@@ -29,6 +29,8 @@ public class WMPEditText extends EditText implements WMPView {
 	private List<WMPAwarenessWidget> awarenessWidgets = new ArrayList<WMPAwarenessWidget>();
 
 	private WMPApplication app;
+	
+	private String nodeID = "edit_text";
 	
 	/**
 	 * Overwrite this class (and only this!) if you want to supply your own
@@ -70,6 +72,14 @@ public class WMPEditText extends EditText implements WMPView {
 		Log.i("WMPEditText", "WMPEditText R.id. is " + this.getId());
 	}
 	
+	public String getNodeID() {
+		return nodeID;
+	}
+
+	public void setNodeID(String nodeID) {
+		this.nodeID = nodeID;
+	}
+
 	public class EditTextInputConnectionWrapper extends InputConnectionWrapper {
 		InputConnection target;
 
@@ -87,7 +97,7 @@ public class WMPEditText extends EditText implements WMPView {
 				}
 				clearComposingText();
 				Element el = (Element) collabService.getDOMAdapter()
-						.getDocument().getElementsByTagName("edit_text")
+						.getDocument().getElementsByTagName(nodeID)
 						.item(0);
 				collabService.replaceText(el, null, NodePosition.INSERT_BEFORE,
 						text.toString(), start, end - start);
@@ -115,7 +125,7 @@ public class WMPEditText extends EditText implements WMPView {
 					end = getSelectionEnd();
 				}
 				Element el = (Element) collabService.getDOMAdapter()
-						.getDocument().getElementsByTagName("edit_text")
+						.getDocument().getElementsByTagName(nodeID)
 						.item(0);
 				collabService.replaceText(el, null, NodePosition.INSERT_BEFORE,
 						text.toString(), start, end - start);
@@ -134,7 +144,7 @@ public class WMPEditText extends EditText implements WMPView {
 			if (collabService != null && collabService.isReadyForEditing()) {
 				// TODO: do in Background
 				Element el = (Element) collabService.getDOMAdapter()
-						.getDocument().getElementsByTagName("edit_text")
+						.getDocument().getElementsByTagName(nodeID)
 						.item(0);
 				collabService.deleteText(el, null, NodePosition.INSERT_BEFORE,
 						getSelectionStart() - leftLength, leftLength
@@ -175,7 +185,7 @@ public class WMPEditText extends EditText implements WMPView {
 					"sendKeyEvent(), keyCode=" + event.getKeyCode());
 			if (collabService != null && collabService.isReadyForEditing()) {
 				Element el = (Element) collabService.getDOMAdapter()
-						.getDocument().getElementsByTagName("edit_text")
+						.getDocument().getElementsByTagName(nodeID)
 						.item(0);
 				int keyCode = event.getKeyCode();
 
@@ -264,7 +274,19 @@ public class WMPEditText extends EditText implements WMPView {
 	protected void onTextChanged(CharSequence text, int start, int before,
 			int after) {
 		super.onTextChanged(text, start, before, after);
-		notifyExternalWMPWidgetsOfContentChange(new CanvasChange());
+		LineChange c = new LineChange();
+		int count = this.getLineCount();
+		c.lineLengths = new float[count];
+		float maxLength = 0;
+		for (int i = 0; i < count; i++) {
+			float width = this.getLayout().getLineWidth(i);
+			c.lineLengths[i] = width;
+			if (width > maxLength) {
+				maxLength = width;
+			}
+		}
+		c.maxLength = maxLength;
+		notifyExternalWMPWidgetsOfContentChange(c);
 	}
 	
 	@Override

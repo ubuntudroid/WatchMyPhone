@@ -480,18 +480,41 @@ public class CollabEditingService implements MobilisAndroidService {
 		return CEFXUtil.getNodeId(node);
 	}
 
+	/**
+	 * This method replaces the specified extract with the given text. Convenience method for executing deleteText() and insertText().
+	 * 
+	 * **IMPORTANT** This method is run synchronously which means it returns after the text has been inserted . 
+	 * 
+	 * @param parent
+	 * @param fixNode
+	 * @param before
+	 * @param text
+	 * @param pos
+	 * @param len
+	 */
 	public void replaceText(Element parent, Element fixNode, int before,
 			String text, int pos, int len) {
 		this.deleteText(parent, fixNode, NodePosition.INSERT_BEFORE, pos, len);
 		this.insertText(parent, fixNode, NodePosition.INSERT_BEFORE, text, pos);
 	}
 
+	/**
+	 * This method replaces the specified extract with the given text. Convenience method for executing deleteText() and insertText().
+	 * 
+	 * **IMPORTANT** This method is run synchronously which means it returns after the text has been inserted . 
+	 * 
+	 * @param parent
+	 * @param fixNode
+	 * @param before
+	 * @param text
+	 * @param pos
+	 * @param len
+	 */
 	public void replaceText(String parentNodeID, String fixNodeID, int before,
 			String text, int pos, int len) {
 		Element parent = getElementForId(parentNodeID);
 		Element fixNode = getElementForId(fixNodeID);
-		this.deleteText(parent, fixNode, NodePosition.INSERT_BEFORE, pos, len);
-		this.insertText(parent, fixNode, NodePosition.INSERT_BEFORE, text, pos);
+		this.replaceText(parent, fixNode, before, text, pos, len);
 	}
 
 	public boolean leaveSession(String sessionName) {
