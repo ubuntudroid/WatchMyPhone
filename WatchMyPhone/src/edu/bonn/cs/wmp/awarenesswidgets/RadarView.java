@@ -1,13 +1,10 @@
 package edu.bonn.cs.wmp.awarenesswidgets;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -15,7 +12,6 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import edu.bonn.cs.wmp.R;
-import edu.bonn.cs.wmp.awarenesswidgets.LineChange.LineLength;
 import edu.bonn.cs.wmp.views.WMPView;
 
 public class RadarView extends View implements WMPAwarenessWidget {
@@ -24,7 +20,6 @@ public class RadarView extends View implements WMPAwarenessWidget {
 	private View subject;
 	
 	private float[] lineLengths;
-	private float maxLineLength;
 	
 	public RadarView(Context context) {
 		super(context);
@@ -84,7 +79,6 @@ public class RadarView extends View implements WMPAwarenessWidget {
 		} else if (c instanceof LineChange) {
 			LineChange lineChange = (LineChange) c;
 			lineLengths = lineChange.lineLengths;
-			maxLineLength = lineChange.getMaxLineLength();
 			// TODO: maybe just invalidate every three seconds to save cpu time?
 			this.invalidate();
 		}

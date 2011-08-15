@@ -149,8 +149,10 @@ public class WMPEditText extends EditText implements WMPView {
 				collabService.deleteText(el, null, NodePosition.INSERT_BEFORE,
 						getSelectionStart() - leftLength, leftLength
 								+ rightLength);
+				return true;
+			} else {
+				return super.deleteSurroundingText(leftLength, rightLength);
 			}
-			return true;
 		}
 
 		private void deleteText(Element el, int start, int end) {
@@ -277,15 +279,10 @@ public class WMPEditText extends EditText implements WMPView {
 		LineChange c = new LineChange();
 		int count = this.getLineCount();
 		c.lineLengths = new float[count];
-		float maxLength = 0;
 		for (int i = 0; i < count; i++) {
 			float width = this.getLayout().getLineWidth(i);
 			c.lineLengths[i] = width;
-			if (width > maxLength) {
-				maxLength = width;
-			}
 		}
-		c.maxLength = maxLength;
 		notifyExternalWMPWidgetsOfContentChange(c);
 	}
 	
