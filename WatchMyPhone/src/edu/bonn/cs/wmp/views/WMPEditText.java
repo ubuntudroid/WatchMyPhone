@@ -7,6 +7,7 @@ import org.w3c.dom.Element;
 
 import android.content.Context;
 import android.graphics.Rect;
+import android.os.RemoteException;
 import android.text.style.BackgroundColorSpan;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -20,6 +21,7 @@ import de.hdm.cefx.concurrency.operations.NodePosition;
 import edu.bonn.cs.wmp.application.WMPApplication;
 import edu.bonn.cs.wmp.awarenesswidgets.LineChange;
 import edu.bonn.cs.wmp.awarenesswidgets.ContentChange;
+import edu.bonn.cs.wmp.awarenesswidgets.ViewportChange;
 import edu.bonn.cs.wmp.awarenesswidgets.WMPAwarenessWidget;
 import edu.bonn.cs.wmp.service.CollabEditingService;
 import edu.bonn.cs.wmp.viewupdater.EditTextViewUpdater;
@@ -183,8 +185,8 @@ public class WMPEditText extends EditText implements WMPView {
 
 		@Override
 		public boolean sendKeyEvent(KeyEvent event) {
-			Log.v("WMPEditText",
-					"sendKeyEvent(), keyCode=" + event.getKeyCode());
+//			Log.v("WMPEditText",
+//					"sendKeyEvent(), keyCode=" + event.getKeyCode());
 			if (collabService != null && collabService.isReadyForEditing()) {
 				Element el = (Element) collabService.getDOMAdapter()
 						.getDocument().getElementsByTagName(nodeID)
@@ -234,6 +236,17 @@ public class WMPEditText extends EditText implements WMPView {
 	@Override
 	protected void onScrollChanged(int l, int t, int oldl, int oldt) {
 		super.onScrollChanged(l, t, oldl, oldt);
+		
+		// report viewport change to awareness widgets
+		ViewportChange change = new ViewportChange();
+		change.top = this.getLayout().getLineForVertical(t);
+		Rect rect = new Rect();
+		this.getDrawingRect(rect);
+		change.bottom = this.getLayout().getLineForVertical(
+				t + rect.height());
+		notifyExternalWMPWidgetsOfContentChange(change);
+		
+		// remove all changed text formatting the user has already seen
 		if (t > oldt) {
 			// scroll down
 			int topVisibleLine = this.getLayout().getLineForVertical(t) - 1;

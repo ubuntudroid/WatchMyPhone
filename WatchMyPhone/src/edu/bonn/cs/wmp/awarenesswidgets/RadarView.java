@@ -8,6 +8,8 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.Paint.Style;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -72,8 +74,8 @@ public class RadarView extends View implements WMPAwarenessWidget {
 	public void onViewContentChange(ContentChange c) {
 		if (c instanceof ViewportChange) {
 			// draw new rectangle over content
-			int startPos = ((ViewportChange) c).startPos;
-			int endPos = ((ViewportChange) c).endPos;
+			int startPos = ((ViewportChange) c).top;
+			int endPos = ((ViewportChange) c).bottom;
 			String user = c.user;
 			viewportLines.put(user, new Viewport(startPos, endPos));
 		} else if (c instanceof LineChange) {
@@ -107,7 +109,7 @@ public class RadarView extends View implements WMPAwarenessWidget {
 			 */
 			
 			int arraySize = lineLengths.length;
-			float lineSpacing = height/arraySize;
+			int lineSpacing = height/arraySize;
 			float lineStart = (float) (width*0.05);
 			float fullLineEnd = (float) (width*0.95);
 			Paint p = new Paint();
@@ -123,9 +125,28 @@ public class RadarView extends View implements WMPAwarenessWidget {
 				}
 				canvas.drawLine(lineStart, (i+.5f)*lineSpacing, lineEnd, (i+.5f)*lineSpacing, p);
 			}
+			
+			// draw viewports
+			for (String user : viewportLines.keySet()) {
+				int color = Color.RED;
+				if (user.equals(ViewportChange.USER_ME)) {
+					color = Color.BLUE;
+				} else {
+					// TODO: we need a specific color for every collaborator
+					color = Color.YELLOW;
+				}
+				Viewport viewport = viewportLines.get(user);
+				int startPos = viewport.startPos;
+				int endPos = viewport.endPos;
+				Rect r = new Rect(3, startPos*lineSpacing, this.getWidth()-3, (endPos+1)*lineSpacing);
+				Paint paint = new Paint();
+				paint.setColor(color);
+				paint.setStyle(Style.STROKE);
+				paint.setStrokeWidth(2);
+				canvas.drawRect(r, paint);
+			}
 		}
 		
-		// draw viewports
 		
 		super.onDraw(canvas);
 	}
