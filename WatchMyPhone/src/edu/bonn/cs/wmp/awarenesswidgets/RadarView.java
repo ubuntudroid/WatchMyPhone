@@ -114,14 +114,20 @@ public class RadarView extends View implements WMPAwarenessWidget {
 			
 			int arraySize = lineLengths.length;
 			float lineSpacing = height/arraySize;
-			float lineStart = (int) (width*0.1);
-			float fullLineEnd = (int) (width*0.9);
+			float lineStart = (float) (width*0.05);
+			float fullLineEnd = (float) (width*0.95);
 			Paint p = new Paint();
 			p.setColor(Color.BLACK);
 			p.setStrokeWidth(lineSpacing/5);
 			
+			float subjectLineLength = subject.getWidth() - subject.getPaddingLeft() - subject.getPaddingRight();
+			
 			for (int i = 0; i < arraySize; i++) {
-				canvas.drawLine(lineStart, (i+.5f)*lineSpacing, maxLineLength/fullLineEnd*lineLengths[i], (i+.5f)*lineSpacing, p);
+				float lineEnd = lineStart + (fullLineEnd-lineStart)/subjectLineLength*lineLengths[i];
+				if (lineEnd < lineStart) {
+					lineEnd = lineStart;
+				}
+				canvas.drawLine(lineStart, (i+.5f)*lineSpacing, lineEnd, (i+.5f)*lineSpacing, p);
 			}
 		}
 		
