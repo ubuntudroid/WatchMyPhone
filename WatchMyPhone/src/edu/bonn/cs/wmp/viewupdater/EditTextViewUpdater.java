@@ -11,6 +11,7 @@ import de.hdm.cefx.awareness.AwarenessEvent;
 import de.hdm.cefx.awareness.events.AwarenessEventTypes;
 import de.hdm.cefx.concurrency.operations.DeleteOperationImpl;
 import de.hdm.cefx.concurrency.operations.InsertOperationImpl;
+import de.hdm.cefx.concurrency.operations.OperationData;
 import de.hdm.cefx.concurrency.operations.UpdateDeleteOperation;
 import de.hdm.cefx.concurrency.operations.UpdateInsertOperation;
 import de.hdm.cefx.concurrency.operations.UpdateOperationImpl;
@@ -33,7 +34,7 @@ public class EditTextViewUpdater extends ViewUpdater {
 	public void notifyOfAwarenessEvent(final AwarenessEvent event) {
 		
 		app.getCollabEditingService();
-
+		
 		// TODO: create getter for operation instead of protected variable
 		if (operation instanceof InsertOperationImpl) {
 			// new node (i.e. in case of late join)
@@ -110,7 +111,7 @@ public class EditTextViewUpdater extends ViewUpdater {
 
 	@Override
 	public boolean hasInterestIn(AwarenessEvent event) {
-		return event.getDescription().equals(
+		return super.hasInterestIn(event) && event.getType().equals(
 				AwarenessEventTypes.OPERATION_EXECUTION.toString());
 	}
 }
