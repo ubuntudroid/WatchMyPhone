@@ -14,6 +14,7 @@ import org.jivesoftware.smack.filter.IQTypeFilter;
 import org.jivesoftware.smack.filter.PacketTypeFilter;
 import org.jivesoftware.smack.packet.IQ;
 import org.jivesoftware.smackx.ServiceDiscoveryManager;
+import org.jivesoftware.smackx.muc.MultiUserChat;
 import org.jivesoftware.smackx.packet.DiscoverItems;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -217,8 +218,6 @@ public class CollabEditingService extends Service implements CEFXtoMobilisHub {
 		Log.i(TAG, "Establishing connection to CEFX-Server: " + server);			
 		cefx.connect(server);
 		
-		XMPPConnection mConn = xmppRemoteService.getXMPPConnection();
-		
 		// TODO: add more sophisticated connected-indication
 		connected = true;
 		
@@ -271,13 +270,21 @@ public class CollabEditingService extends Service implements CEFXtoMobilisHub {
 	public List<String> getRoomOccupants() throws XMPPException {
 		List<String> occupants = new ArrayList<String>();
 	    ServiceDiscoveryManager discoManager = ServiceDiscoveryManager.getInstanceFor(xmppRemoteService.getXMPPConnection());
-	    DiscoverItems items = discoManager.discoverItems(getCEFXController().getNetworkController().getSession().getMucRoomName());
+	    DiscoverItems items = discoManager.discoverItems(getMucRoomName());
 	    for (Iterator<DiscoverItems.Item> it = items.getItems(); it.hasNext();) {
 	    	DiscoverItems.Item item = (DiscoverItems.Item) it.next();
 	        String occupant = item.getEntityID();
 	        occupants.add(occupant);
 	    }
 	    return occupants;
+	}
+	
+	public String getMucUserName() {
+		return getMucRoomName() + "/" + JabberClient.getInstance().getUserName() + "_" + cefx.getIdentifier(); 
+	}
+
+	private String getMucRoomName() {
+		return cefx.getNetworkController().getSession().getMucRoomName();
 	}
 	
 	private final ICollabEditingService.Stub mBinder = new ICollabEditingService.Stub() {
@@ -510,7 +517,7 @@ public class CollabEditingService extends Service implements CEFXtoMobilisHub {
 		}
 		
 		public String getMucRoomName() {
-			return getCEFXController().getNetworkController().getSession().getMucRoomName();
+			return cefx.getNetworkController().getSession().getMucRoomName();
 		}
 		
 		public int getCEFXUserID() {
@@ -530,15 +537,19 @@ public class CollabEditingService extends Service implements CEFXtoMobilisHub {
 		public void fireAndForgetMUCIQ(XMPPIQ iq) throws RemoteException {
 			List<String> occupants = null;
 			try {
-				occupants = getRoomOccupants();
+				occupants = getRoomOccupants(); getCEFXController().getIdentifier();
+				String mucUserName = getMucUserName();
+				for (String occupant : occupants) {
+					if (!mucUserName.equals(occupant)){
+						iq.to = occupant;
+						Log.v(TAG, "member to send MUC-IQ to:" + iq.to);
+						fireAndForgetIQ(iq);
+					}
+				}
 			} catch (XMPPException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
-			for (String occupant : occupants) {
-				iq.to = occupant;
-				Log.v(TAG, "member to send MUC-IQ to:" + iq.to);
-				fireAndForgetIQ(iq);
+				// try again
+				fireAndForgetMUCIQ(iq);
 			}
 		}
 		
