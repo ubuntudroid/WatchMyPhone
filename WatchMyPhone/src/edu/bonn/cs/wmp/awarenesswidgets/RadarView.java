@@ -130,10 +130,10 @@ public class RadarView extends View implements WMPAwarenessWidget {
 			for (String user : viewportLines.keySet()) {
 				int color = Color.RED;
 				if (user.equals(ViewportChange.USER_ME)) {
-					color = Color.BLUE;
+					color = Color.argb(100, 0, 0, 255);
 				} else {
 					// TODO: we need a specific color for every collaborator
-					color = Color.GREEN;
+					color = Color.argb(100, 0, 255, 0);
 				}
 				Viewport viewport = viewportLines.get(user);
 				float startPosRatio = viewport.startPosRatio;
@@ -141,8 +141,8 @@ public class RadarView extends View implements WMPAwarenessWidget {
 				Rect r = new Rect(3, (int) (startPosRatio*this.getHeight()), this.getWidth()-3, (int) (endPosRatio*this.getHeight()+lineSpacing));
 				Paint viewportPaint = new Paint();
 				viewportPaint.setColor(color);
-				viewportPaint.setStyle(Style.STROKE);
-				viewportPaint.setStrokeWidth(2);
+				viewportPaint.setStyle(Style.FILL);
+//				viewportPaint.setStrokeWidth(2);
 				canvas.drawRect(r, viewportPaint);
 			}
 		}

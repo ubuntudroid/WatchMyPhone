@@ -95,14 +95,12 @@ public class WMPApplication extends Application {
 									
 									ViewportChange c = new ViewportChange();
 									c.user = user;
-									if (!c.user.equals(MXAController.get().getXMPPService().getUsername())) {
-										c.top = viewportStart;
-										c.bottom = viewportEnd;
-										
-										WMPView view = WMPViewRegistry.getInstance().findWMPView(resId);
-										if (view != null) {
-											view.notifyExternalWMPWidgetsOfContentChange(c);
-										}
+									c.top = viewportStart;
+									c.bottom = viewportEnd;
+									
+									WMPView view = WMPViewRegistry.getInstance().findWMPView(resId);
+									if (view != null) {
+										view.notifyExternalWMPWidgetsOfContentChange(c);
 									}
 								} else if (b.getType() == XMPPBean.TYPE_ERROR) {
 									// this is not defined atm!
