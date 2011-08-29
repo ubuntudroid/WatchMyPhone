@@ -23,6 +23,8 @@ public class RadarView extends View implements WMPAwarenessWidget {
 	
 	private float[] lineLengths;
 	
+	final int BORDER_PAINT_HEIGHT = 3;
+	
 	public RadarView(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
@@ -95,7 +97,12 @@ public class RadarView extends View implements WMPAwarenessWidget {
 	@Override
 	protected void onDraw(Canvas canvas) {
 		
+		// prepare view
 		setBackgroundColor(Color.WHITE);
+		Paint borderPaint = new Paint();
+		borderPaint.setColor(Color.argb(255,199,199,199));
+		borderPaint.setStyle(Style.FILL);
+		canvas.drawRect(0, 0, getWidth(), BORDER_PAINT_HEIGHT, borderPaint);
 		
 		if (lineLengths != null) {
 			// draw line indicators
@@ -109,7 +116,7 @@ public class RadarView extends View implements WMPAwarenessWidget {
 			 */
 			
 			int arraySize = lineLengths.length;
-			float lineSpacing = height/arraySize;
+			float lineSpacing = (height - BORDER_PAINT_HEIGHT)/arraySize;
 			float lineStart = (float) (width*0.02);
 			float fullLineEnd = (float) (width*0.98);
 			Paint linePaint = new Paint();

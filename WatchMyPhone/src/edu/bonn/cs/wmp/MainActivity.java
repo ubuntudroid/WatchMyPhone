@@ -1,6 +1,5 @@
 package edu.bonn.cs.wmp;
 
-import de.tudresden.inf.rn.mobilis.mxa.services.callbacks.ICollabEditingCallback;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.RemoteException;
@@ -8,6 +7,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.SlidingDrawer;
+import android.widget.SlidingDrawer.OnDrawerScrollListener;
 import android.widget.Toast;
 import edu.bonn.cs.wmp.application.WMPApplication;
 
@@ -39,7 +41,23 @@ public class MainActivity extends Activity implements WMPConnectionListener {
 		setContentView(R.layout.main);
 		app = (WMPApplication) getApplication();
 		instance = this;
-
+		
+		// prepare Radar View slider
+		final ImageView handle = (ImageView) findViewById(R.id.handle);
+		handle.setAlpha(100);
+		SlidingDrawer slider = (SlidingDrawer) findViewById(R.id.drawer);
+		slider.setOnDrawerScrollListener(new OnDrawerScrollListener() {
+			
+			@Override
+			public void onScrollStarted() {
+				handle.setAlpha(255);
+			}
+			
+			@Override
+			public void onScrollEnded() {
+				handle.setAlpha(100);
+			}
+		});
 	}
 
 	@Override
@@ -74,7 +92,7 @@ public class MainActivity extends Activity implements WMPConnectionListener {
 	@Override
 	protected void onDestroy() {
 		try {
-			if (app.getCollabEditingService().isConnected())
+			if (app.getCollabEditingService() != null && app.getCollabEditingService().isConnected())
 				app.getCollabEditingService().leaveSession("edit_text_test");
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
