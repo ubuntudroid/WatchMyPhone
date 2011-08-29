@@ -43,13 +43,13 @@ import java.io.Serializable;
 @SuppressWarnings("serial")
 public class AwarenessEvent implements Serializable {
 
-	String description;
+	protected String description;
 
-	String type;
+	protected String type;
 
-	String eventSource;
+	protected String eventSource;
 
-	Object event;
+	protected Object event;
 
 	/**
 	 * Constructor. Used to create a new AwarenessEvent object.
@@ -74,7 +74,7 @@ public class AwarenessEvent implements Serializable {
 		this.event = obj;
 		this.eventSource = source;
 	}
-
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -145,4 +145,5 @@ public class AwarenessEvent implements Serializable {
 	public void setType(String type) {
 		this.type = type;
 	}
+	
 }

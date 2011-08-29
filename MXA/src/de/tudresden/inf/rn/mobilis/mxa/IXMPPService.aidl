@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2009 Technische Universität Dresden
+ * Copyright (C) 2009 Technische Universitï¿½t Dresden
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,6 +32,7 @@ import de.tudresden.inf.rn.mobilis.mxa.callbacks.IConnectionCallback;
 import de.tudresden.inf.rn.mobilis.mxa.services.servicediscovery.IServiceDiscoveryService;
 import de.tudresden.inf.rn.mobilis.mxa.services.filetransfer.IFileTransferService;
 import de.tudresden.inf.rn.mobilis.mxa.services.multiuserchat.IMultiUserChatService;
+import de.tudresden.inf.rn.mobilis.mxa.services.collabedit.ICollabEditingService;
 import de.tudresden.inf.rn.mobilis.mxa.services.pubsub.IPubSubService;
 
 interface IXMPPService {
@@ -149,4 +150,11 @@ interface IXMPPService {
 	 * A basic publish-subscribe service for general purposes.
 	 */
 	IPubSubService getPubSubService();
+	
+	/**
+	 * The CollabEditingService takes care of collaboration purposes.
+	 * It is automatically used by the classes of the WMP-Project.
+	 */
+	 ICollabEditingService getCollabEditingService();
+
 }

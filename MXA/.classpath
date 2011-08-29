@@ -9,5 +9,8 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/MXA/lib/smackx-pubsub-doc.jar!/doc"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="src" path="/AndroidCEFX_Common"/>
+	<classpathentry kind="src" path="/MobilisXMPP"/>
+	<classpathentry kind="src" path="/MobilisCommon"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

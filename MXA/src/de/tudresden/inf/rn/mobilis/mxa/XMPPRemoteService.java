@@ -103,6 +103,8 @@ import de.tudresden.inf.rn.mobilis.mxa.callbacks.IXMPPMessageCallback;
 import de.tudresden.inf.rn.mobilis.mxa.parcelable.XMPPIQ;
 import de.tudresden.inf.rn.mobilis.mxa.parcelable.XMPPMessage;
 import de.tudresden.inf.rn.mobilis.mxa.parcelable.XMPPPresence;
+import de.tudresden.inf.rn.mobilis.mxa.services.collabedit.CollabEditingService;
+import de.tudresden.inf.rn.mobilis.mxa.services.collabedit.ICollabEditingService;
 import de.tudresden.inf.rn.mobilis.mxa.services.filetransfer.FileTransferService;
 import de.tudresden.inf.rn.mobilis.mxa.services.filetransfer.IFileTransferService;
 import de.tudresden.inf.rn.mobilis.mxa.services.multiuserchat.IMultiUserChatService;
@@ -139,6 +141,9 @@ public class XMPPRemoteService extends Service {
 	MultiUserChatService mMultiUserChatService;
 	PubSubService mPubSubService;
 	ServiceDiscoveryService mServiceDiscoveryService;
+	CollabEditingService mCollabEditingService;
+	
+	private XMPPRemoteService instance;
 
 	/*
 	 * Remote callback list for message listeners.
@@ -195,10 +200,24 @@ public class XMPPRemoteService extends Service {
 		// killed while playing
 		NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		nm.cancel(XMPPSERVICE_STATUS);
+		instance = this;
+	}
+	
+	/**
+	 * This method is just a quick fix to get hold of the current XMPPConnection object. It may
+	 * be removed as soon as the WMP-CollaborationService has been properly integrated into Mobilis
+	 * and into this service.
+	 */
+	public XMPPRemoteService getInstance() {
+		return instance;
 	}
 
 	public XMPPConnection getXMPPConnection() {
 		return mConn;
+	}
+	
+	public void setXMPPConnection(XMPPConnection mConn) {
+		this.mConn = mConn;
 	}
 
 	public ExecutorService getWriteExecutor() {
@@ -219,6 +238,7 @@ public class XMPPRemoteService extends Service {
 			Looper.prepare();
 
 			mHandler = new Handler() {
+
 				public void handleMessage(Message msg) {
 					// initialize response Message, as Messages cannot be reused
 					// get a Message from the Message pool and copy values of
@@ -329,6 +349,8 @@ public class XMPPRemoteService extends Service {
 							mPubSubService = new PubSubService(
 									XMPPRemoteService.this);
 							mServiceDiscoveryService = new ServiceDiscoveryService(
+									XMPPRemoteService.this);
+							mCollabEditingService = new CollabEditingService(
 									XMPPRemoteService.this);
 							
 							msg2.arg1 = ConstMXA.MSG_STATUS_SUCCESS;
@@ -974,6 +996,10 @@ public class XMPPRemoteService extends Service {
 		}
 	}
 
+	public IXMPPService getXMPPService() {
+		return mBinder;
+	}
+	
 	private final IXMPPService.Stub mBinder = new IXMPPService.Stub() {
 
 		@Override
@@ -1093,9 +1119,12 @@ public class XMPPRemoteService extends Service {
 
 		@Override
 		public String getUsername() throws RemoteException {
-			return mConn.getUser();
+			Bundle xmppConnectionParameters = getXMPPConnectionParameters();
+			return xmppConnectionParameters.getString("xmpp_user") + "@" +
+					xmppConnectionParameters.getString("xmpp_service") + "/" +
+					xmppConnectionParameters.getString("xmpp_resource");
 		}
-
+		
 		@Override
 		public boolean isConnected() throws RemoteException {
 			if (mConn != null) {
@@ -1141,6 +1170,11 @@ public class XMPPRemoteService extends Service {
 				throws RemoteException {
 			IBinder b = mServiceDiscoveryService.onBind(null);
 			return (IServiceDiscoveryService) b;
+		}
+		
+		public ICollabEditingService getCollabEditingService() throws RemoteException {
+			IBinder b = mCollabEditingService.onBind(null);
+			return (ICollabEditingService) b;
 		}
 
 		@Override

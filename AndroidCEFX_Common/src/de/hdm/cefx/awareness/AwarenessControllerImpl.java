@@ -60,6 +60,8 @@ public class AwarenessControllerImpl implements AwarenessController {
 	 */
 	private Set<String> interestingEvents;
 
+	private CEFXtoMobilisHub collabEditingService;
+
 	/**
 	 * Constructor.
 	 */
@@ -99,13 +101,14 @@ public class AwarenessControllerImpl implements AwarenessController {
 	 */
 	public void awarenessEvent(AwarenessEvent event) {
 		LOG.info("AwarenessController received Awareness Event: " + event);
-		for (AwarenessWidget widget : widgets) {
-
-			if (widget.hasInterestIn(event)) {
-				widget.notifyOfAwarenessEvent(event);
-			}
-		}
-
+//		for (AwarenessWidget widget : widgets) {
+//
+//			if (widget.hasInterestIn(event)) {
+//				widget.notifyOfAwarenessEvent(event);
+//			}
+//		}
+//		collabEditingService.sendCEFXAwarenessEventToMyself(event);
+		collabEditingService.onAwarenessEventReceived(event);
 	}
 
 	/*
@@ -151,6 +154,10 @@ public class AwarenessControllerImpl implements AwarenessController {
 	public CEFXController getCEFXController() {
 
 		return cefx;
+	}
+
+	public void setCollabEditingService(CEFXtoMobilisHub collabEditingService) {
+		this.collabEditingService = collabEditingService;
 	}
 
 }
