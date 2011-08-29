@@ -29,7 +29,6 @@
  */
 package de.hdm.cefx.concurrency.operations;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -43,9 +42,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
-import de.hdm.cefx.awareness.AwarenessEvent;
-import de.hdm.cefx.awareness.events.AwarenessEventTypes;
-import de.hdm.cefx.awareness.events.EventPropagator;
 import de.hdm.cefx.exceptions.NodeNotFoundException;
 import de.hdm.cefx.util.DOM3Methods;
 

@@ -23,12 +23,16 @@
  ******************************************************************************/
 package de.hdm.cefx.concurrency.operations;
 
+import java.io.Serializable;
+
 /**
  * Bundles an operation with its type and if it is a part of a complex operation indicated by the
  * ComplexOperationStatus.
  * @author Dirk Hering
+ * @author Sven Bendel
  */
-public class OperationData {
+@SuppressWarnings("serial")
+public class OperationData implements Serializable {
 
 	/**
 	 * The executed operation.

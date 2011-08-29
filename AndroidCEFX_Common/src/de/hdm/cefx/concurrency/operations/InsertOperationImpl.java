@@ -29,6 +29,12 @@
  */
 package de.hdm.cefx.concurrency.operations;
 
+import java.io.IOException;
+
+import org.apache.xml.serialize.Method;
+import org.apache.xml.serialize.OutputFormat;
+import org.apache.xml.serialize.SerializerFactory;
+import org.apache.xml.serialize.TextSerializer;
 import org.w3c.dom.Attr;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
@@ -46,11 +52,12 @@ import de.hdm.cefx.util.DOM3Methods;
  *
  * @author Ansgar Gerlicher
  * @author Dirk Hering
+ * @author Sven Bendel
  *
  */
 @SuppressWarnings("serial")
 public class InsertOperationImpl implements InsertOperation {
-	private Node insertNode = null;
+	transient private Node insertNode = null;
 
 	private final NodePosition insertPosition;
 
@@ -526,6 +533,16 @@ public class InsertOperationImpl implements InsertOperation {
 
 	public void setOperationID(OperationID oid) {
 		opID=oid;
+	}
+	
+	private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+		out.defaultWriteObject();
+		SerializerFactory fac = SerializerFactory.getSerializerFactory(Method.TEXT);
+		TextSerializer serializer = (TextSerializer) fac.makeSerializer(out, new OutputFormat());
+		serializer.serialize((Element) insertNode);
+	}
+	
+	private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
 	}
 
 }

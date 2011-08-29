@@ -27,6 +27,7 @@
  */
 package de.hdm.cefx.concurrency.operations;
 
+@SuppressWarnings("serial")
 public class UpdateInsertOperation extends UpdateOperations {
 
 	private int     textPos;

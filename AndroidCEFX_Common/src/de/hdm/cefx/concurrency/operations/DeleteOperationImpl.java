@@ -29,7 +29,14 @@
  */
 package de.hdm.cefx.concurrency.operations;
 
+import java.io.IOException;
+
+import org.apache.xml.serialize.Method;
+import org.apache.xml.serialize.OutputFormat;
+import org.apache.xml.serialize.SerializerFactory;
+import org.apache.xml.serialize.TextSerializer;
 import org.w3c.dom.DOMException;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 import de.hdm.cefx.exceptions.NodeNotFoundException;
@@ -38,6 +45,7 @@ import de.hdm.cefx.exceptions.NodeNotFoundException;
  * Implementing class of the DeleteOperation interface.
  *
  * @author Ansgar Gerlicher
+ * @author Sven Bendel
  *
  */
 @SuppressWarnings("serial")
@@ -312,5 +320,15 @@ public class DeleteOperationImpl implements DeleteOperation {
 
 	public void setOperationID(OperationID oid) {
 		opID=oid;
+	}
+	
+	private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+		out.defaultWriteObject();
+		SerializerFactory fac = SerializerFactory.getSerializerFactory(Method.TEXT);
+		TextSerializer serializer = (TextSerializer) fac.makeSerializer(out, new OutputFormat());
+		serializer.serialize((Element) parent);
+	}
+	
+	private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
 	}
 }

@@ -30,6 +30,7 @@ package de.hdm.cefx.concurrency.operations;
 import java.io.Serializable;
 
 
+@SuppressWarnings("serial")
 public class UpdateOperations implements Serializable {
 
 	public static final int DELETE = 0;
