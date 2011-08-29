@@ -4,34 +4,46 @@ import org.xmlpull.v1.XmlPullParser;
 
 import de.tudresden.inf.rn.mobilis.xmpp.beans.XMPPBean;
 
-public class ButtonBean extends WMPBean {
+public class ViewportBean extends WMPBean {
 
 	private static final long serialVersionUID = 1L;
-	public static final String NAMESPACE = "wmp:iq:button";
+	public static final String NAMESPACE = "wmp:iq:viewport";
 	public static final String CHILD_ELEMENT = "query";
+	protected float viewportStart;
+	protected float viewportEnd;
 	
+	public float getViewportStart() {
+		return viewportStart;
+	}
+
+	public void setViewportStart(float viewportStart) {
+		this.viewportStart = viewportStart;
+	}
+
+	public float getViewportEnd() {
+		return viewportEnd;
+	}
+
+	public void setViewportEnd(float viewportEnd) {
+		this.viewportEnd = viewportEnd;
+	}
+
 	/** Constructor for type=SET */
-	public ButtonBean(int wmpId) {
+	public ViewportBean(int wmpId) {
 		super(wmpId);
 		this.type = XMPPBean.TYPE_SET;
 	}
 	
-	/** Constructor for empty bean and type=RESULT */
-	public ButtonBean() {
-		super();
-		this.type = XMPPBean.TYPE_RESULT;
-	}
-	
 	/** Constructor for type=ERROR */
-	public ButtonBean(String errorType, String errorCondition, String errorText) {
+	public ViewportBean(String errorType, String errorCondition, String errorText) {
 		super(errorType, errorCondition, errorText);
 	}
 	
 	@Override
-	public XMPPBean clone() {
-		ButtonBean twin = new ButtonBean(wmpId);
+	public ViewportBean clone() {
+		ViewportBean twin = new ViewportBean(wmpId);
 		
-		twin = (ButtonBean) cloneBasicAttributes(twin);
+		twin = (ViewportBean) cloneBasicAttributes(twin);
 		return twin;
 	}
 
@@ -39,7 +51,8 @@ public class ButtonBean extends WMPBean {
 	public String payloadToXML() {
 		StringBuilder sb = new StringBuilder();
 		
-//		sb.append("<wmpId>").append(this.wmpId).append("</wmpId>");
+		sb.append("<viewport_start>").append(this.viewportStart).append("</viewport_start>");
+		sb.append("<viewport_end>").append(this.viewportEnd).append("</viewport_end>");
 //		sb = appendErrorPayload(sb);
 		
 		sb = appendErrorPayloadAndWMPId(sb);
@@ -51,7 +64,7 @@ public class ButtonBean extends WMPBean {
 		//TODO: age wmpId-handling to WMPBean 
 //		super.fromXML(parser);
 		
-		String childElement = ButtonBean.CHILD_ELEMENT;
+		String childElement = ViewportBean.CHILD_ELEMENT;
 		
 		boolean done = false;
 		do {
@@ -62,6 +75,10 @@ public class ButtonBean extends WMPBean {
 					parser.next();
 				} else if (tagName.equals("wmpId")) {
 					this.wmpId = Integer.parseInt(parser.nextText());
+				} else if (tagName.equals("viewport_start")) {
+					this.viewportStart = Float.parseFloat(parser.nextText());
+				} else if (tagName.equals("viewport_end")) {
+					this.viewportEnd = Float.parseFloat(parser.nextText());
 				} else if (tagName.equals("error")) {
 					parser = parseErrorAttributes(parser);
 				} else
@@ -85,13 +102,13 @@ public class ButtonBean extends WMPBean {
 	@Override
 	public String getChildElement() {
 		// TODO Auto-generated method stub
-		return ButtonBean.CHILD_ELEMENT;
+		return ViewportBean.CHILD_ELEMENT;
 	}
 
 	@Override
 	public String getNamespace() {
 		// TODO Auto-generated method stub
-		return ButtonBean.NAMESPACE;
+		return ViewportBean.NAMESPACE;
 	}
 
 

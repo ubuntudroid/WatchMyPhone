@@ -8,33 +8,43 @@ public abstract class WMPBean extends XMPPBean {
 	
 	private static final long serialVersionUID = 1L;
 	
-	protected String wmpId;
+	protected int wmpId;
 	public static final String CHILD_ELEMENT = "query";
 	
 	public WMPBean(String errorType, String errorCondition, String errorText) {
 		super(errorType, errorCondition, errorText);
 	}
 
-	public WMPBean(String wmpId) {
+	public WMPBean(int wmpId) {
 		super();
 		this.wmpId = wmpId;
 	}
-
+	
+	/**
+	 * This constructor shouldn't be used any more as the view
+	 * has to add it's R.id as wmpId by contract.
+	 */
+	@Deprecated
 	public WMPBean() {
 		super();
 		this.wmpId = getIdFromRegistry();
 	}
 
-	private String getIdFromRegistry() {
+	/**
+	 *  This method is obsolete, as the view has to add it's
+	 *  R.id as wmpId by contract.
+	 */
+	@Deprecated
+	private int getIdFromRegistry() {
 		// TODO Auto-generated method stub
-		return "";
+		return 0;
 	}
 
-	public String getWmpId() {
+	public int getWmpId() {
 		return wmpId;
 	}
 
-	public void setWmpId(String wmpId) {
+	public void setWmpId(int wmpId) {
 		this.wmpId = wmpId;
 	}
 	
@@ -56,7 +66,7 @@ public abstract class WMPBean extends XMPPBean {
 				if (tagName.equals(childElement)) {
 					parser.next();
 				} else if (tagName.equals("wmpId")) {
-					this.wmpId = parser.nextText();
+					this.wmpId = Integer.parseInt(parser.nextText());
 				} else
 					parser.next();
 				break;
