@@ -14,5 +14,7 @@ public interface WMPView {
 	public boolean removeWidget(WMPAwarenessWidget w);
 
 	public void notifyExternalWMPWidgetsOfContentChange(ContentChange c);
+	
+	public void notifyCollaboratorsOfContentChange(ContentChange c);
 
 }

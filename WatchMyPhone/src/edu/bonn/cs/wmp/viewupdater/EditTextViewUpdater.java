@@ -4,6 +4,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Text;
 
 import android.graphics.Color;
+import android.os.RemoteException;
 import android.text.Editable;
 import android.text.Spannable;
 import android.text.style.BackgroundColorSpan;
@@ -11,7 +12,6 @@ import de.hdm.cefx.awareness.AwarenessEvent;
 import de.hdm.cefx.awareness.events.AwarenessEventTypes;
 import de.hdm.cefx.concurrency.operations.DeleteOperationImpl;
 import de.hdm.cefx.concurrency.operations.InsertOperationImpl;
-import de.hdm.cefx.concurrency.operations.OperationData;
 import de.hdm.cefx.concurrency.operations.UpdateDeleteOperation;
 import de.hdm.cefx.concurrency.operations.UpdateInsertOperation;
 import de.hdm.cefx.concurrency.operations.UpdateOperationImpl;
@@ -26,8 +26,7 @@ public class EditTextViewUpdater extends ViewUpdater {
 	public EditTextViewUpdater(WMPEditText editText) {
 		this.editText = editText;
 		app = WMPApplication.getInstance();
-		app.getCollabEditingService()
-				.getAwarenessController().registerWidget(this);
+		app.registerViewUpdater(this);
 	}
 
 	@Override
@@ -74,14 +73,19 @@ public class EditTextViewUpdater extends ViewUpdater {
 						// should happen much earlier, as this is also
 						// interesting for other view updaters ->
 						// EventPropagator
-						if (updateOperation.getClientId() != app.getCollabEditingService()
-								.getCEFXController().getIdentifier()) {
-							BackgroundColorSpan background = new BackgroundColorSpan(
-									Color.argb(100, 255, 255, 0));
-							text.setSpan(background, 0, text.length(),
-									Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-						} else {
-							// TODO: advance cursor/selection?
+						try {
+							if (updateOperation.getClientId() != app.getCollabEditingService()
+									.getCEFXUserID()) {
+								BackgroundColorSpan background = new BackgroundColorSpan(
+										Color.argb(100, 255, 255, 0));
+								text.setSpan(background, 0, text.length(),
+										Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+							} else {
+								// TODO: advance cursor/selection?
+							}
+						} catch (RemoteException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
 						}
 
 						editText.getText().replace(start, start, text);
@@ -111,6 +115,11 @@ public class EditTextViewUpdater extends ViewUpdater {
 
 	@Override
 	public boolean hasInterestIn(AwarenessEvent event) {
+		/* 
+		 * TODO: check if the operation is interesting for this particular view updater
+		 * by comparing the node id to the ressource id of our parent (CollabEditingService has to implement
+		 * additional method for getting the RessourceID for a CEFX-ID) 
+		 */
 		return super.hasInterestIn(event) && event.getType().equals(
 				AwarenessEventTypes.OPERATION_EXECUTION.toString());
 	}

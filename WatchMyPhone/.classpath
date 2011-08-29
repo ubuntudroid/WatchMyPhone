@@ -5,8 +5,9 @@
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry kind="lib" path="/MXA/build/MXAClient.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/MobilisXMPP"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/AndroidCEFX_Common"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/MobilisCommon"/>
 	<classpathentry kind="lib" path="/MobilisCommon/libs/smack.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/MXA"/>
+	<classpathentry kind="src" path="/AndroidCEFX_Common"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

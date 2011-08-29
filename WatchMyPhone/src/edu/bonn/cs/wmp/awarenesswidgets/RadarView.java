@@ -59,13 +59,13 @@ public class RadarView extends View implements WMPAwarenessWidget {
 	
 	private class Viewport {
 		@SuppressWarnings("unused")
-		public int startPos = -1;
+		public float startPosRatio = -1;
 		@SuppressWarnings("unused")
-		public int endPos = -1;
+		public float endPosRatio = -1;
 
-		public Viewport(int startPos, int endPos) {
-			this.startPos = startPos;
-			this.endPos = endPos;
+		public Viewport(float startPosRatio, float endPosRatio) {
+			this.startPosRatio = startPosRatio;
+			this.endPosRatio = endPosRatio;
 		}
 
 	}
@@ -74,8 +74,8 @@ public class RadarView extends View implements WMPAwarenessWidget {
 	public void onViewContentChange(ContentChange c) {
 		if (c instanceof ViewportChange) {
 			// draw new rectangle over content
-			int startPos = ((ViewportChange) c).top;
-			int endPos = ((ViewportChange) c).bottom;
+			float startPos = ((ViewportChange) c).top;
+			float endPos = ((ViewportChange) c).bottom;
 			String user = c.user;
 			viewportLines.put(user, new Viewport(startPos, endPos));
 		} else if (c instanceof LineChange) {
@@ -109,12 +109,12 @@ public class RadarView extends View implements WMPAwarenessWidget {
 			 */
 			
 			int arraySize = lineLengths.length;
-			int lineSpacing = height/arraySize;
-			float lineStart = (float) (width*0.05);
-			float fullLineEnd = (float) (width*0.95);
-			Paint p = new Paint();
-			p.setColor(Color.BLACK);
-			p.setStrokeWidth(lineSpacing/5);
+			float lineSpacing = height/arraySize;
+			float lineStart = (float) (width*0.02);
+			float fullLineEnd = (float) (width*0.98);
+			Paint linePaint = new Paint();
+			linePaint.setColor(Color.BLACK);
+			linePaint.setStrokeWidth(lineSpacing/5);
 			
 			float subjectLineLength = subject.getWidth() - subject.getPaddingLeft() - subject.getPaddingRight();
 			
@@ -123,7 +123,7 @@ public class RadarView extends View implements WMPAwarenessWidget {
 				if (lineEnd < lineStart) {
 					lineEnd = lineStart;
 				}
-				canvas.drawLine(lineStart, (i+.5f)*lineSpacing, lineEnd, (i+.5f)*lineSpacing, p);
+				canvas.drawLine(lineStart, (i+.5f)*lineSpacing, lineEnd, (i+.5f)*lineSpacing, linePaint);
 			}
 			
 			// draw viewports
@@ -133,17 +133,17 @@ public class RadarView extends View implements WMPAwarenessWidget {
 					color = Color.BLUE;
 				} else {
 					// TODO: we need a specific color for every collaborator
-					color = Color.YELLOW;
+					color = Color.GREEN;
 				}
 				Viewport viewport = viewportLines.get(user);
-				int startPos = viewport.startPos;
-				int endPos = viewport.endPos;
-				Rect r = new Rect(3, startPos*lineSpacing, this.getWidth()-3, (endPos+1)*lineSpacing);
-				Paint paint = new Paint();
-				paint.setColor(color);
-				paint.setStyle(Style.STROKE);
-				paint.setStrokeWidth(2);
-				canvas.drawRect(r, paint);
+				float startPosRatio = viewport.startPosRatio;
+				float endPosRatio = viewport.endPosRatio;
+				Rect r = new Rect(3, (int) (startPosRatio*this.getHeight()), this.getWidth()-3, (int) (endPosRatio*this.getHeight()+lineSpacing));
+				Paint viewportPaint = new Paint();
+				viewportPaint.setColor(color);
+				viewportPaint.setStyle(Style.STROKE);
+				viewportPaint.setStrokeWidth(2);
+				canvas.drawRect(r, viewportPaint);
 			}
 		}
 		

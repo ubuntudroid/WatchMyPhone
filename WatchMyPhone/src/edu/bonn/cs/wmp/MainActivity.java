@@ -1,17 +1,17 @@
 package edu.bonn.cs.wmp;
 
+import de.tudresden.inf.rn.mobilis.mxa.services.callbacks.ICollabEditingCallback;
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.RemoteException;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 import edu.bonn.cs.wmp.application.WMPApplication;
-import edu.bonn.cs.wmp.views.WMPEditText;
 
-public class MainActivity extends Activity {
-	private WMPEditText collabText;
+public class MainActivity extends Activity implements WMPConnectionListener {
 	private static MainActivity instance;
 	private WMPApplication app;
 
@@ -40,9 +40,6 @@ public class MainActivity extends Activity {
 		app = (WMPApplication) getApplication();
 		instance = this;
 
-		collabText = (WMPEditText) findViewById(R.id.main_edit_text_collab_text);
-
-//		SessionService.getInstance().getCollabEditingService().connect();
 	}
 
 	@Override
@@ -59,14 +56,16 @@ public class MainActivity extends Activity {
 			app.startXMPPPrefs();
 			break;
 		case R.id.menu_join:
-			if (app.getCollabEditingService().isConnected()) {
-				app.getCollabEditingService().joinSession("edit_text_test");
-			} else {
-				Log.e(TAG, "Could not join session edit_text_test as XMPPService was not connected.");
-			}
+			app.connectToServiceAndServer(this);
 			break;
 		case R.id.menu_disconnect:
-			app.getCollabEditingService().leaveSession("edit_text_test");
+			try {
+				app.getCollabEditingService().leaveSession("edit_text_test");
+				app.deregisterCollabEditingCallback();
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			break;
 		}
 		return true;
@@ -74,10 +73,30 @@ public class MainActivity extends Activity {
 
 	@Override
 	protected void onDestroy() {
-		if (app.getCollabEditingService().isConnected())
-			app.getCollabEditingService().leaveSession("edit_text_test");
+		try {
+			if (app.getCollabEditingService().isConnected())
+				app.getCollabEditingService().leaveSession("edit_text_test");
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		super.onDestroy();
 	}
-	
+
+	@Override
+	public void onConnected() {
+		try {
+			app.getCollabEditingService().joinSession("edit_text_test");
+		} catch (RemoteException e) {
+			Log.e(TAG, "Could not join session edit_text_test.");
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void onDisconnected() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
