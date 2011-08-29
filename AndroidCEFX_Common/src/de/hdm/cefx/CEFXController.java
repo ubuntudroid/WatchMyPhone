@@ -168,7 +168,7 @@ public interface CEFXController extends OperationExecutor {
 	
 	public boolean uploadDocument(String path);
 	
-	public void connect(String serverJid);
+	public boolean connect(String serverJid);
 	
 	public int getDocumentID(String name,Vector<ServerObject> files);
 }

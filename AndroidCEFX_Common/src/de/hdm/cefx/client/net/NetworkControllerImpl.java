@@ -33,6 +33,8 @@ package de.hdm.cefx.client.net;
 import jabberSrpc.JabberClient;
 
 import java.util.Vector;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.Logger;
 
 import org.w3c.dom.Document;
@@ -85,6 +87,8 @@ public class NetworkControllerImpl implements NetworkController, RemoteOperation
 	private int documentID;
 	
 	private CollabEditingHandlerImpl collabEditingHandler;
+	
+	private ExecutorService propagationThreadExecutor;
 
 	/**
 	 * Class constructor.
@@ -109,6 +113,8 @@ public class NetworkControllerImpl implements NetworkController, RemoteOperation
 		connected=false;
 		openClientConnection();
 		clientCH = new OutgoingClientConnectionHandler();
+		
+		propagationThreadExecutor = Executors.newSingleThreadExecutor();
 	}
 
 	public SessionData openDocument(int docID) {
@@ -176,11 +182,11 @@ public class NetworkControllerImpl implements NetworkController, RemoteOperation
 		documentID=-1;
 	}
 
-	public void connect(String serverJid) {
+	public boolean connect(String serverJid) {
 		if (serverCH == null) {
 			serverCH = new OutgoingServerConnectionHandler();
 		}
-		connected = serverCH.connectToServer(serverJid);
+		return serverCH.connectToServer(serverJid);
 	}
 
 	public Vector<ServerObject> listFiles() {
@@ -265,9 +271,7 @@ System.out.println("openClientConnection "+JabberClient.getInstance().getUserNam
 			}
 		};
 		
-		Thread t = new Thread(propagateRunnable);
-		t.start();
-		
+		propagationThreadExecutor.execute(propagateRunnable);
 	}
 
 	/*

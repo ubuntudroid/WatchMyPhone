@@ -192,13 +192,14 @@ public class CEFXControllerImpl implements CEFXController {
 		JabberClient.getInstance().setServiceName(serviceName);
 	}
 
-	public void jabberConnect() {
+	public boolean jabberConnect() {
 		boolean b=JabberClient.getInstance().connect();
 		if (b) {
 			System.out.println(JabberClient.getInstance().getUserName()+" (Client) connected");
 		} else {
 			System.out.println(JabberClient.getInstance().getUserName()+" (Client) NOT connected");
 		}
+		return b;
 	}
 
 	/**
@@ -545,8 +546,8 @@ public class CEFXControllerImpl implements CEFXController {
 		return false;
 	}
 
-	public void connect(String serverJid) {
-		nc.connect(serverJid);
+	public boolean connect(String serverJid) {
+		return nc.connect(serverJid);
 	}
 	
 	public Document getDocument() {

@@ -77,7 +77,7 @@ public interface NetworkController extends Serializable {
 	 */
 	//public boolean connect(String documentURI);
 
-	public void connect(String serverJid);
+	public boolean connect(String serverJid);
 
 	/**
 	 * In order to retrieve a document from the server or upload a document to
