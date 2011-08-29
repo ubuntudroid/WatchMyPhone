@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package jabberSrpc;
+package de.tudresden.inf.rn.mobilis.xmpp.beans;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

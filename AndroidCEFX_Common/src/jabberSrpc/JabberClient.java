@@ -80,6 +80,8 @@ import org.jivesoftware.smackx.provider.VCardProvider;
 import org.jivesoftware.smackx.provider.XHTMLExtensionProvider;
 import org.jivesoftware.smackx.search.UserSearch;
 
+import de.tudresden.inf.rn.mobilis.xmpp.beans.Base64;
+
 public class JabberClient {
 
 	private XMPPConnection jabberConnection;
@@ -929,10 +931,18 @@ System.out.println("##################### PacketProcessor run "+request.getMetho
 
 	public void setUsesProvidedConnection(boolean usesProvidedConnection) {
 		this.usesProvidedConnection = usesProvidedConnection;
+		if (usesProvidedConnection) {
+			this.jabberConnection = providedXMPPConnection;
+		} else {
+			this.jabberConnection = null;
+		}
 	}
 
 	public void setProvidedXMPPConnection(XMPPConnection providedXMPPConnection) {
 		this.providedXMPPConnection = providedXMPPConnection;
+		if (this.usesProvidedConnection) {
+			this.jabberConnection = providedXMPPConnection;
+		}
 	}
 
 	public XMPPConnection getJabberConnection() {

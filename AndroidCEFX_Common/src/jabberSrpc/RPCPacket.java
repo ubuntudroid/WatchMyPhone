@@ -27,7 +27,6 @@
  */
 package jabberSrpc;
 
-import jabberSrpc.Base64.DecodingException;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -38,6 +37,9 @@ import java.io.UnsupportedEncodingException;
 
 import org.jivesoftware.smack.packet.IQ;
 import org.xml.sax.SAXException;
+
+import de.tudresden.inf.rn.mobilis.xmpp.beans.Base64;
+import de.tudresden.inf.rn.mobilis.xmpp.beans.Base64.DecodingException;
 
 public class RPCPacket extends IQ {
 
