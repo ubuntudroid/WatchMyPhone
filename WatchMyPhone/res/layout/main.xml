@@ -8,24 +8,26 @@
 		android:orientation="vertical" android:layout_width="fill_parent"
 		android:layout_height="fill_parent">
 		
-		<edu.bonn.cs.wmp.views.WMPEditText android:id="@+id/main_edit_text_collab_text" android:layout_width="fill_parent"
-			android:layout_height="fill_parent" android:text=""
-			android:gravity="top" android:inputType="textMultiLine">
+		<edu.bonn.cs.wmp.views.WMPEditText 
+			android:id="@+id/main_edit_text_collab_text" 
+			android:layout_width="fill_parent" android:layout_height="fill_parent"
+			android:text=""	android:gravity="top"
+			android:inputType="textMultiLine">
 		</edu.bonn.cs.wmp.views.WMPEditText>
 		
 		<SlidingDrawer
-     		android:id="@+id/drawer"
-     		android:layout_width="fill_parent"	android:layout_height="fill_parent"
-     		android:handle="@+id/handle" android:content="@+id/main_radar_view"
-     		android:orientation="vertical">
+     			android:id="@+id/drawer"
+     			android:layout_width="fill_parent" android:layout_height="fill_parent"
+     			android:handle="@+id/handle" android:content="@+id/main_radar_view"
+     			android:orientation="vertical">
 
-     		<ImageView
-         		android:id="@id/handle"
-         		android:layout_width="wrap_content" android:layout_height="wrap_content"
-         		android:src="@drawable/tray_handle_normal"/>
-
-     		<edu.bonn.cs.wmp.awarenesswidgets.RadarView 
-     			android:id="@+id/main_radar_view"
+	     		<ImageView
+	         		android:id="@id/handle"
+	         		android:layout_width="wrap_content" android:layout_height="wrap_content"
+	         		android:src="@drawable/tray_handle_normal"/>
+	
+	     		<edu.bonn.cs.wmp.awarenesswidgets.RadarView 
+	     			android:id="@+id/main_radar_view"
 				android:layout_width="fill_parent" android:layout_height="fill_parent"
 				app:subject="@id/main_edit_text_collab_text">
 			</edu.bonn.cs.wmp.awarenesswidgets.RadarView>
