@@ -12,6 +12,7 @@ import android.graphics.Rect;
 import android.graphics.Paint.Style;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import edu.bonn.cs.wmp.R;
 import edu.bonn.cs.wmp.views.WMPView;
@@ -133,29 +134,50 @@ public class RadarView extends View implements WMPAwarenessWidget {
 				canvas.drawLine(lineStart, (i+.5f)*lineSpacing, lineEnd, (i+.5f)*lineSpacing, linePaint);
 			}
 			
-			// draw viewports
-			for (String user : viewportLines.keySet()) {
-				int color = Color.RED;
-				if (user.equals(ViewportChange.USER_ME)) {
-					color = Color.argb(100, 0, 0, 255);
-				} else {
-					// TODO: we need a specific color for every collaborator
-					color = Color.argb(100, 0, 255, 0);
-				}
-				Viewport viewport = viewportLines.get(user);
-				float startPosRatio = viewport.startPosRatio;
-				float endPosRatio = viewport.endPosRatio;
-				Rect r = new Rect(3, (int) (startPosRatio*this.getHeight()), this.getWidth()-3, (int) (endPosRatio*this.getHeight()+lineSpacing));
-				Paint viewportPaint = new Paint();
-				viewportPaint.setColor(color);
-				viewportPaint.setStyle(Style.FILL);
-//				viewportPaint.setStrokeWidth(2);
-				canvas.drawRect(r, viewportPaint);
-			}
+			drawViewports(canvas, lineSpacing);
 		}
 		
 		
 		super.onDraw(canvas);
+	}
+
+	private void drawViewports(Canvas canvas, float lineSpacing) {
+		drawMyViewport(canvas, lineSpacing);
+		drawOtherViewports(canvas, lineSpacing);
+	}
+	
+	private void drawMyViewport(Canvas canvas, float lineSpacing) {
+		Viewport myViewport = viewportLines.get(ViewportChange.USER_ME);
+		Paint myViewportPaint = new Paint();
+		myViewportPaint.setColor(Color.argb(55, 0, 0, 255));
+		myViewportPaint.setStyle(Style.FILL);
+		float myStartPosRatio = myViewport.startPosRatio;
+		float myEndPosRatio = myViewport.endPosRatio;
+		Rect myDrawingRect = new Rect(3, (int) (myStartPosRatio*this.getHeight()), this.getWidth()-3, (int) (myEndPosRatio*this.getHeight()+lineSpacing));
+		canvas.drawRect(myDrawingRect, myViewportPaint);
+	}
+
+	private void drawOtherViewports(Canvas canvas, float lineSpacing) {
+		for (String user : viewportLines.keySet()) {
+			if (!user.equals(ViewportChange.USER_ME)) {
+				Paint viewportPaint = new Paint();
+				// TODO: we need a specific color for every collaborator
+				viewportPaint.setColor(Color.argb(100, 0, 255, 0));
+				viewportPaint.setStyle(Style.STROKE);
+				Viewport viewport = viewportLines.get(user);
+				float startPosRatio = viewport.startPosRatio;
+				float endPosRatio = viewport.endPosRatio;
+				Rect r = new Rect(3, (int) (startPosRatio*this.getHeight()), this.getWidth()-3, (int) (endPosRatio*this.getHeight()+lineSpacing));
+				viewportPaint.setStrokeWidth(3);
+				canvas.drawRect(r, viewportPaint);
+			}
+		}
+	}
+
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		super.onTouchEvent(event);
+		return true;
 	}
 
 	public void setSubjectView(View v) {
