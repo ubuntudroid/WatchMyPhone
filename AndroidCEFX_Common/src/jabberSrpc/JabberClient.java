@@ -80,8 +80,6 @@ import org.jivesoftware.smackx.provider.VCardProvider;
 import org.jivesoftware.smackx.provider.XHTMLExtensionProvider;
 import org.jivesoftware.smackx.search.UserSearch;
 
-import de.tudresden.inf.rn.mobilis.xmpp.beans.Base64;
-
 public class JabberClient {
 
 	private XMPPConnection jabberConnection;

@@ -21,7 +21,6 @@ import de.tudresden.inf.rn.mobilis.mxa.MXAListener;
 import de.tudresden.inf.rn.mobilis.mxa.callbacks.IXMPPIQCallback;
 import de.tudresden.inf.rn.mobilis.mxa.parcelable.XMPPIQ;
 import de.tudresden.inf.rn.mobilis.mxa.services.callbacks.ICollabEditingCallback;
-import de.tudresden.inf.rn.mobilis.mxa.services.collabedit.CollabEditingService;
 import de.tudresden.inf.rn.mobilis.mxa.services.collabedit.ICollabEditingService;
 import de.tudresden.inf.rn.mobilis.xmpp.android.Parceller;
 import de.tudresden.inf.rn.mobilis.xmpp.beans.XMPPBean;

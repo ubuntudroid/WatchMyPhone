@@ -69,13 +69,17 @@ public class EditTextViewUpdater extends ViewUpdater {
 						// TODO: color should be chosen based on modifying
 						// collaborator
 
-						// TODO: determination of LOCALE or REMOTE operation
+						// TODO: determination of LOCAL or REMOTE operation
 						// should happen much earlier, as this is also
 						// interesting for other view updaters ->
 						// EventPropagator
 						try {
 							if (updateOperation.getClientId() != app.getCollabEditingService()
 									.getCEFXUserID()) {
+								/*
+								 *  TODO: better use own subclass of BackgroundColorSpan so we don't
+								 *  accidently remove other BackgroundColorSpans in WMPEditText#onScrollChanged()
+								 */
 								BackgroundColorSpan background = new BackgroundColorSpan(
 										Color.argb(100, 255, 255, 0));
 								text.setSpan(background, 0, text.length(),

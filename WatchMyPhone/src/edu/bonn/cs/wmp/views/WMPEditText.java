@@ -5,8 +5,6 @@ import java.util.List;
 
 import android.content.Context;
 import android.graphics.Rect;
-import android.os.Handler;
-import android.os.Messenger;
 import android.os.RemoteException;
 import android.text.style.BackgroundColorSpan;
 import android.util.AttributeSet;
