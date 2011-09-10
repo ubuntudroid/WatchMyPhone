@@ -121,8 +121,8 @@ public class EditTextViewUpdater extends ViewUpdater {
 	public boolean hasInterestIn(AwarenessEvent event) {
 		/* 
 		 * TODO: check if the operation is interesting for this particular view updater
-		 * by comparing the node id to the ressource id of our parent (CollabEditingService has to implement
-		 * additional method for getting the RessourceID for a CEFX-ID) 
+		 * by comparing the node id to the resource id of our parent (CollabEditingService has
+		 * a method for getting the ResourceID for a CEFX-ID) 
 		 */
 		return super.hasInterestIn(event) && event.getType().equals(
 				AwarenessEventTypes.OPERATION_EXECUTION.toString());
