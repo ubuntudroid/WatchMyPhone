@@ -28,6 +28,7 @@ import edu.bonn.cs.wmp.viewupdater.EditTextViewUpdater;
 import edu.bonn.cs.wmp.xmpp.beans.ViewportBean;
 
 public class WMPEditText extends EditText implements WMPView {
+	private static final boolean TIME_TRIAL = false;
 	private ICollabEditingService collabService;
 	private List<WMPAwarenessWidget> awarenessWidgets = new ArrayList<WMPAwarenessWidget>();
 
@@ -35,6 +36,7 @@ public class WMPEditText extends EditText implements WMPView {
 	
 //	private int nodeID = Integer.toString(this.getId());
 	private String nodeName = "edit_text";
+public long startTime;
 	
 	/**
 	 * Overwrite this class (and only this!) if you want to supply your own
@@ -91,6 +93,10 @@ public class WMPEditText extends EditText implements WMPView {
 
 		@Override
 		public boolean setComposingText(CharSequence text, int newCursorPosition) {
+			if (TIME_TRIAL) {
+				startTime = System.currentTimeMillis();
+				Log.i("Time_Trial", "start time = " + String.valueOf(startTime));
+			}
 			collabService = app.getCollabEditingService();
 			try {
 				if (collabService != null && collabService.isReadyForEditing()) {
@@ -126,6 +132,10 @@ public class WMPEditText extends EditText implements WMPView {
 
 		@Override
 		public boolean commitText(CharSequence text, int newCursorPosition) {
+			if (TIME_TRIAL) {
+				startTime = System.currentTimeMillis();
+				Log.i("Time_Trial", "start time = " + String.valueOf(startTime));
+			}
 			collabService = app.getCollabEditingService();
 			try {
 				if (collabService != null && collabService.isReadyForEditing()) {
@@ -351,6 +361,11 @@ public class WMPEditText extends EditText implements WMPView {
 	@Override
 	protected void onTextChanged(CharSequence text, int start, int before,
 			int after) {
+		if (TIME_TRIAL) {
+			long endTime = System.currentTimeMillis();
+			Log.i("Time_Trial", "end time = " + String.valueOf(endTime));
+			Log.i("Time_Trial", "delta = " + (startTime - endTime));
+		}
 		super.onTextChanged(text, start, before, after);
 		LineChange c = new LineChange();
 		int count = this.getLineCount();
