@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <jardesc>
     <jar path="AndroidCEFX_Common/build/CEFX_Utils.jar"/>
-    <options buildIfNeeded="true" compress="true" descriptionLocation="/AndroidCEFX_Common/buildMXAClientjar.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="false" overwrite="true" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
+    <options buildIfNeeded="true" compress="true" descriptionLocation="/AndroidCEFX_Common/buildCEFXUtilsjar.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="false" overwrite="true" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
     <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
     <selectedProjects/>
     <manifest generateManifest="true" manifestLocation="" manifestVersion="1.0" reuseManifest="false" saveManifest="false" usesManifest="true">
@@ -11,7 +11,6 @@
         </sealing>
     </manifest>
     <selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
-        <file path="/AndroidCEFX_Common/.classpath"/>
         <folder path="/AndroidCEFX_Common/lib"/>
         <javaElement handleIdentifier="=AndroidCEFX_Common/src"/>
     </selectedElements>

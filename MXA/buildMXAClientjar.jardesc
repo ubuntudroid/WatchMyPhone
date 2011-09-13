@@ -11,29 +11,30 @@
         </sealing>
     </manifest>
     <selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
-        <javaElement handleIdentifier="=MXA/src&lt;de.tudresden.inf.rn.mobilis.media.parcelables"/>
         <javaElement handleIdentifier="=MXA/gen&lt;de.tudresden.inf.rn.mobilis.mxa.callbacks"/>
-        <javaElement handleIdentifier="=MXA/src&lt;de.tudresden.inf.rn.mobilis.mxa.callbacks"/>
         <javaElement handleIdentifier="=MXA/gen&lt;de.tudresden.inf.rn.mobilis.mxa.services.servicediscovery"/>
         <file path="/MXA/src/de/tudresden/inf/rn/mobilis/mxa/IXMPPService.aidl"/>
-        <file path="/MXA/src/de/tudresden/inf/rn/mobilis/mxa/services/filetransfer/IFileTransferService.aidl"/>
-        <javaElement handleIdentifier="=MXA/gen&lt;de.tudresden.inf.rn.mobilis.mxa.services.callbacks"/>
         <javaElement handleIdentifier="=MXA/gen&lt;de.tudresden.inf.rn.mobilis.mxa.services.pubsub"/>
         <javaElement handleIdentifier="=MXA/gen&lt;de.tudresden.inf.rn.mobilis.mxa.services.multiuserchat"/>
         <javaElement handleIdentifier="=MXA/gen&lt;de.tudresden.inf.rn.mobilis.mxa.services.collabedit"/>
-        <javaElement handleIdentifier="=MXA/src&lt;de.tudresden.inf.rn.mobilis.xmpp.android"/>
-        <file path="/MXA/src/de/tudresden/inf/rn/mobilis/mxa/services/servicediscovery/IServiceDiscoveryService.aidl"/>
         <javaElement handleIdentifier="=MXA/gen&lt;de.tudresden.inf.rn.mobilis.mxa{IXMPPService.java"/>
-        <file path="/MXA/src/de/tudresden/inf/rn/mobilis/mxa/services/multiuserchat/IMultiUserChatService.aidl"/>
         <javaElement handleIdentifier="=MXA/gen&lt;de.tudresden.inf.rn.mobilis.mxa.services.filetransfer"/>
         <file path="/MXA/src/de/tudresden/inf/rn/mobilis/mxa/services/pubsub/IPubSubService.aidl"/>
         <file path="/MXA/src/de/tudresden/inf/rn/mobilis/mxa/services/collabedit/ICollabEditingService.aidl"/>
-        <javaElement handleIdentifier="=MXA/src&lt;de.tudresden.inf.rn.mobilis.mxa{MXAController.java"/>
-        <javaElement handleIdentifier="=MXA/src&lt;de.tudresden.inf.rn.mobilis.mxa{MXAListener.java"/>
+        <javaElement handleIdentifier="=MobilisXMPP/src"/>
         <javaElement handleIdentifier="=MXA/src&lt;android.os"/>
+        <javaElement handleIdentifier="=MXA/src&lt;de.tudresden.inf.rn.mobilis.mxa{MXAListener.java"/>
         <javaElement handleIdentifier="=MXA/src&lt;de.tudresden.inf.rn.mobilis.mxa.services.callbacks"/>
         <javaElement handleIdentifier="=MXA/src&lt;de.tudresden.inf.rn.mobilis.mxa.parcelable"/>
         <javaElement handleIdentifier="=MXA/src&lt;de.tudresden.inf.rn.mobilis.mxa.services.parcelable"/>
+        <javaElement handleIdentifier="=MXA/src&lt;de.tudresden.inf.rn.mobilis.media.parcelables"/>
+        <javaElement handleIdentifier="=MXA/src&lt;de.tudresden.inf.rn.mobilis.mxa.callbacks"/>
+        <javaElement handleIdentifier="=MXA/gen&lt;de.tudresden.inf.rn.mobilis.mxa.services.callbacks"/>
+        <file path="/MXA/src/de/tudresden/inf/rn/mobilis/mxa/services/filetransfer/IFileTransferService.aidl"/>
+        <javaElement handleIdentifier="=MXA/src&lt;de.tudresden.inf.rn.mobilis.xmpp.android"/>
+        <file path="/MXA/src/de/tudresden/inf/rn/mobilis/mxa/services/servicediscovery/IServiceDiscoveryService.aidl"/>
+        <file path="/MXA/src/de/tudresden/inf/rn/mobilis/mxa/services/multiuserchat/IMultiUserChatService.aidl"/>
+        <javaElement handleIdentifier="=MXA/src&lt;de.tudresden.inf.rn.mobilis.mxa{MXAController.java"/>
         <javaElement handleIdentifier="=MXA/src&lt;de.tudresden.inf.rn.mobilis.mxa{ConstMXA.java"/>
     </selectedElements>
 </jardesc>

@@ -148,6 +148,9 @@ public class RadarView extends View implements WMPAwarenessWidget {
 	
 	private void drawMyViewport(Canvas canvas, float lineSpacing) {
 		Viewport myViewport = viewportLines.get(ViewportChange.USER_ME);
+		if (myViewport == null) {
+			myViewport = new Viewport(0, 1);
+		}
 		Paint myViewportPaint = new Paint();
 		myViewportPaint.setColor(Color.argb(55, 0, 0, 255));
 		myViewportPaint.setStyle(Style.FILL);

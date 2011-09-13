@@ -2,15 +2,11 @@ package edu.bonn.cs.wmp;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.RemoteException;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ImageView;
-import android.widget.SlidingDrawer;
-import android.widget.SlidingDrawer.OnDrawerScrollListener;
 import android.widget.Toast;
+import edu.bonn.cs.wmp.WMPConnectionListener;
 import edu.bonn.cs.wmp.application.WMPApplication;
 
 public class MainActivity extends Activity implements WMPConnectionListener {
@@ -38,26 +34,8 @@ public class MainActivity extends Activity implements WMPConnectionListener {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
 		app = (WMPApplication) getApplication();
 		instance = this;
-		
-		// prepare Radar View slider
-		final ImageView handle = (ImageView) findViewById(R.id.handle);
-		handle.setAlpha(100);
-		SlidingDrawer slider = (SlidingDrawer) findViewById(R.id.drawer);
-		slider.setOnDrawerScrollListener(new OnDrawerScrollListener() {
-			
-			@Override
-			public void onScrollStarted() {
-				handle.setAlpha(255);
-			}
-			
-			@Override
-			public void onScrollEnded() {
-				handle.setAlpha(100);
-			}
-		});
 	}
 
 	@Override
@@ -77,13 +55,8 @@ public class MainActivity extends Activity implements WMPConnectionListener {
 			app.connectToServiceAndServer(this);
 			break;
 		case R.id.menu_disconnect:
-			try {
-				app.getCollabEditingService().leaveSession("edit_text_test");
-				app.deregisterCollabEditingCallback();
-			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			app.leaveSession("edit_text_test");
+			app.deregisterCollabEditingCallback();
 			break;
 		}
 		return true;
@@ -91,24 +64,14 @@ public class MainActivity extends Activity implements WMPConnectionListener {
 
 	@Override
 	protected void onDestroy() {
-		try {
-			if (app.getCollabEditingService() != null && app.getCollabEditingService().isConnected())
-				app.getCollabEditingService().leaveSession("edit_text_test");
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		if (app.isConnected())
+			app.leaveSession("edit_text_test");
 		super.onDestroy();
 	}
 
 	@Override
 	public void onConnected() {
-		try {
-			app.getCollabEditingService().joinSession("edit_text_test");
-		} catch (RemoteException e) {
-			Log.e(TAG, "Could not join session edit_text_test.");
-			e.printStackTrace();
-		}
+		app.joinSession("edit_text_test");
 	}
 
 	@Override

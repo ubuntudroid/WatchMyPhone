@@ -59,6 +59,34 @@ public class WMPApplication extends Application {
 		return collabEditService;
 	}
 	
+	public void leaveSession(String sessionName) {
+		try {
+			collabEditService.leaveSession(sessionName);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void joinSession(String sessionName) {
+		try {
+			collabEditService.joinSession(sessionName);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public boolean isConnected() {
+		try {
+			return (collabEditService != null && collabEditService.isConnected());
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 	public static WMPApplication getInstance() {
 		/*
 		 * this should never be null, as the application object is the first one to be created and
@@ -203,21 +231,16 @@ public class WMPApplication extends Application {
 	 */
 	private void restartApp() {
 		Intent i;
-		try {
-			i = WMPApplication
-					.getInstance()
-					.getBaseContext()
-					.getPackageManager()
-					.getLaunchIntentForPackage(
-							WMPApplication.getInstance().getBaseContext()
-									.getPackageName());
-			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			WMPApplication.getInstance().getApplicationContext()
-					.startActivity(i);
-		} catch (NameNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		i = WMPApplication
+				.getInstance()
+				.getBaseContext()
+				.getPackageManager()
+				.getLaunchIntentForPackage(
+						WMPApplication.getInstance().getBaseContext()
+								.getPackageName());
+		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		WMPApplication.getInstance().getApplicationContext()
+				.startActivity(i);
 	}
 	
 	public void registerViewUpdater(ViewUpdater v) {
