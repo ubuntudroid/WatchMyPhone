@@ -27,24 +27,19 @@ import edu.bonn.cs.wmp.awarenesswidgets.WMPAwarenessWidget;
 import edu.bonn.cs.wmp.viewupdater.EditTextViewUpdater;
 import edu.bonn.cs.wmp.xmpp.beans.ViewportBean;
 
+/**
+ * This is the collaborative version of a standard Android {@link EditText}. It is recommended
+ * to be used together with the {@link RadarView} awareness widget for full collaboration awareness.
+ * @author sven
+ *
+ */
 public class WMPEditText extends EditText implements WMPView {
 	private static final boolean TIME_TRIAL = false;
 	private ICollabEditingService collabService;
 	private List<WMPAwarenessWidget> awarenessWidgets = new ArrayList<WMPAwarenessWidget>();
 
 	private WMPApplication app;
-	
-//	private int nodeID = Integer.toString(this.getId());
-	private String nodeName = "edit_text";
-public long startTime;
-	
-	/**
-	 * Overwrite this class (and only this!) if you want to supply your own
-	 * InputConnection to a {@link WMPEditText} view.
-	 * 
-	 * @author Sven Bendel
-	 */
-	
+
 	/*
 	 * TODO: atm node name is hardcoded, obtain ID from WMPComponentRegistry on
 	 * view creation using the following code. The problem with this is, that
@@ -52,8 +47,16 @@ public long startTime;
 	 * 1) a XML with more than one node having the same name (not sure if this
 	 * is possible or if CEFX merges the nodes then) 
 	 * 2) a XML with several nodes having different names but should be the same 
-	 * Therefore we need to obtain the node name either from the server or from the ressource id.
+	 * Therefore we need to obtain the node name either from the server or from the resource id.
+	 * Alternatively the user should be able to provide an own id by setting it directly
+	 * in the XML.
+	 * 
+	 * See getNodeName().
 	 */
+//	private int nodeID = Integer.toString(this.getId());
+	private String nodeName = "edit_text";
+	public long startTime;
+	
 	public WMPEditText(Context context) {
 		super(context);
 		init();
@@ -69,6 +72,10 @@ public long startTime;
 		init();
 	}
 	
+	/**
+	 * Does all initialization work, e.g. registering the {@link ViewUpdater} and
+	 * adding ourselves to the {@link WMPViewRegistry}.
+	 */
 	public void init() {
 		app = WMPApplication.getInstance();
 		collabService = app.getCollabEditingService();
@@ -76,186 +83,33 @@ public long startTime;
 		registerViewUpdater();
 		
 		WMPViewRegistry.getInstance().addWMPView(this);
-		
-		Log.i("WMPEditText", "WMPEditText R.id. is " + this.getId());
 	}
 	
+	/**
+	 * Returns the name of the node by which the content of this view is represented
+	 * in the document of the Collaborative Editing Framework. Will be generated
+	 * by using the Android resource ID or from XML in the future.
+	 * @return
+	 * 		the content node's name
+	 */
 	public String getNodeName() {
 		return nodeName;
 	}
 
+	/**
+	 * This method allows setting the name of the node by which the content of this view
+	 * is represented in the document of the Collaborative Editing Framework. Will be
+	 * generated automatically by using the Android resource ID or from XML in the future.
+	 * @param nodeID
+	 */
 	public void setNodeName(String nodeID) {
 		this.nodeName = nodeID;
 	}
 
-	public class EditTextInputConnectionWrapper extends InputConnectionWrapper {
-		InputConnection target;
-
-		@Override
-		public boolean setComposingText(CharSequence text, int newCursorPosition) {
-			if (TIME_TRIAL) {
-				startTime = System.currentTimeMillis();
-				Log.i("Time_Trial", "start time = " + String.valueOf(startTime));
-			}
-			collabService = app.getCollabEditingService();
-			try {
-				if (collabService != null && collabService.isReadyForEditing()) {
-					int start = BaseInputConnection
-							.getComposingSpanStart(getText());
-					int end = BaseInputConnection.getComposingSpanEnd(getText());
-					if (start == -1) {
-						start = getSelectionStart();
-					}
-					if (end == -1) {
-						end = getSelectionEnd();
-					}
-					clearComposingText();
-
-					String nodeId = collabService.getCEFXIDForName(getNodeName());
-										
-					collabService.replaceText(nodeId, null, NodePosition.INSERT_BEFORE,
-							text.toString(), start, end - start);
-					int selectionStart, selectionEnd;
-					selectionStart = start + text.length();
-					selectionEnd = start + text.length();
-					setSelection(selectionStart, selectionEnd);
-					finishComposingText();
-					return true;
-				} else {
-					return super.setComposingText(text, newCursorPosition);
-				}
-			} catch (RemoteException e) {
-				e.printStackTrace();
-				return false;
-			}
-		}
-
-		@Override
-		public boolean commitText(CharSequence text, int newCursorPosition) {
-			if (TIME_TRIAL) {
-				startTime = System.currentTimeMillis();
-				Log.i("Time_Trial", "start time = " + String.valueOf(startTime));
-			}
-			collabService = app.getCollabEditingService();
-			try {
-				if (collabService != null && collabService.isReadyForEditing()) {
-					int start = BaseInputConnection
-							.getComposingSpanStart(getText());
-					int end = BaseInputConnection.getComposingSpanEnd(getText());
-					if (start == -1) {
-						start = getSelectionStart();
-					}
-					if (end == -1) {
-						end = getSelectionEnd();
-					}
-					String nodeId = collabService.getCEFXIDForName(getNodeName());
-					collabService.replaceText(nodeId, null, NodePosition.INSERT_BEFORE,
-							text.toString(), start, end - start);
-					int selectionStart, selectionEnd;
-					selectionStart = start + text.length();
-					selectionEnd = start + text.length();
-					setSelection(selectionStart, selectionEnd);
-					return true;
-				} else {
-					return super.commitText(text, newCursorPosition);
-				}
-			} catch (RemoteException e) {
-				e.printStackTrace();
-				return false;
-			}
-		}
-
-		@Override
-		public boolean deleteSurroundingText(int leftLength, int rightLength) {
-			collabService = app.getCollabEditingService();
-			try {
-				if (collabService != null && collabService.isReadyForEditing()) {
-					// TODO: do in Background
-					String nodeId = collabService.getCEFXIDForName(getNodeName());
-					collabService.deleteText(nodeId, null, NodePosition.INSERT_BEFORE,
-							getSelectionStart() - leftLength, leftLength
-									+ rightLength);
-					return true;
-				} else {
-					return super.deleteSurroundingText(leftLength, rightLength);
-				}
-			} catch (RemoteException e) {
-				e.printStackTrace();
-				return false;
-			}
-		}
-
-		private void deleteText(String nodeId, int start, int end) throws RemoteException {
-			int deletePos;
-			int length;
-			if (start < end) {
-				deletePos = start;
-				length = end - start;
-			} else if (start > end) {
-				deletePos = end;
-				length = start - end;
-			} else {
-				if (start == 0)
-					return;
-				deletePos = start - 1;
-				length = 1;
-			}
-
-			collabService.deleteText(nodeId, null, NodePosition.INSERT_BEFORE,
-					deletePos, length);
-		}
-
-		public EditTextInputConnectionWrapper(InputConnection target,
-				boolean mutable) {
-			super(target, mutable);
-			// TODO Auto-generated constructor stub
-		}
-
-		@Override
-		public boolean sendKeyEvent(KeyEvent event) {
-//			Log.v("WMPEditText",
-//					"sendKeyEvent(), keyCode=" + event.getKeyCode());
-			collabService = app.getCollabEditingService();
-			try {
-				if (collabService != null && collabService.isReadyForEditing()) {
-					String nodeId = collabService.getCEFXIDForName(getNodeName());
-					int keyCode = event.getKeyCode();
-
-					int start = BaseInputConnection
-							.getComposingSpanStart(getText());
-					int end = BaseInputConnection.getComposingSpanEnd(getText());
-					if (start == -1) {
-						start = getSelectionStart();
-					}
-					if (end == -1) {
-						end = getSelectionEnd();
-					}
-
-					if (keyCode == KeyEvent.KEYCODE_DEL) {
-						// DELETE
-						/*
-						 * TODO: check if really necessary - seems, that this is
-						 * already handled in the other methods. Maybe necessary for
-						 * hard keyboard?
-						 */
-						deleteText(nodeId, start, end);
-						return true;
-					} else if (keyCode == KeyEvent.KEYCODE_ENTER) {
-						// ENTER
-						// TODO: handle enter key
-						return true;
-					} else
-						return false;
-				} else {
-					return super.sendKeyEvent(event);
-				}
-			} catch (RemoteException e) {
-				e.printStackTrace();
-				return false;
-			}
-		}
-	}
-
+	/**
+	 * Creates a new {@link EditTextViewUpdater} for us. This view updater will provide
+	 * us with new content when in collaboration mode.
+	 */
 	private void registerViewUpdater() {
 		new EditTextViewUpdater(this);
 	}
@@ -404,6 +258,194 @@ public long startTime;
 				if (w.isInterestedIn(c.getClass())) {
 					w.onViewContentChange(c);
 				}
+			}
+		}
+	}
+	
+	/**
+	 * Attention: Overwrite this class (and only this!) if you want to supply your own
+	 * InputConnectionWrapper to a {@link WMPEditText} view!
+	 * 
+	 * This class handles all input to this WMPEditText and routes it through the Collaborative
+	 * Editing Framework when in collaboration mode. The output will be generated by the
+	 * {@link EditTextViewUpdater} when OT is done.
+	 * 
+	 * @author Sven Bendel
+	 */
+	public class EditTextInputConnectionWrapper extends InputConnectionWrapper {
+		InputConnection target;
+
+		@Override
+		public boolean setComposingText(CharSequence text, int newCursorPosition) {
+			if (TIME_TRIAL) {
+				startTime = System.currentTimeMillis();
+				Log.i("Time_Trial", "start time = " + String.valueOf(startTime));
+			}
+			collabService = app.getCollabEditingService();
+			try {
+				if (collabService != null && collabService.isReadyForEditing()) {
+					int start = BaseInputConnection
+							.getComposingSpanStart(getText());
+					int end = BaseInputConnection.getComposingSpanEnd(getText());
+					if (start == -1) {
+						start = getSelectionStart();
+					}
+					if (end == -1) {
+						end = getSelectionEnd();
+					}
+					clearComposingText();
+
+					String nodeId = collabService.getCEFXIDForName(getNodeName());
+										
+					collabService.replaceText(nodeId, null, NodePosition.INSERT_BEFORE,
+							text.toString(), start, end - start);
+					int selectionStart, selectionEnd;
+					selectionStart = start + text.length();
+					selectionEnd = start + text.length();
+					setSelection(selectionStart, selectionEnd);
+					finishComposingText();
+					return true;
+				} else {
+					return super.setComposingText(text, newCursorPosition);
+				}
+			} catch (RemoteException e) {
+				e.printStackTrace();
+				return false;
+			}
+		}
+
+		@Override
+		public boolean commitText(CharSequence text, int newCursorPosition) {
+			if (TIME_TRIAL) {
+				startTime = System.currentTimeMillis();
+				Log.i("Time_Trial", "start time = " + String.valueOf(startTime));
+			}
+			collabService = app.getCollabEditingService();
+			try {
+				if (collabService != null && collabService.isReadyForEditing()) {
+					int start = BaseInputConnection
+							.getComposingSpanStart(getText());
+					int end = BaseInputConnection.getComposingSpanEnd(getText());
+					if (start == -1) {
+						start = getSelectionStart();
+					}
+					if (end == -1) {
+						end = getSelectionEnd();
+					}
+					String nodeId = collabService.getCEFXIDForName(getNodeName());
+					collabService.replaceText(nodeId, null, NodePosition.INSERT_BEFORE,
+							text.toString(), start, end - start);
+					int selectionStart, selectionEnd;
+					selectionStart = start + text.length();
+					selectionEnd = start + text.length();
+					setSelection(selectionStart, selectionEnd);
+					return true;
+				} else {
+					return super.commitText(text, newCursorPosition);
+				}
+			} catch (RemoteException e) {
+				e.printStackTrace();
+				return false;
+			}
+		}
+
+		@Override
+		public boolean deleteSurroundingText(int leftLength, int rightLength) {
+			collabService = app.getCollabEditingService();
+			try {
+				if (collabService != null && collabService.isReadyForEditing()) {
+					// TODO: do in Background
+					String nodeId = collabService.getCEFXIDForName(getNodeName());
+					collabService.deleteText(nodeId, null, NodePosition.INSERT_BEFORE,
+							getSelectionStart() - leftLength, leftLength
+									+ rightLength);
+					return true;
+				} else {
+					return super.deleteSurroundingText(leftLength, rightLength);
+				}
+			} catch (RemoteException e) {
+				e.printStackTrace();
+				return false;
+			}
+		}
+
+		/**
+		 * Deletes text from a given node.
+		 * @param nodeId
+		 * 				the ID of the node to delete text from
+		 * @param start
+		 * 				the position where text deletion starts
+		 * @param end
+		 * 				the position where text deletion ends
+		 * @throws RemoteException
+		 */
+		private void deleteText(String nodeId, int start, int end) throws RemoteException {
+			int deletePos;
+			int length;
+			if (start < end) {
+				deletePos = start;
+				length = end - start;
+			} else if (start > end) {
+				deletePos = end;
+				length = start - end;
+			} else {
+				if (start == 0)
+					return;
+				deletePos = start - 1;
+				length = 1;
+			}
+
+			collabService.deleteText(nodeId, null, NodePosition.INSERT_BEFORE,
+					deletePos, length);
+		}
+
+		public EditTextInputConnectionWrapper(InputConnection target,
+				boolean mutable) {
+			super(target, mutable);
+			// TODO Auto-generated constructor stub
+		}
+
+		@Override
+		public boolean sendKeyEvent(KeyEvent event) {
+//			Log.v("WMPEditText",
+//					"sendKeyEvent(), keyCode=" + event.getKeyCode());
+			collabService = app.getCollabEditingService();
+			try {
+				if (collabService != null && collabService.isReadyForEditing()) {
+					String nodeId = collabService.getCEFXIDForName(getNodeName());
+					int keyCode = event.getKeyCode();
+
+					int start = BaseInputConnection
+							.getComposingSpanStart(getText());
+					int end = BaseInputConnection.getComposingSpanEnd(getText());
+					if (start == -1) {
+						start = getSelectionStart();
+					}
+					if (end == -1) {
+						end = getSelectionEnd();
+					}
+
+					if (keyCode == KeyEvent.KEYCODE_DEL) {
+						// DELETE
+						/*
+						 * TODO: check if really necessary - seems, that this is
+						 * already handled in the other methods. Maybe necessary for
+						 * hard keyboard?
+						 */
+						deleteText(nodeId, start, end);
+						return true;
+					} else if (keyCode == KeyEvent.KEYCODE_ENTER) {
+						// ENTER
+						// TODO: handle enter key
+						return true;
+					} else
+						return false;
+				} else {
+					return super.sendKeyEvent(event);
+				}
+			} catch (RemoteException e) {
+				e.printStackTrace();
+				return false;
 			}
 		}
 	}

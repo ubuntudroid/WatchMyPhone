@@ -2,9 +2,7 @@ package edu.bonn.cs.wmp;
 
 import java.util.HashMap;
 
-import android.util.Log;
 import android.view.View;
-
 import edu.bonn.cs.wmp.views.WMPView;
 
 /**
@@ -58,10 +56,24 @@ public class WMPViewRegistry {
 		views.put(view.getId(), (WMPView) view);
 	}
 	
+	/**
+	 * Removes the View with the specified resource ID from the registry.
+	 * 
+	 * @param resId
+	 * 				the resource ID of the {@link WMPView} to be removed from the registry
+	 */
 	public void removeWMPView(int resId) {
 		views.remove(resId);
 	}
 	
+	/**
+	 * Returns the {@link WMPView} object for the given resource ID.
+	 * 
+	 * @param resId
+	 * 				resource ID
+	 * @return
+	 * 				the {@link WMPView} for the given resource ID 
+	 */
 	public WMPView findWMPView(int resId) {
 		return views.get(resId);
 	}

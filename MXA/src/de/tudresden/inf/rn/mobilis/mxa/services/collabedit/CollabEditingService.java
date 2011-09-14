@@ -29,6 +29,7 @@ import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
 import android.util.Log;
+import de.hdm.cefx.CEFXController;
 import de.hdm.cefx.CEFXControllerImpl;
 import de.hdm.cefx.awareness.AwarenessControllerImpl;
 import de.hdm.cefx.awareness.AwarenessEvent;
@@ -38,6 +39,7 @@ import de.hdm.cefx.client.net.NetworkControllerImpl;
 import de.hdm.cefx.concurrency.AbstractConcurrencyControllerImpl;
 import de.hdm.cefx.concurrency.OrderingConcurrencyControllerImpl;
 import de.hdm.cefx.concurrency.operations.NodePosition;
+import de.hdm.cefx.dom.adapter.CEFXDOMAdapter;
 import de.hdm.cefx.dom.adapter.CEFXDOMAdapterImpl;
 import de.hdm.cefx.exceptions.NodeNotFoundException;
 import de.hdm.cefx.server.ServerObject;
@@ -53,6 +55,14 @@ import de.tudresden.inf.rn.mobilis.xmpp.android.Parceller;
 import de.tudresden.inf.rn.mobilis.xmpp.beans.collabedit.AwarenessEventBean;
 import de.tudresden.inf.rn.mobilis.xmpp.packet.MonitoringIQ;
 
+/**
+ * This service handles all stuff related to Collaborative Editing sessions. In
+ * addition to taking care of the connection between clients and the server it
+ * handles the access to the local Collaborative Editing Framework.
+ * 
+ * @author Sven Bendel
+ * @author Dirk Hering
+ */
 public class CollabEditingService extends Service implements CEFXtoMobilisHub {
 	private static final String TAG = "CollabEditingService";
 
@@ -75,10 +85,6 @@ public class CollabEditingService extends Service implements CEFXtoMobilisHub {
 	
 	boolean connected = false;
 
-	public IXMPPService getXMPPService() {
-		return xmppService;
-	}
-	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -89,6 +95,7 @@ public class CollabEditingService extends Service implements CEFXtoMobilisHub {
 		return mBinder;
 	}
 	
+	@Deprecated
 	private Handler ackHandler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
@@ -156,14 +163,29 @@ public class CollabEditingService extends Service implements CEFXtoMobilisHub {
 		connectToXMPPViaCEFX();
 	}
 	
-	public CEFXDOMAdapterImpl getDOMAdapter() {
+	/**
+	 * @return the currently used {@link CEFXDOMAdapter}
+	 */
+	public CEFXDOMAdapter getDOMAdapter() {
 		return da;
 	}
-
-	public CEFXControllerImpl getCEFXController() {
+	
+	/**
+	 * @return the currently used {@link CEFXController}
+	 */
+	public CEFXController getCEFXController() {
 		return cefx;
 	}
 	
+	/**
+	 * This method connects the client part of CEFX with
+	 * the CEFX server via XMPP. It reuses the XMPP connection
+	 * from MXA.
+	 * 
+	 * @return
+	 * 			<code>true</code> if the connection could be established
+	 * 			successfully, <code>false</code> otherwise
+	 */
 	private boolean connectToXMPPViaCEFX() {
 		// read bundled connection params
 		// Bundle connectionParams =
@@ -230,6 +252,7 @@ public class CollabEditingService extends Service implements CEFXtoMobilisHub {
 	 * to the Mobilis Beans communication model.
 	 * @param event
 	 */
+	@Deprecated
 	public void sendCEFXAwarenessEventToMyself(AwarenessEvent event)	{
 		AwarenessEventBean b = new AwarenessEventBean();
 		
@@ -255,6 +278,7 @@ public class CollabEditingService extends Service implements CEFXtoMobilisHub {
 		}
 	}
 	
+	@Override
 	public void onAwarenessEventReceived(AwarenessEvent event) {
 		for (ICollabEditingCallback callback : collabEditingCallbacks) {
 			try {
@@ -266,6 +290,11 @@ public class CollabEditingService extends Service implements CEFXtoMobilisHub {
 		}
 	}
 	
+	/**
+	 * @return a List of the XMPP IDs of all occupants in the currently used
+	 * MUC room
+	 * @throws XMPPException
+	 */
 	public List<String> getRoomOccupants() throws XMPPException {
 		List<String> occupants = new ArrayList<String>();
 	    ServiceDiscoveryManager discoManager = ServiceDiscoveryManager.getInstanceFor(xmppRemoteService.getXMPPConnection());
@@ -278,10 +307,16 @@ public class CollabEditingService extends Service implements CEFXtoMobilisHub {
 	    return occupants;
 	}
 	
+	/**
+	 * @return our user name in the current MUC session (this is *not* our global XMPP ID!)
+	 */
 	public String getMucUserName() {
 		return getMucRoomName() + "/" + JabberClient.getInstance().getUserName() + "_" + cefx.getIdentifier(); 
 	}
 
+	/**
+	 * @return the name of the currently used MUC room
+	 */
 	private String getMucRoomName() {
 		return cefx.getNetworkController().getSession().getMucRoomName();
 	}
@@ -300,27 +335,6 @@ public class CollabEditingService extends Service implements CEFXtoMobilisHub {
 		 */
 		public boolean isConnected() {
 			return connected;
-		}
-
-		/* (non-Javadoc)
-		 * @see de.tudresden.inf.rn.mobilis.mxa.services.collabedit.ICollabEditingService#insertAttributeText(java.lang.String, int)
-		 */
-		public void insertAttributeText(String text, int pos) {
-			// da.Element_AttributeInsert(...);
-		}
-
-		/* (non-Javadoc)
-		 * @see de.tudresden.inf.rn.mobilis.mxa.services.collabedit.ICollabEditingService#deleteAttributeText(int, int)
-		 */
-		public void deleteAttributeText(int pos, int length) {
-			// da.Element_AttributeDelete(...);
-		}
-
-		/* (non-Javadoc)
-		 * @see de.tudresden.inf.rn.mobilis.mxa.services.collabedit.ICollabEditingService#insertAttribute(java.lang.String)
-		 */
-		public void insertAttribute(String text) {
-			// da.Element_AttributeSet(...);
 		}
 
 		/* (non-Javadoc)

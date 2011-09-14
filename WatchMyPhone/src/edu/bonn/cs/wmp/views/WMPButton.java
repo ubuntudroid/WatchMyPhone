@@ -4,6 +4,7 @@ import android.widget.Button;
 import android.content.Context;
 import android.util.AttributeSet;
 
+@Deprecated
 public class WMPButton extends Button {
 	private boolean wmpInput = false;
 

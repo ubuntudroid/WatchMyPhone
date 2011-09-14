@@ -5,7 +5,6 @@ import java.util.List;
 
 import android.app.Application;
 import android.content.Intent;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Messenger;
@@ -49,17 +48,35 @@ public class WMPApplication extends Application {
 		super.onCreate();
 	}
 	
+	/**
+	 * Opens up the XMPP preferences Activity from MXA.
+	 */
 	public void startXMPPPrefs() {
 		Intent i = new Intent(ConstMXA.INTENT_PREFERENCES);
 		this.startActivity(Intent.createChooser(i,
 				"MXA not found. Please install."));
 	}
 	
+	/**
+	 * Supplies the MXA CollabEditingService object.
+	 * @return
+	 * 			{@link ICollabEditingService}
+	 */
 	public ICollabEditingService getCollabEditingService() {
 		return collabEditService;
 	}
 	
+	/**
+	 * Disconnects from the given Collaborative Editing session.
+	 * @param sessionName
+	 * 						The name of the session to be disconnected from.
+	 */
 	public void leaveSession(String sessionName) {
+		/*
+		 * TODO: as we probably will only be in one session per app we could simply store
+		 * the session name and provide this method without any additional parameters.
+		 */
+		
 		try {
 			collabEditService.leaveSession(sessionName);
 		} catch (RemoteException e) {
@@ -68,6 +85,11 @@ public class WMPApplication extends Application {
 		}
 	}
 	
+	/**
+	 * Connects to the given Collaborative Editing session.
+	 * @param sessionName
+	 * 						The name of the session to connect to.
+	 */
 	public void joinSession(String sessionName) {
 		try {
 			collabEditService.joinSession(sessionName);
@@ -77,7 +99,13 @@ public class WMPApplication extends Application {
 		}
 	}
 	
-	public boolean isConnected() {
+	/**
+	 * Tells whether we the CollabEditingService is connected to the Collaborative
+	 * Editing Framework's server.
+	 * @return <code>true</code> if the CollabEditingService is connected to the server,
+	 * 		<code>false</code> otherwise.
+	 */
+	public boolean isCollabEditingServiceConnected() {
 		try {
 			return (collabEditService != null && collabEditService.isConnected());
 		} catch (RemoteException e) {
@@ -87,6 +115,11 @@ public class WMPApplication extends Application {
 		}
 	}
 	
+	/**
+	 * Supplies the current instance of the WMPApplication class.
+	 * @return
+	 * 			the current instance of WMPApplication
+	 */
 	public static WMPApplication getInstance() {
 		/*
 		 * this should never be null, as the application object is the first one to be created and
@@ -95,6 +128,16 @@ public class WMPApplication extends Application {
 		return instance;
 	}
 	
+	/**
+	 * This method handles all necessary steps to connect to the MXA service and the Collaborative
+	 * Editing Service. The calling class should implement the {@link WMPConnectionListener} interface
+	 * and pass itself as a parameter to get notified when the connection is up and running and when
+	 * it is teared down again. Additionally one may use the {@link #isCollabEditingServiceConnected()}
+	 * method in combination with the ICollabEditingService object's connection methods to get this information.
+	 * @param listener
+	 * 			Implementation of the WMPConnectionListener interface, which is notified about
+	 * 			connection state changes. 
+	 */
 	public void connectToServiceAndServer(final WMPConnectionListener listener) {
 		Handler xmppResultHandler = new Handler() {
 
@@ -169,8 +212,8 @@ public class WMPApplication extends Application {
 						Log.e(TAG, "Couldn't register IQ-callback for ViewportBeans!");
 						e.printStackTrace();
 					}
-					
-					listener.onConnected();
+					if (listener != null)
+						listener.onConnected();
 			};
 
 		};
@@ -182,7 +225,8 @@ public class WMPApplication extends Application {
 			@Override
 			public void onMXADisconnected() {
 				Log.i(TAG, "Disconnected from MXA Remote Service");
-				listener.onDisconnected();
+				if (listener != null)
+					listener.onDisconnected();
 			}
 
 			@Override
@@ -208,8 +252,13 @@ public class WMPApplication extends Application {
 		mxaController.connectMXA(WMPApplication.getInstance().getApplicationContext(), mMXAListener);
 	}
 	
-	private void notifyViewUpdatersOfAwarenessEvent(
-			AwarenessEvent event) {
+	/**
+	 * This method notifies all registered {@link ViewUpdater}s about new
+	 * {@link AwarenessEvent}s.
+	 * @param event
+	 * 			AwarenessEvent to be propagated to registered view updaters
+	 */
+	private void notifyViewUpdatersOfAwarenessEvent(AwarenessEvent event) {
 		for (ViewUpdater v : viewUpdaters) {
 			if (v.hasInterestIn(event)) {
 				v.notifyOfAwarenessEvent(event);
@@ -217,6 +266,9 @@ public class WMPApplication extends Application {
 		}
 	}
 	
+	/**
+	 * Registers all necessary bean prototypes at the XMPP-{@link Parceller}.
+	 */
 	protected void registerBeanPrototypes() {
 		// TODO: add additionally needed packet types here (Chat, Buddy-List etc.)
 		ViewportBean viewportBeanPrototype = new ViewportBean(0);
@@ -243,14 +295,33 @@ public class WMPApplication extends Application {
 				.startActivity(i);
 	}
 	
+	/**
+	 * Registers the given {@link ViewUpdater}, so that it gets notified on the
+	 * arrival of new {@link AwarenessEvent}s.
+	 * @param v
+	 * 			ViewUpdater to be eventually notified about AwarenessEvents 
+	 */
 	public void registerViewUpdater(ViewUpdater v) {
 		viewUpdaters.add(v);
 	}
 
+	/**
+	 * De-registers the given {@link ViewUpdater}, so that it gets notified on the
+	 * arrival of new {@link AwarenessEvent}s.
+	 * @param v
+	 * 			ViewUpdater which should not be notified about AwarenessEvents
+	 * 			any more 
+	 */
 	public void deregisterViewUpdater(ViewUpdater v) {
 		viewUpdaters.remove(v);
 	}
 
+	/**
+	 * This method disconnects the app from the MXA's CollabEditingService. You should
+	 * call this after disconnection from a Collaborative Editing Session if it is obvious,
+	 * that the service isn't needed any more in the near future as this will save some
+	 * resources.
+	 */
 	public void deregisterCollabEditingCallback() {
 		try {
 			collabEditService.deregisterCollabEditingCallback(collabEditingCallback);

@@ -3,6 +3,7 @@ package edu.bonn.cs.wmp.viewupdater;
 import org.w3c.dom.Element;
 import org.w3c.dom.Text;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.os.RemoteException;
 import android.text.Editable;
@@ -15,10 +16,17 @@ import de.hdm.cefx.concurrency.operations.InsertOperationImpl;
 import de.hdm.cefx.concurrency.operations.UpdateDeleteOperation;
 import de.hdm.cefx.concurrency.operations.UpdateInsertOperation;
 import de.hdm.cefx.concurrency.operations.UpdateOperationImpl;
-import edu.bonn.cs.wmp.MainActivity;
 import edu.bonn.cs.wmp.application.WMPApplication;
 import edu.bonn.cs.wmp.views.WMPEditText;
+import edu.bonn.cs.wmp.views.WMPView;
 
+/**
+ * This view updater is normally used together with {@link WMPEditText} to
+ * provide this {@link WMPView} with updates from the Collaborative Editing Framework.
+ * 
+ * @author Sven Bendel
+ *
+ */
 public class EditTextViewUpdater extends ViewUpdater {
 	private WMPEditText editText;
 	private WMPApplication app;
@@ -44,7 +52,7 @@ public class EditTextViewUpdater extends ViewUpdater {
 					&& insOp.getInsertNode().getFirstChild() instanceof Text) {
 				final Text textNode = (Text) insOp.getInsertNode()
 						.getFirstChild().cloneNode(true);
-				MainActivity.getInstance().runOnUiThread(new Runnable() {
+				((Activity) editText.getContext()).runOnUiThread(new Runnable() {
 
 					@Override
 					public void run() {
@@ -59,7 +67,7 @@ public class EditTextViewUpdater extends ViewUpdater {
 				final UpdateInsertOperation upInsOp = (UpdateInsertOperation) updateOperation
 						.getDISOperation();
 
-				MainActivity.getInstance().runOnUiThread(new Runnable() {
+				((Activity) editText.getContext()).runOnUiThread(new Runnable() {
 
 					@Override
 					public void run() {
@@ -99,7 +107,7 @@ public class EditTextViewUpdater extends ViewUpdater {
 			} else if (updateOperation.getDISOperation() instanceof UpdateDeleteOperation) {
 				final UpdateDeleteOperation upDelOp = (UpdateDeleteOperation) updateOperation
 						.getDISOperation();
-				MainActivity.getInstance().runOnUiThread(new Runnable() {
+				((Activity) editText.getContext()).runOnUiThread(new Runnable() {
 
 					@Override
 					public void run() {

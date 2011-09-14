@@ -9,14 +9,20 @@ import android.widget.Toast;
 import edu.bonn.cs.wmp.WMPConnectionListener;
 import edu.bonn.cs.wmp.application.WMPApplication;
 
-public class MainActivity extends Activity implements WMPConnectionListener {
-	private static MainActivity instance;
+public class WMPActivity extends Activity implements WMPConnectionListener {
 	private WMPApplication app;
 
 	boolean DEBUG = false;
 	private final String TAG = this.getClass().getSimpleName();
 
-
+	/**
+	 * Convenience method for presenting a toast to the user.
+	 * @param text
+	 * 		The text to be displayed within the toast. 
+	 * @param length
+	 * 		The amount of time this toast will be shown. May be {@link Toast#LENGTH_LONG} or
+	 * 		{@link Toast#LENGTH_SHORT}.
+	 */
 	protected void makeAndShowToast(final String text, final int length) {
 		runOnUiThread(new Runnable() {
 
@@ -27,15 +33,10 @@ public class MainActivity extends Activity implements WMPConnectionListener {
 		});
 	}
 	
-	public static MainActivity getInstance() {
-		return instance;
-	}
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		app = (WMPApplication) getApplication();
-		instance = this;
 	}
 
 	@Override
@@ -64,7 +65,7 @@ public class MainActivity extends Activity implements WMPConnectionListener {
 
 	@Override
 	protected void onDestroy() {
-		if (app.isConnected())
+		if (app.isCollabEditingServiceConnected())
 			app.leaveSession("edit_text_test");
 		super.onDestroy();
 	}

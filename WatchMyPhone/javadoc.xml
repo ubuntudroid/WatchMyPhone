@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="javadoc">
+    <target name="javadoc">
+        <javadoc access="public" author="true" classpath="/home/sven/git/WatchMyPhone/AndroidCEFX_Common/lib/smack.jar:/home/sven/git/WatchMyPhone/MXA/lib/smack.jar:/home/sven/git/WatchMyPhone/MobilisXMPP/bin:/home/sven/git/WatchMyPhone/AndroidCEFX_Common/lib/xmlpull_1_1_3_4c.jar:/home/sven/git/WatchMyPhone/MXA/lib/smackx-pubsub.0.6.jar:/home/sven/git/WatchMyPhone/AndroidCEFX_Common/bin:/home/sven/git/WatchMyPhone/MobilisCommon/bin:/home/sven/git/WatchMyPhone/MobilisXMPP/libs/xmlpull_1_1_3_4c.jar:/home/sven/git/WatchMyPhone/AndroidCEFX_Common/build/CEFX_Utils.jar:/home/sven/git/WatchMyPhone/MXA/build/MXAClient.jar:/home/sven/git/WatchMyPhone/AndroidCEFX_Common/lib/kxml2-2.3.0.jar:/home/sven/git/WatchMyPhone/MobilisCommon/libs/xmlpull_1_1_3_4c.jar:/home/sven/git/WatchMyPhone/MobilisCommon/libs/su-smack-1.4.jar:/home/sven/git/WatchMyPhone/MobilisCommon/libs/smack.jar" destdir="doc" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="edu.bonn.cs.wmp.awarenesswidgets,edu.bonn.cs.wmp.application,edu.bonn.cs.wmp.views,edu.bonn.cs.wmp.viewupdater" source="1.6" sourcefiles="src/edu/bonn/cs/wmp/WMPActivity.java,src/edu/bonn/cs/wmp/WMPConnectionListener.java,/home/sven/git/WatchMyPhone/MXA/src/de/tudresden/inf/rn/mobilis/mxa/services/collabedit/CollabEditingService.java,src/edu/bonn/cs/wmp/WMPViewRegistry.java" sourcepath="/home/sven/git/WatchMyPhone/MXA/src:src:/home/sven/git/WatchMyPhone/MXA/gen:gen" splitindex="true" use="true" version="true">
+            <link href="file:/home/sven/opt/android-sdk-linux_x86/docs/reference"/>
+        </javadoc>
+    </target>
+</project>

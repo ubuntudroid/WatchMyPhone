@@ -6,15 +6,17 @@ import de.tudresden.inf.rn.mobilis.mxa.services.callbacks.ICollabEditingCallback
 
 interface ICollabEditingService {
 
+	/**
+	 * @return <code>true</code> if it is now safe to send new operations to the
+	 * Collaborative Editing Framework, <code>false</code> otherwise
+	 */
 	boolean isReadyForEditing();
 
+	/**
+	 * @return <code>true</code> if the connection to the CEFX server is established,
+	 * <code>false</code> otherwise
+	 */
 	boolean isConnected();
-
-	void insertAttributeText(in String text, in int pos);
-
-	void deleteAttributeText(in int pos, in int length);
-
-	void insertAttribute(in String text);
 
 	void insertText(in String parentNodeID, in String fixNodeID, in int before,
 			in String text, in int textPos);
