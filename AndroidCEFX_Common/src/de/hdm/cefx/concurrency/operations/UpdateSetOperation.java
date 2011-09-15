@@ -27,6 +27,7 @@
  */
 package de.hdm.cefx.concurrency.operations;
 
+@SuppressWarnings("serial")
 public class UpdateSetOperation extends UpdateOperations {
 
 	private String text;

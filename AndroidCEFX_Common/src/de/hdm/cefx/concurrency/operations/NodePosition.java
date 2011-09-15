@@ -38,8 +38,12 @@ import de.hdm.cefx.exceptions.NodePositionException;
  * @author Ansgar Gerlicher
  *
  */
-@SuppressWarnings("serial")
 public class NodePosition implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private int relativeInsertPosition = 0;
 

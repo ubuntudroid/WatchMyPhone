@@ -21,6 +21,7 @@ import org.w3c.dom.Text;
 
 import android.app.Service;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -84,7 +85,7 @@ public class CollabEditingService extends Service implements CEFXtoMobilisHub {
 	private List<ICollabEditingCallback> collabEditingCallbacks = new ArrayList<ICollabEditingCallback>(); 
 	
 	boolean connected = false;
-
+	
 	/*
 	 * (non-Javadoc)
 	 * 

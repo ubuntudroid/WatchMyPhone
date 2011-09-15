@@ -43,7 +43,10 @@ public class EditTextViewUpdater extends ViewUpdater {
 		app.getCollabEditingService();
 		
 		// TODO: create getter for operation instead of protected variable
+		
 		if (operation instanceof InsertOperationImpl) {
+			//TODO: not needed any more - may be removed in the future
+
 			// new node (i.e. in case of late join)
 			InsertOperationImpl insOp = (InsertOperationImpl) operation;
 			// TODO: very basic implementation which heavily relies on the

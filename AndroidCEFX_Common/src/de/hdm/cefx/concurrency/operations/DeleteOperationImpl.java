@@ -50,6 +50,7 @@ import de.hdm.cefx.exceptions.NodeNotFoundException;
  */
 @SuppressWarnings("serial")
 public class DeleteOperationImpl implements DeleteOperation {
+
 	private final String targetId;
 
 	private StateVector stateVector;

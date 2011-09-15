@@ -53,6 +53,7 @@ import de.hdm.cefx.util.DOM3Methods;
  */
 @SuppressWarnings("serial")
 public class UpdateOperationImpl implements UpdateOperation {
+
 	private final String targetNodeId;
 
 	private NodeModification orgNode;
@@ -86,7 +87,7 @@ public class UpdateOperationImpl implements UpdateOperation {
 	 * @param identifier
 	 *            the id of the issueing client.
 	 */
-	protected UpdateOperationImpl(UpdateOperations disOperation, final StateVector sv, final String name, int identifier) {
+	public UpdateOperationImpl(UpdateOperations disOperation, final StateVector sv, final String name, int identifier) {
 		undone = false;
 		discarded = false;
 		targetNodeId = new String(disOperation.getNodePosition().getParentNodeId());

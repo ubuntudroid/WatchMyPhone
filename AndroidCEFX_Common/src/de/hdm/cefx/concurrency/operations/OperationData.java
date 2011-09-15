@@ -31,8 +31,12 @@ import java.io.Serializable;
  * @author Dirk Hering
  * @author Sven Bendel
  */
-@SuppressWarnings("serial")
 public class OperationData implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * The executed operation.
@@ -48,6 +52,10 @@ public class OperationData implements Serializable {
 	 * Indicates whether this operation is a part of a complex operation.
 	 */
 	private ComplexOperationStatus complexOperationStatus;
+	
+	public OperationData() {
+		
+	}
 	
 	public OperationData(Operation operation) {
 		this.operation = operation;

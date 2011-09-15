@@ -139,7 +139,7 @@ public class WMPApplication extends Application {
 	 * 			connection state changes. 
 	 */
 	public void connectToServiceAndServer(final WMPConnectionListener listener) {
-		Handler xmppResultHandler = new Handler() {
+		Handler connectionHandler = new Handler() {
 
 			@Override
 			public void handleMessage(Message msg) {
@@ -218,7 +218,7 @@ public class WMPApplication extends Application {
 
 		};
 		registerBeanPrototypes();
-		final Messenger mConnectMessenger = new Messenger(xmppResultHandler);
+		final Messenger mConnectMessenger = new Messenger(connectionHandler);
 		MXAController mxaController = MXAController.get();
 		MXAListener mMXAListener = new MXAListener() {
 

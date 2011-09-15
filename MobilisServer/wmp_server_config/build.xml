@@ -8,55 +8,56 @@
                 <attribute name="Main-Class" value="de.tudresden.inf.rn.mobilis.server.MG_Server"/>
                 <attribute name="Class-Path" value="."/>
             </manifest>
-            <fileset dir="/home/sven/Projects/Eclipse workspace/WMP/MobilisServer/bin"/>
-            <fileset dir="/home/sven/Projects/Eclipse workspace/WMP/MobilisCommon/bin"/>
-            <zipfileset excludes="META-INF/*.SF" src="/home/sven/Projects/Eclipse workspace/WMP/MobilisCommon/libs/su-smack-1.4.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/home/sven/Projects/Eclipse workspace/WMP/MobilisCommon/libs/xmlpull_1_1_3_4c.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/home/sven/Projects/Eclipse workspace/WMP/MobilisCommon/libs/smack.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/home/sven/Projects/Eclipse workspace/WMP/MobilisServer/libs/appframework-1.0.3.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/home/sven/Projects/Eclipse workspace/WMP/MobilisServer/libs/commons-beanutils.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/home/sven/Projects/Eclipse workspace/WMP/MobilisServer/libs/commons-collections-3.2.1.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/home/sven/Projects/Eclipse workspace/WMP/MobilisServer/libs/commons-lang-2.4.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/home/sven/Projects/Eclipse workspace/WMP/MobilisServer/libs/commons-logging-1.1.1.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/home/sven/Projects/Eclipse workspace/WMP/MobilisServer/libs/facebook-java-api-schema-2.0.4.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/home/sven/Projects/Eclipse workspace/WMP/MobilisServer/libs/jdom.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/home/sven/Projects/Eclipse workspace/WMP/MobilisServer/libs/json-20070829.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/home/sven/Projects/Eclipse workspace/WMP/MobilisServer/libs/servlet-api.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/home/sven/Projects/Eclipse workspace/WMP/MobilisServer/libs/smack.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/home/sven/Projects/Eclipse workspace/WMP/MobilisServer/libs/smackx-debug.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/home/sven/Projects/Eclipse workspace/WMP/MobilisServer/libs/smackx.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/home/sven/Projects/Eclipse workspace/WMP/MobilisServer/libs/smackx-jingle.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/home/sven/Projects/Eclipse workspace/WMP/MobilisServer/libs/swing-worker-1.1.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/home/sven/Projects/Eclipse workspace/WMP/MobilisServer/libs/xpp3-1.1.4c.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/home/sven/Projects/Eclipse workspace/WMP/MobilisServer/libs/derby.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/home/sven/Projects/Eclipse workspace/WMP/MobilisServer/libs/eclipselink.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/home/sven/Projects/Eclipse workspace/WMP/MobilisServer/libs/javax.persistence_2.0.1.v201006031150.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/home/sven/Projects/Eclipse workspace/WMP/MobilisServer/libs/SimpleWebServer.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/home/sven/Projects/Eclipse workspace/WMP/MobilisServer/libs/QueryTool1.2a.jar"/>
-            <fileset dir="/home/sven/Projects/Eclipse workspace/WMP/AndroidCEFX_Common/bin"/>
-            <zipfileset excludes="META-INF/*.SF" src="/home/sven/Projects/Eclipse workspace/WMP/AndroidCEFX_Common/lib/xmlpull_1_1_3_4c.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/home/sven/Projects/Eclipse workspace/WMP/AndroidCEFX_Common/lib/kxml2-2.3.0.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/home/sven/Projects/Eclipse workspace/WMP/AndroidCEFX_Common/lib/smack.jar"/>
-            <fileset dir="/home/sven/Projects/Eclipse workspace/WMP/MobilisXMPP/bin"/>
-            <zipfileset excludes="META-INF/*.SF" src="/home/sven/Projects/Eclipse workspace/WMP/MobilisXMPP/libs/xmlpull_1_1_3_4c.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/home/sven/Projects/Eclipse workspace/WMP/MobilisServer/libs/hibernate-annotations.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/home/sven/Projects/Eclipse workspace/WMP/MobilisServer/libs/hibernate-entitymanager.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/home/sven/Projects/Eclipse workspace/WMP/MobilisServer/libs/hibernate3.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/home/sven/Projects/Eclipse workspace/WMP/MobilisServer/libs/mysql-connector-java-5.1.10-bin.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/home/sven/Projects/Eclipse workspace/WMP/MobilisServer/libs/persistence-api-1.0.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/home/sven/Projects/Eclipse workspace/WMP/MobilisServer/libs/dom4j-1.6.1.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/home/sven/Projects/Eclipse workspace/WMP/MobilisServer/libs/antlr-2.7.6.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/home/sven/Projects/Eclipse workspace/WMP/MobilisServer/libs/commons-collections-3.1.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/home/sven/Projects/Eclipse workspace/WMP/MobilisServer/libs/ejb3-persistence.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/home/sven/Projects/Eclipse workspace/WMP/MobilisServer/libs/hibernate-commons-annotations.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/home/sven/Projects/Eclipse workspace/WMP/MobilisServer/libs/hibernate-core.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/home/sven/Projects/Eclipse workspace/WMP/MobilisServer/libs/javassist-3.9.0.GA.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/home/sven/Projects/Eclipse workspace/WMP/MobilisServer/libs/jta-1.1.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/home/sven/Projects/Eclipse workspace/WMP/MobilisServer/libs/slf4j-api-1.5.8.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/home/sven/Projects/Eclipse workspace/WMP/MobilisServer/libs/javassist.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/home/sven/Projects/Eclipse workspace/WMP/MobilisServer/libs/slf4j-jdk14-1.5.8.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/home/sven/Projects/Eclipse workspace/WMP/MobilisServer/libs/ant-antlr-1.6.5.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/home/sven/Projects/Eclipse workspace/WMP/MobilisServer/libs/axiom.jar"/>
+            <fileset dir="/home/sven/git/WatchMyPhone/MobilisServer/bin"/>
+            <fileset dir="/home/sven/git/WatchMyPhone/MobilisCommon/bin"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/MobilisCommon/libs/su-smack-1.4.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/MobilisCommon/libs/xmlpull_1_1_3_4c.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/MobilisCommon/libs/smack.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/MobilisServer/libs/appframework-1.0.3.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/MobilisServer/libs/commons-beanutils.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/MobilisServer/libs/commons-collections-3.2.1.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/MobilisServer/libs/commons-lang-2.4.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/MobilisServer/libs/commons-logging-1.1.1.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/MobilisServer/libs/facebook-java-api-schema-2.0.4.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/MobilisServer/libs/jdom.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/MobilisServer/libs/json-20070829.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/MobilisServer/libs/servlet-api.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/MobilisServer/libs/smack.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/MobilisServer/libs/smackx-debug.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/MobilisServer/libs/smackx.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/MobilisServer/libs/smackx-jingle.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/MobilisServer/libs/swing-worker-1.1.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/MobilisServer/libs/xpp3-1.1.4c.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/MobilisServer/libs/derby.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/MobilisServer/libs/eclipselink.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/MobilisServer/libs/javax.persistence_2.0.1.v201006031150.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/MobilisServer/libs/SimpleWebServer.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/MobilisServer/libs/QueryTool1.2a.jar"/>
+            <fileset dir="/home/sven/git/WatchMyPhone/AndroidCEFX_Common/bin"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/AndroidCEFX_Common/lib/xmlpull_1_1_3_4c.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/AndroidCEFX_Common/lib/kxml2-2.3.0.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/AndroidCEFX_Common/lib/smack.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/AndroidCEFX_Common/lib/xstream-1.4.1.jar"/>
+            <fileset dir="/home/sven/git/WatchMyPhone/MobilisXMPP/bin"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/MobilisXMPP/libs/xmlpull_1_1_3_4c.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/MobilisServer/libs/hibernate-annotations.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/MobilisServer/libs/hibernate-entitymanager.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/MobilisServer/libs/hibernate3.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/MobilisServer/libs/mysql-connector-java-5.1.10-bin.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/MobilisServer/libs/persistence-api-1.0.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/MobilisServer/libs/dom4j-1.6.1.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/MobilisServer/libs/antlr-2.7.6.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/MobilisServer/libs/commons-collections-3.1.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/MobilisServer/libs/ejb3-persistence.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/MobilisServer/libs/hibernate-commons-annotations.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/MobilisServer/libs/hibernate-core.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/MobilisServer/libs/javassist-3.9.0.GA.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/MobilisServer/libs/jta-1.1.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/MobilisServer/libs/slf4j-api-1.5.8.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/MobilisServer/libs/javassist.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/MobilisServer/libs/slf4j-jdk14-1.5.8.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/MobilisServer/libs/ant-antlr-1.6.5.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/MobilisServer/libs/axiom.jar"/>
         </jar>
     </target>
 </project>

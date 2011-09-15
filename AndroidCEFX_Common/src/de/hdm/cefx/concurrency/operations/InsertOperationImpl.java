@@ -29,12 +29,6 @@
  */
 package de.hdm.cefx.concurrency.operations;
 
-import java.io.IOException;
-
-import org.apache.xml.serialize.Method;
-import org.apache.xml.serialize.OutputFormat;
-import org.apache.xml.serialize.SerializerFactory;
-import org.apache.xml.serialize.TextSerializer;
 import org.w3c.dom.Attr;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
@@ -49,6 +43,12 @@ import de.hdm.cefx.util.DOM3Methods;
 
 /**
  * Implementing class of the InsertOperation interface.
+ * 
+ * Be careful with serializing this class as it incorporates a Node which will
+ * *not* be serialized as it is simply not serializable! When trying to pass this
+ * class via IPC on Android make sure, that you wrap it in a ParcelableAwarenessEvent,
+ * as this class will make sure, that the operation gets transformed to a serializable
+ * {@link UpdateInsertOperation}.
  *
  * @author Ansgar Gerlicher
  * @author Dirk Hering
@@ -57,6 +57,7 @@ import de.hdm.cefx.util.DOM3Methods;
  */
 @SuppressWarnings("serial")
 public class InsertOperationImpl implements InsertOperation {
+
 	transient private Node insertNode = null;
 
 	private final NodePosition insertPosition;
@@ -535,14 +536,4 @@ public class InsertOperationImpl implements InsertOperation {
 		opID=oid;
 	}
 	
-	private void writeObject(java.io.ObjectOutputStream out) throws IOException {
-		out.defaultWriteObject();
-		SerializerFactory fac = SerializerFactory.getSerializerFactory(Method.TEXT);
-		TextSerializer serializer = (TextSerializer) fac.makeSerializer(out, new OutputFormat());
-		serializer.serialize((Element) insertNode);
-	}
-	
-	private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
-	}
-
 }

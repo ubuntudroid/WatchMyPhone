@@ -43,6 +43,7 @@ import java.util.Map.Entry;
  * @author Ansgar Gerlicher
  *
  */
+@SuppressWarnings("serial")
 public class StateVector implements Cloneable, Serializable {
 
 	private HashMap<Integer, Integer> states;

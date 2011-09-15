@@ -2,9 +2,22 @@ package de.tudresden.inf.rn.mobilis.media.parcelables;
 
 import java.io.Serializable;
 
+import org.jivesoftware.smackx.pubsub.NodeType;
+import org.w3c.dom.DOMException;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.Text;
+
+import android.app.Activity;
 import android.os.Parcel;
 import android.os.Parcelable;
 import de.hdm.cefx.awareness.AwarenessEvent;
+import de.hdm.cefx.concurrency.operations.InsertOperationImpl;
+import de.hdm.cefx.concurrency.operations.NodePosition;
+import de.hdm.cefx.concurrency.operations.OperationData;
+import de.hdm.cefx.concurrency.operations.UpdateInsertOperation;
+import de.hdm.cefx.concurrency.operations.UpdateOperationImpl;
+import de.hdm.cefx.exceptions.NodePositionException;
 
 /**
  * This class acts as a wrapper for CEFX-AwarenessEvent objects. It
@@ -41,6 +54,36 @@ public class ParcelableAwarenessEvent extends AwarenessEvent implements
 	
 	public ParcelableAwarenessEvent(AwarenessEvent event) {
 		super(event.getType(), event.getDescription(), event.getEvent(), event.getEventSource());
+		
+		// workaround for non-parcelable InsertOperationImpl
+		if (event.getEvent() instanceof OperationData) {
+			OperationData opData = (OperationData) event.getEvent();
+			if (opData.getOperation() instanceof InsertOperationImpl) {
+				InsertOperationImpl insOp = (InsertOperationImpl) opData.getOperation();
+				if (insOp.getInsertNode() instanceof Element
+						&& insOp.getInsertNode().getFirstChild() instanceof Text) {
+					final Text textNode = (Text) insOp.getInsertNode()
+							.getFirstChild().cloneNode(true);
+					UpdateInsertOperation upIns;
+					try {
+						/*
+						 *  most of these fields just get some dummy values as we just need
+						 *  them for the constructor
+						 */
+						upIns = new UpdateInsertOperation(textNode.getData(), 0, Node.TEXT_NODE, new NodePosition("dummy", null, NodePosition.INSERT_BEFORE), "");
+						UpdateOperationImpl upOp = new UpdateOperationImpl(upIns, insOp.getStateVector(), insOp.getClientName(), insOp.getClientId());
+						opData.setOperation(upOp);
+						setEvent(opData);
+					} catch (DOMException e) {
+						// should never be fired due to the nature of our intitialization values
+						e.printStackTrace();
+					} catch (NodePositionException e) {
+						// should never be fired due to the nature of our intitialization values
+						e.printStackTrace();
+					}
+				}
+			}
+		}
 	}
 
 	@Override

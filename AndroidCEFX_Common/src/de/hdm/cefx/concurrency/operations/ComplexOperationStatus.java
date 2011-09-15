@@ -23,9 +23,7 @@
  ******************************************************************************/
 package de.hdm.cefx.concurrency.operations;
 
-import java.io.Serializable;
-
-public enum ComplexOperationStatus implements Serializable {
+public enum ComplexOperationStatus {
 
 	/**
 	 * This Operation is an atomic operation (UPDATE, INSERT or DELETE) and not a ComplexOperation.
