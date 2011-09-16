@@ -65,8 +65,10 @@ public class WMPActivity extends Activity implements WMPConnectionListener {
 
 	@Override
 	protected void onDestroy() {
-		if (app.isCollabEditingServiceConnected())
+		if (app.isCollabEditingServiceConnected()) {
 			app.leaveSession("edit_text_test");
+			app.deregisterCollabEditingCallback();
+		}
 		super.onDestroy();
 	}
 

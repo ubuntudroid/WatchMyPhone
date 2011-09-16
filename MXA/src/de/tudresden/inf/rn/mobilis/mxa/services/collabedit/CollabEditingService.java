@@ -576,7 +576,11 @@ public class CollabEditingService extends Service implements CEFXtoMobilisHub {
 		@Override
 		public void deregisterCollabEditingCallback(
 				ICollabEditingCallback callback) throws RemoteException {
-			collabEditingCallbacks.remove(callback);
+			for (ICollabEditingCallback storedCallback : collabEditingCallbacks) {
+				if (storedCallback.asBinder() == callback.asBinder()) {
+					collabEditingCallbacks.remove(storedCallback);
+				}
+			}
 		}
 		
 	};
