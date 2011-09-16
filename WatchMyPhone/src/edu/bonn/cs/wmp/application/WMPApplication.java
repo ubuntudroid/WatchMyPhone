@@ -41,6 +41,8 @@ public class WMPApplication extends Application {
 	private ICollabEditingCallback collabEditingCallback;
 
 	private String TAG = this.getClass().getSimpleName();
+
+	private boolean connected;
 	
 	@Override
 	public void onCreate() {
@@ -227,6 +229,7 @@ public class WMPApplication extends Application {
 				Log.i(TAG, "Disconnected from MXA Remote Service");
 				if (listener != null)
 					listener.onDisconnected();
+				connected = false;
 			}
 
 			@Override
@@ -242,6 +245,7 @@ public class WMPApplication extends Application {
 //						Toast.makeText(WMPApplication.getInstance().getApplicationContext(), "Couldn't connect to CEFX - restarting...", Toast.LENGTH_SHORT).show();
 //						restartApp();
 //					}
+					connected = true;
 				} catch (RemoteException e) {
 					Log.e(TAG,
 							"MXA Remote service couldn't connect to XMPP Server");
@@ -305,6 +309,22 @@ public class WMPApplication extends Application {
 		viewUpdaters.add(v);
 	}
 
+	public void disconnectFromMXA() {
+		if (connected) {
+			leaveSession("edit_text_test");
+			deregisterCollabEditingCallback();
+			/*
+			 * TODO: add the following line or alternatively 
+			 * MXAController.get().disconnect(); when implemented by the Mobilis developers
+			 */
+//			unbindService(MXAController.get());
+
+//			collabEditService = null;
+			connected = false;
+		}
+		
+	}
+	
 	/**
 	 * De-registers the given {@link ViewUpdater}, so that it gets notified on the
 	 * arrival of new {@link AwarenessEvent}s.
@@ -329,5 +349,9 @@ public class WMPApplication extends Application {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public boolean isConnectedToMXA() {
+		return connected;
 	}
 }

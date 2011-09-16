@@ -222,8 +222,16 @@ public class CollabEditingService extends Service implements CEFXtoMobilisHub {
 
 		cefx.init();
 		JabberClient.getInstance().setUsesProvidedConnection(true);
-		JabberClient.getInstance().setProvidedXMPPConnection(
-				xmppRemoteService.getXMPPConnection());
+		XMPPConnection xmppConnection = xmppRemoteService.getXMPPConnection();
+//		if (!xmppConnection.isConnected()) {
+//			try {
+//				xmppService.connect(new Messenger(new Handler(Looper.getMainLooper())));
+//			} catch (RemoteException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
+		JabberClient.getInstance().setProvidedXMPPConnection(xmppConnection);
 		cefx.jabberConnect();
 
 		NetworkController nc = cefx.getNetworkController();
@@ -580,6 +588,16 @@ public class CollabEditingService extends Service implements CEFXtoMobilisHub {
 				if (storedCallback.asBinder() == callback.asBinder()) {
 					collabEditingCallbacks.remove(storedCallback);
 				}
+			}
+		}
+		
+		@Override
+		public void disconnect() {
+			try {
+				xmppService.disconnect(new Messenger(new Handler(Looper.getMainLooper())));
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 		

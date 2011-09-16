@@ -56,8 +56,7 @@ public class WMPActivity extends Activity implements WMPConnectionListener {
 			app.connectToServiceAndServer(this);
 			break;
 		case R.id.menu_disconnect:
-			app.leaveSession("edit_text_test");
-			app.deregisterCollabEditingCallback();
+			app.disconnectFromMXA();
 			break;
 		}
 		return true;
@@ -66,8 +65,7 @@ public class WMPActivity extends Activity implements WMPConnectionListener {
 	@Override
 	protected void onDestroy() {
 		if (app.isCollabEditingServiceConnected()) {
-			app.leaveSession("edit_text_test");
-			app.deregisterCollabEditingCallback();
+			app.disconnectFromMXA();
 		}
 		super.onDestroy();
 	}

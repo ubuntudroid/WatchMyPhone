@@ -103,4 +103,9 @@ interface ICollabEditingService {
 	void registerCollabEditingCallback(in ICollabEditingCallback callback);
 	
 	void deregisterCollabEditingCallback(in ICollabEditingCallback callback);
+	
+	/**
+	 * Disconnects from the current CEFX session.
+	 */
+	void disconnect();
 }
