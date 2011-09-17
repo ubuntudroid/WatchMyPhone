@@ -183,7 +183,7 @@ public class InsertOperationImpl implements InsertOperation {
 		Node fixNode = null;
 		try {
 			parent = context.getNodeForId(pos.getParentNodeId());
-			if (pos.getFixNodeId() == null || pos.getFixNodeId().equals("")) {
+			if (pos.getFixNodeId() == null || pos.getFixNodeId().equals("") || pos.getFixNodeId().equals("null")) {
 				return appendChild(parent, insertNode);
 			} else {
 				fixNode = context.getNodeForId(pos.getFixNodeId());

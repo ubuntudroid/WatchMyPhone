@@ -4,6 +4,7 @@ import de.hdm.cefx.awareness.AwarenessEvent;
 import de.hdm.cefx.concurrency.operations.Operation;
 import de.hdm.cefx.concurrency.operations.OperationData;
 import edu.bonn.cs.wmp.application.WMPApplication;
+import edu.bonn.cs.wmp.views.WMPView;
 
 /**
  * The view updater is responsible for informing a collaborative
@@ -48,4 +49,9 @@ public abstract class ViewUpdater {
 	 * 			the new AwarenessEvent
 	 */
 	public abstract void notifyOfAwarenessEvent(AwarenessEvent event);
+	
+	/**
+	 * @return the currently attached {@link WMPView}
+	 */
+	public abstract WMPView getWMPView();
 }

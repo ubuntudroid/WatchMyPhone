@@ -34,6 +34,7 @@ import java.util.Collection;
 
 import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.PacketExtension;
+import org.jivesoftware.smack.util.StringUtils;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
@@ -77,12 +78,12 @@ public class OperationXMLTransformer {
 			ex = createInsertMessage(io);
 			
 			// provide inserted element to be serialized into the message body
-			Node insertNode = io.getInsertNode();
-			if (insertNode.getNodeType() == Node.ELEMENT_NODE) {
-				Element element = (Element) insertNode;
-				// serialize the Element
-				messageBody = XMLHelper.getElementString(element, false);
-			}
+//			Node insertNode = io.getInsertNode();
+//			if (insertNode.getNodeType() == Node.ELEMENT_NODE) {
+//				Element element = (Element) insertNode;
+//				// serialize the Element
+//				messageBody = XMLHelper.getElementString(element, false);
+//			}
 		}
 		if (o.getType()==Operation.DELETE) {
 			DeleteOperationImpl od=(DeleteOperationImpl)o;
@@ -208,8 +209,8 @@ public class OperationXMLTransformer {
 				return o;
 			}
 			if (type.equals(OperationExtension.NAMESPACE+OperationExtension.INSERT)) {
-//				o=createInsertOperation((InsertExtension)e,session);
-				o = createInsertOperation((InsertExtension) e, msg, session);
+				o=createInsertOperation((InsertExtension)e,session);
+//				o = createInsertOperation((InsertExtension) e, msg, session);
 				return o;
 			}
 			if (type.equals(OperationExtension.NAMESPACE+OperationExtension.DELETE)) {
@@ -247,7 +248,7 @@ public class OperationXMLTransformer {
 		try {
 			np = new NodePosition(ex.getParentID(), ex.getFixNodeID(), ex.getBeforeAfter());
 			o = OperationFactory.newInsertOperation(
-					XMLHelper.getElement(msg.getBody()), 
+					XMLHelper.getElement(StringUtils.unescapeNode(ex.getContent())), 
 					np, ex.getStateVector(), session.getClient(ex.getCliendID()));
 		} catch (NodePositionException e) {
 			e.printStackTrace();

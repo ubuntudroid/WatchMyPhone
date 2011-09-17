@@ -214,8 +214,21 @@ public class WMPApplication extends Application {
 						Log.e(TAG, "Couldn't register IQ-callback for ViewportBeans!");
 						e.printStackTrace();
 					}
+					
+					// inform attached activity
 					if (listener != null)
 						listener.onConnected();
+					
+					// initialize needed CEFX nodes
+					for (ViewUpdater v : viewUpdaters) {
+						String wmpName = v.getWMPView().getWMPName();
+						try {
+							collabEditService.createNewTopLevelNode(wmpName);
+						} catch (RemoteException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
 			};
 
 		};
@@ -307,6 +320,15 @@ public class WMPApplication extends Application {
 	 */
 	public void registerViewUpdater(ViewUpdater v) {
 		viewUpdaters.add(v);
+		if (connected) {
+			String wmpName = v.getWMPView().getWMPName();
+			try {
+				collabEditService.createNewTopLevelNode(wmpName);
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public void disconnectFromMXA() {

@@ -21,7 +21,6 @@ import org.w3c.dom.Text;
 
 import android.app.Service;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -601,6 +600,13 @@ public class CollabEditingService extends Service implements CEFXtoMobilisHub {
 			}
 		}
 		
+		@Override
+		public void createNewTopLevelNode(String nodeId) {
+			if (document.getElementsByTagName(nodeId).getLength() == 0) {
+				Element newNode = document.createElement(nodeId);
+				da.Node_insert(document.getElementsByTagName("EditTextDoc").item(0), newNode, null, NodePosition.INSERT_BEFORE);
+			}
+		}
 	};
 
 }

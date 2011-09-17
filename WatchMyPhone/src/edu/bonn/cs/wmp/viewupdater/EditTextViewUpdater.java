@@ -36,6 +36,11 @@ public class EditTextViewUpdater extends ViewUpdater {
 		app = WMPApplication.getInstance();
 		app.registerViewUpdater(this);
 	}
+	
+	@Override
+	public WMPView getWMPView() {
+		return editText;
+	}
 
 	@Override
 	public void notifyOfAwarenessEvent(final AwarenessEvent event) {
@@ -133,7 +138,7 @@ public class EditTextViewUpdater extends ViewUpdater {
 		/* 
 		 * TODO: check if the operation is interesting for this particular view updater
 		 * by comparing the node id to the resource id of our parent (CollabEditingService has
-		 * a method for getting the ResourceID for a CEFX-ID) 
+		 * a method for getting the ResourceID for a CEFX-ID (getNodeName()) 
 		 */
 		return super.hasInterestIn(event) && event.getType().equals(
 				AwarenessEventTypes.OPERATION_EXECUTION.toString());
