@@ -108,4 +108,13 @@ interface ICollabEditingService {
 	 * Disconnects from the current CEFX session.
 	 */
 	void disconnect();
+	
+	/**
+	 * Creates and inserts a new top-level node within CEFX. This node will have the
+	 * specified name. If there already exists an element with such a name, nothing will
+	 * be done.
+	 * @param nodeId
+	 *				the name for the new node
+	 */
+	void createNewTopLevelNode(String nodeId);
 }

@@ -41,5 +41,9 @@ public interface WMPView {
 	 * @param c ContentChange to be propagated to the other session takers
 	 */
 	public void notifyCollaboratorsOfContentChange(ContentChange c);
-
+	
+	/**
+	 * @return the WMP ID of this view 
+	 */
+	public String getWMPName();
 }

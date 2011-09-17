@@ -53,8 +53,8 @@ public class WMPEditText extends EditText implements WMPView {
 	 * 
 	 * See getNodeName().
 	 */
-//	private String nodeName = Integer.toString(this.getId());
-	private String nodeName = "edit_text";
+	private String wmpName = "wmp_" + Integer.toString(this.getId());
+//	private String nodeName = "edit_text";
 	public long startTime;
 	
 	public WMPEditText(Context context) {
@@ -92,8 +92,8 @@ public class WMPEditText extends EditText implements WMPView {
 	 * @return
 	 * 		the content node's name
 	 */
-	public String getNodeName() {
-		return nodeName;
+	public String getWMPName() {
+		return wmpName;
 	}
 
 	/**
@@ -103,7 +103,7 @@ public class WMPEditText extends EditText implements WMPView {
 	 * @param nodeID
 	 */
 	public void setNodeName(String nodeID) {
-		this.nodeName = nodeID;
+		this.wmpName = nodeID;
 	}
 
 	/**
@@ -295,7 +295,7 @@ public class WMPEditText extends EditText implements WMPView {
 					}
 					clearComposingText();
 
-					String nodeId = collabService.getCEFXIDForName(getNodeName());
+					String nodeId = collabService.getCEFXIDForName(getWMPName());
 										
 					collabService.replaceText(nodeId, null, NodePosition.INSERT_BEFORE,
 							text.toString(), start, end - start);
@@ -332,7 +332,7 @@ public class WMPEditText extends EditText implements WMPView {
 					if (end == -1) {
 						end = getSelectionEnd();
 					}
-					String nodeId = collabService.getCEFXIDForName(getNodeName());
+					String nodeId = collabService.getCEFXIDForName(getWMPName());
 					collabService.replaceText(nodeId, null, NodePosition.INSERT_BEFORE,
 							text.toString(), start, end - start);
 					int selectionStart, selectionEnd;
@@ -355,7 +355,7 @@ public class WMPEditText extends EditText implements WMPView {
 			try {
 				if (collabService != null && collabService.isReadyForEditing()) {
 					// TODO: do in Background
-					String nodeId = collabService.getCEFXIDForName(getNodeName());
+					String nodeId = collabService.getCEFXIDForName(getWMPName());
 					collabService.deleteText(nodeId, null, NodePosition.INSERT_BEFORE,
 							getSelectionStart() - leftLength, leftLength
 									+ rightLength);
@@ -412,7 +412,7 @@ public class WMPEditText extends EditText implements WMPView {
 			collabService = app.getCollabEditingService();
 			try {
 				if (collabService != null && collabService.isReadyForEditing()) {
-					String nodeId = collabService.getCEFXIDForName(getNodeName());
+					String nodeId = collabService.getCEFXIDForName(getWMPName());
 					int keyCode = event.getKeyCode();
 
 					int start = BaseInputConnection

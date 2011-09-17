@@ -37,6 +37,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.apache.xml.serialize.Method;
 import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
+import org.jivesoftware.smack.util.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -119,7 +120,8 @@ public class XMLHelper {
         XMLSerializer serializer = new XMLSerializer(out, format);
         try {
 			serializer.serialize(sourceElement);
-			return out.toString();
+			String escaped = StringUtils.escapeForXML(out.toString());
+			return escaped;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
