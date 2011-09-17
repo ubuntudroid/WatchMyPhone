@@ -37,7 +37,6 @@
             <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/AndroidCEFX_Common/lib/xmlpull_1_1_3_4c.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/AndroidCEFX_Common/lib/kxml2-2.3.0.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/AndroidCEFX_Common/lib/smack.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/AndroidCEFX_Common/lib/xstream-1.4.1.jar"/>
             <fileset dir="/home/sven/git/WatchMyPhone/MobilisXMPP/bin"/>
             <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/MobilisXMPP/libs/xmlpull_1_1_3_4c.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="/home/sven/git/WatchMyPhone/MobilisServer/libs/hibernate-annotations.jar"/>
