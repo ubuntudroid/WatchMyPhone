@@ -9,6 +9,14 @@ import android.widget.Toast;
 import edu.bonn.cs.wmp.WMPConnectionListener;
 import edu.bonn.cs.wmp.application.WMPApplication;
 
+/**
+ * This class should be used as a super class for all collaborative Activities.
+ * It automatically registrates at the {@link WMPApplication} object and sports
+ * some necessary connection related menu entries.
+ * 
+ * @author Sven Bendel
+ *
+ */
 public class WMPActivity extends Activity implements WMPConnectionListener {
 	private WMPApplication app;
 

@@ -30,7 +30,7 @@ import edu.bonn.cs.wmp.xmpp.beans.ViewportBean;
 /**
  * This is the collaborative version of a standard Android {@link EditText}. It is recommended
  * to be used together with the {@link RadarView} awareness widget for full collaboration awareness.
- * @author sven
+ * @author Sven Bendel
  *
  */
 public class WMPEditText extends EditText implements WMPView {
@@ -53,7 +53,7 @@ public class WMPEditText extends EditText implements WMPView {
 	 * 
 	 * See getNodeName().
 	 */
-//	private int nodeID = Integer.toString(this.getId());
+//	private String nodeName = Integer.toString(this.getId());
 	private String nodeName = "edit_text";
 	public long startTime;
 	

@@ -7,6 +7,12 @@ import android.widget.SlidingDrawer;
 import android.widget.SlidingDrawer.OnDrawerScrollListener;
 import android.widget.Toast;
 
+/**
+ * Sample implementation of a collaborative WMP Activity.
+ * 
+ * @author Sven Bendel
+ *
+ */
 public class WMPTextEditorActivity extends WMPActivity {
     /** Called when the activity is first created. */
     @Override
