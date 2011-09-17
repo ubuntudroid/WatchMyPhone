@@ -40,25 +40,7 @@ public class WMPEditText extends EditText implements WMPView {
 
 	private WMPApplication app;
 
-<<<<<<< HEAD
 	private String wmpName = "wmp_" + Integer.toString(this.getId());
-=======
-	/*
-	 * TODO: atm node name is hardcoded, obtain ID from WMPComponentRegistry on
-	 * view creation using the following code. The problem with this is, that
-	 * this node will be created by all participants which probably leads to
-	 * 1) a XML with more than one node having the same name (not sure if this
-	 * is possible or if CEFX merges the nodes then) 
-	 * 2) a XML with several nodes having different names but should be the same 
-	 * Therefore we need to obtain the node name either from the server or from the resource id.
-	 * Alternatively the user should be able to provide an own id by setting it directly
-	 * in the XML.
-	 * 
-	 * See getNodeName().
-	 */
-	private String wmpName = "wmp_" + Integer.toString(this.getId());
-//	private String nodeName = "edit_text";
->>>>>>> origin/master
 	public long startTime;
 	
 	public WMPEditText(Context context) {
