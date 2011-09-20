@@ -106,26 +106,16 @@ public class WMPEditText extends EditText implements WMPView {
 	}
 
 	@Override
+	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+		super.onSizeChanged(w, h, oldw, oldh);
+		refreshViewport(this.getScrollY());
+	}
+	
+	@Override
 	protected void onScrollChanged(int l, int t, int oldl, int oldt) {
 		super.onScrollChanged(l, t, oldl, oldt);
 		
-		// report viewport change to awareness widgets
-		ViewportChange change = new ViewportChange();
-		change.top = (float) this.getLayout().getLineForVertical(t)/this.getLayout().getLineCount();
-		Rect rect = new Rect();
-		this.getDrawingRect(rect);
-		change.bottom = (float) this.getLayout().getLineForVertical(
-				t + rect.height())/this.getLayout().getLineCount();
-		notifyExternalWMPWidgetsOfContentChange(change);
-		collabService = app.getCollabEditingService();
-		try {
-			if (collabService != null && collabService.isReadyForEditing()) {
-				// TODO: just report relevant changes
-				notifyCollaboratorsOfContentChange(change);
-			}
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
+		refreshViewport(t);
 		
 		// remove all changed text formatting the user has already seen
 		if (t > oldt) {
@@ -154,6 +144,31 @@ public class WMPEditText extends EditText implements WMPView {
 			for (BackgroundColorSpan highlight : highlights) {
 				this.getText().removeSpan(highlight);
 			}
+		}
+	}
+
+	/**
+	 * Report viewport change to the attached awareness widgets.
+	 * @param top
+	 * 			current vertical scroll origin
+	 */
+	private void refreshViewport(int top) {
+		// report viewport change to awareness widgets
+		ViewportChange change = new ViewportChange();
+		change.top = (float) this.getLayout().getLineForVertical(top)/this.getLayout().getLineCount();
+		Rect rect = new Rect();
+		this.getDrawingRect(rect);
+		change.bottom = (float) this.getLayout().getLineForVertical(
+				top + rect.height())/this.getLayout().getLineCount();
+		notifyExternalWMPWidgetsOfContentChange(change);
+		collabService = app.getCollabEditingService();
+		try {
+			if (collabService != null && collabService.isReadyForEditing()) {
+				// TODO: just report relevant changes
+				notifyCollaboratorsOfContentChange(change);
+			}
+		} catch (RemoteException e) {
+			e.printStackTrace();
 		}
 	}
 
