@@ -8,12 +8,16 @@
 		android:orientation="vertical" android:layout_width="fill_parent"
 		android:layout_height="fill_parent">
 		
-		<edu.bonn.cs.wmp.views.WMPEditText 
-			android:id="@+id/main_edit_text_collab_text" 
-			android:layout_width="fill_parent" android:layout_height="fill_parent"
-			android:text=""	android:gravity="top"
-			android:inputType="textMultiLine">
-		</edu.bonn.cs.wmp.views.WMPEditText>
+		<ScrollView android:id="@+id/main_layout_scroll_view_text"
+			android:scrollbarStyle="outsideInset" android:layout_width="fill_parent"
+			android:layout_height="fill_parent" android:fillViewport="true">
+			<edu.bonn.cs.wmp.views.WMPEditText 
+				android:id="@+id/main_edit_text_collab_text" 
+				android:layout_width="fill_parent" android:layout_height="fill_parent"
+				android:text=""	android:gravity="top"
+				android:inputType="textMultiLine">
+			</edu.bonn.cs.wmp.views.WMPEditText>
+		</ScrollView>
 		
 		<SlidingDrawer
      			android:id="@+id/drawer"
