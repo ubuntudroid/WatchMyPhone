@@ -18,29 +18,114 @@ interface ICollabEditingService {
 	 */
 	boolean isConnected();
 
+	/**
+	 * Inserts the given text at the given position in a text node under a parent
+	 * node before/after another specified (fix) sub-node.
+	 * 
+	 * @param parentNodeID
+	 * 				the ID of the node being the parent of the text node
+	 * @param fixNodeID
+	 * 				the ID of the node which determines the position of the text node
+	 * @param before
+	 * 				either {@link NodePosition#INSERT_BEFORE} or {@link NodePosition#INSERT_AFTER},
+	 *				depending on whether the text should be inserted in a text node before or after
+	 *				the fix node
+	 * @param text
+	 *				the text to be inserted into the text node
+	 * @param textPos
+	 *				the position where the text will be inserted at
+	 */ 
 	void insertText(in String parentNodeID, in String fixNodeID, in int before,
 			in String text, in int textPos);
 
+	/**
+	 * Deletes a chunk of text at the given position in a text node under a parent
+	 * node before/after another specified (fix) sub-node.
+	 * 
+	 * @param parentNodeID
+	 * 				the ID of the node being the parent of the text node
+	 * @param fixNodeID
+	 * 				the ID of the node which determines the position of the text node
+	 * @param before
+	 * 				either {@link NodePosition#INSERT_BEFORE} or {@link NodePosition#INSERT_AFTER},
+	 *				depending on whether the text should be deleted in a text node before or after
+	 *				the fix node
+	 * @param pos
+	 *				the beginning of the chunk marked for deletion
+	 * @param textPos
+	 *				the length of the chunk marked for deletion
+	 */ 
 	void deleteText(in String parentNodeID, in String fixNodeID, in int before, in int pos,
 			in int len);
 
+	/**
+	 * Sets the text of a text node under a parent
+	 * node before/after another specified (fix) sub-node.
+	 * 
+	 * @param parentNodeID
+	 * 				the ID of the node being the parent of the text node
+	 * @param fixNodeID
+	 * 				the ID of the node which determines the position of the text node
+	 * @param before
+	 * 				either {@link NodePosition#INSERT_BEFORE} or {@link NodePosition#INSERT_AFTER},
+	 *				depending on whether the text should be set in a text node before or after
+	 *				the fix node
+	 * @param text
+	 *				the text to be set as content of the specified text node
+	 */ 
 	void setText(in String parentNodeID, in String fixNodeID, in int before, in String text);
 
+	/**
+	 * Deletes the node with the given id.
+	 * 
+	 * @param id
+	 * 			the id of the node which shall be removed from the document
+	 */
 	void deleteNode(in String id);
-
+	
+	/**
+	 * Uploads the XML specified by its file path to the server.
+	 *
+	 * @param filePath
+	 * 				the fully qualified path to the XML-document to be uploaded to the server
+	 */
 	boolean uploadDocument(in String filePath);
 
 	/**
-	 * Shows the current XML document in the console, just for debugging.
+	 * Shows the current XML document in the console, just for debugging purposes.
 	 */
 	void showDocument();
 
+	/**
+	 * Shows the current state vector in the console, just for debugging purposes.
+	 */
 	void showStateVector();
-
+	
+	/**
+	 * @return a String representing the content of the current XML-document
+	 */
 	String getDocumentString();
-
+	
+	/**
+	 * Loads a specific document from the server.
+	 * 
+	 * @param uri
+	 *				the uri of the file on the server
+	 * @returns
+	 *				<code>true</code> if the document was successfully loaded from the server,
+	 * 				<code>false</code> otherwise
+	 */
 	boolean loadDocumentFromServer(String uri);
-
+	
+	/**
+	 * By calling this method the service attempts to connect to a running CEFX session.
+	 * 
+	 * @param sessionName
+	 *				the name of the session to be joined
+	 * @returns
+	 *				<code>true</code> if the session has been successfully joined,
+	 *				<code>false</code> otherwise
+	 */
 	boolean joinSession(String sessionName);
 
 	/**
@@ -84,24 +169,90 @@ interface ICollabEditingService {
 	void replaceText(String parentNodeID, String fixNodeID, int before,
 			String text, int pos, int len);
 
+	/**
+	 * Attempts to leave a currently running collaboration session.
+	 * @param sessionName
+	 *				the name of the session to be left
+	 * @returns
+	 *				<code>true</code> if the session was successfully left,
+	 *				<code>false</code> otherwise
+	 */	 
 	boolean leaveSession(in String sessionName);
 	
-	String getCEFXIDForName(in String wmpId);
+	/**
+	 * Returns the CEFXID for the node with the specified name.
+	 * @param nodeName
+	 * 				the name of the node whose CEFXID shall be returned
+	 * @returns
+	 *				the CEFXID of the specified node
+	 */
+	String getCEFXIDForName(in String nodeName);
 	
+	/**
+	 * @returns
+	 *				the current user JID
+	 */
 	String getUsername();
 	
+	/**
+	 * @returns
+	 * 				the JID of the MUC room currently being used for the collaboration session
+	 */
 	String getMucRoomName();
 	
+	/**
+	 * @returns
+	 *				the current CEFX user ID
+	 */
 	int getCEFXUserID();
 	
+	/**
+	 * Sends the given IQ via the currently used XMPP connection without caring for the result.
+	 * 
+	 * @param iq
+	 *				the {@link XMPPIQ} iq to be sent
+	 */
 	void fireAndForgetIQ(in XMPPIQ iq);
 	
+	/**
+	 * Sends the given IQ to all participants of the currently used MUC room without caring for the
+	 * result.
+	 * 
+	 * @param iq
+	 *				the {@link XMPPIQ} iq to be sent
+	 */
 	void fireAndForgetMUCIQ(in XMPPIQ iq);
 	
+	/**
+	 * Sends the given IQ via the currently used XMPP connection.
+	 * 
+	 * @param acknowledgement
+	 * 				this {@link Messenger} will be called when the ACK is received for the iq
+	 * @param result
+	 *				this {@link Messenger} will be called when the iq's result has been returned to us
+	 * @param requestCode
+	 * @param iq
+	 *				the {@link XMPPIQ} to be sent
+	 */
 	void sendIQ(in Messenger acknowledgement, in Messenger result, in int requestCode, in XMPPIQ iq);
 	
+	/**
+	 * This method should be called by all classes implementing the {@link ICollabEditingCallback} interface.
+	 * Otherwise they won't receive any awareness event updates.
+	 *
+	 * @param callback
+	 * 				the {@link ICollabEditingCallback} which wishes to register at the service to receive
+	 *				{@link ParcelableAwarenessEvent} updates
+	 */  
 	void registerCollabEditingCallback(in ICollabEditingCallback callback);
 	
+	/**
+	 * This method should be called by all classes implementing the {@link ICollabEditingCallback} interface,
+	 * if they no longer want to receive awareness event updates.
+	 *
+	 * @param
+	 *				the {@link ICollabEditingCallback} which wishes to no longer receive awareness event updates
+	 */
 	void deregisterCollabEditingCallback(in ICollabEditingCallback callback);
 	
 	/**

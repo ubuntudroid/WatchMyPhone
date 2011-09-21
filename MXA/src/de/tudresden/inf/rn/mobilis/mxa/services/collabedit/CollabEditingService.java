@@ -529,8 +529,8 @@ public class CollabEditingService extends Service implements CEFXtoMobilisHub {
 			}
 		}
 		
-		public String getCEFXIDForName(String wmpId) {
-			return getDOMAdapter().getDocument().getElementsByTagName(wmpId).item(0).getAttributes().getNamedItem(CEFXUtil.CEFXUID).getNodeValue();
+		public String getCEFXIDForName(String nodeName) {
+			return getDOMAdapter().getDocument().getElementsByTagName(nodeName).item(0).getAttributes().getNamedItem(CEFXUtil.CEFXUID).getNodeValue();
 		}
 		
 		public String getUsername() throws RemoteException {
@@ -569,6 +569,28 @@ public class CollabEditingService extends Service implements CEFXtoMobilisHub {
 				}
 			} catch (XMPPException e) {
 				e.printStackTrace();
+				
+				// reconnect
+				try {
+					xmppRemoteService.getXMPPConnection().connect();
+				} catch (XMPPException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				// try again
+				fireAndForgetMUCIQ(iq);
+			} catch (IllegalStateException e) {
+				e.printStackTrace(); // disconnect may happen due to SSL write exception
+				
+				// reconnect
+				try {
+					xmppRemoteService.getXMPPConnection().connect();
+				} catch (XMPPException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
 				// try again
 				fireAndForgetMUCIQ(iq);
 			}
