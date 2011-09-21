@@ -8,22 +8,18 @@
 		android:orientation="vertical" android:layout_width="fill_parent"
 		android:layout_height="fill_parent">
 		
-		<ScrollView android:id="@+id/main_layout_scroll_view_text"
-			android:scrollbarStyle="outsideInset" android:layout_width="fill_parent"
-			android:layout_height="fill_parent" android:fillViewport="true">
-			<edu.bonn.cs.wmp.views.WMPEditText 
-				android:id="@+id/main_edit_text_collab_text" 
-				android:layout_width="fill_parent" android:layout_height="fill_parent"
-				android:text=""	android:gravity="top"
-				android:inputType="textMultiLine">
-			</edu.bonn.cs.wmp.views.WMPEditText>
-		</ScrollView>
+		<edu.bonn.cs.wmp.views.WMPEditText 
+			android:id="@+id/main_edit_text_collab_text" 
+			android:layout_width="fill_parent" android:layout_height="fill_parent"
+			android:text=""	android:gravity="top"
+			android:inputType="textMultiLine" android:scrollbars="vertical">
+		</edu.bonn.cs.wmp.views.WMPEditText>
 		
 		<SlidingDrawer
      			android:id="@+id/drawer"
      			android:layout_width="fill_parent" android:layout_height="fill_parent"
      			android:handle="@+id/handle" android:content="@+id/main_radar_view"
-     			android:orientation="vertical">
+     			android:orientation="vertical" android:layout_gravity="bottom">
 
 	     		<ImageView
 	         		android:id="@id/handle"
