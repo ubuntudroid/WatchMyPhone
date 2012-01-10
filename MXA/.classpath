@@ -12,5 +12,6 @@
 	<classpathentry kind="src" path="/AndroidCEFX_Common"/>
 	<classpathentry kind="src" path="/MobilisXMPP"/>
 	<classpathentry kind="src" path="/MobilisCommon"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

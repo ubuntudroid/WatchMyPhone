@@ -6,5 +6,6 @@
 	<classpathentry exported="true" kind="lib" path="/WMP/lib/MXAClient.jar"/>
 	<classpathentry exported="true" kind="lib" path="/WMP/lib/CEFX_Utils.jar"/>
 	<classpathentry kind="src" path="WMP_src"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

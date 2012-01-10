@@ -56,16 +56,12 @@ public class WMPActivity extends Activity implements WMPConnectionListener {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.menu_pref:
+		if (item.getItemId() == R.id.menu_pref) {
 			app.startXMPPPrefs();
-			break;
-		case R.id.menu_join:
+		} else if (item.getItemId() == R.id.menu_join) {
 			app.connectToServiceAndServer(this);
-			break;
-		case R.id.menu_disconnect:
+		} else if (item.getItemId() == R.id.menu_disconnect) {
 			app.disconnectFromMXA();
-			break;
 		}
 		return true;
 	}
