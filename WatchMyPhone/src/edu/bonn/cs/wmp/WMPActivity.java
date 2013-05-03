@@ -11,7 +11,7 @@ import edu.bonn.cs.wmp.application.WMPApplication;
 
 /**
  * This class should be used as a super class for all collaborative Activities.
- * It automatically registrates at the {@link WMPApplication} object and sports
+ * It automatically registers at the {@link WMPApplication} object and sports
  * some necessary connection related menu entries.
  * 
  * @author Sven Bendel
